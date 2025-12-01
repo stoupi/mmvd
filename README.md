@@ -269,6 +269,14 @@ NEXT_PUBLIC_APP_URL="https://your-domain.com"
 - [next-intl Guide](https://next-intl-docs.vercel.app)
 - [Playwright Testing](https://playwright.dev)
 
+## 📝 Claude Code Tips
+
+- 'claude' to start Claude Code in your terminal
+- 'shift + tab' to switch between mods (yolo, plan mod)
+- '/model' to change the model (sonnet plz)
+- '/clear' to clear the chat (flush the context) and start a new conversation
+- '/resume' to resume a previous conversation (among all your conversations)
+
 ## 📄 License
 
 This template is open source and available under the [MIT License](LICENSE).
