@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { proposalFormSchema, type ProposalFormData } from '@/lib/schemas/proposal';
 import { useAction } from 'next-safe-action/hooks';
-import { createProposalAction, updateProposalAction } from '@/lib/actions/proposal-actions';
+import { createProposalAction, updateProposalAction, createAndSubmitProposalAction, updateAndSubmitProposalAction } from '@/lib/actions/proposal-actions';
 import { useRouter } from '@/app/i18n/navigation';
 import { toast } from 'sonner';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from '@/components/ui/form';
@@ -13,8 +13,18 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import type { MainArea } from '@/app/generated/prisma';
-import { Save, Plus, Trash2 } from 'lucide-react';
+import { Save, Plus, Trash2, Send } from 'lucide-react';
 import { useState } from 'react';
 
 interface ProposalFormProps {
@@ -40,6 +50,7 @@ export function ProposalForm({
   const [secondaryObjectivesCount, setSecondaryObjectivesCount] = useState(initialData?.secondaryObjectives?.length || 0);
   const [secondaryEndpointsCount, setSecondaryEndpointsCount] = useState(initialData?.secondaryEndpoints?.length || 0);
   const [competingWorkCount, setCompetingWorkCount] = useState((initialData?.competingWork as any[])?.length || 0);
+  const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
 
   const countWords = (text: string) => {
     if (!text) return 0;
@@ -109,7 +120,33 @@ export function ProposalForm({
     }
   );
 
-  const isExecuting = createStatus === 'executing' || updateStatus === 'executing';
+  const { execute: createAndSubmitProposal, status: createSubmitStatus } = useAction(
+    createAndSubmitProposalAction,
+    {
+      onSuccess: ({ data }) => {
+        toast.success('Proposal submitted successfully');
+        router.push(`/submission/${data?.proposalId}`);
+      },
+      onError: ({ error }) => {
+        toast.error(error.serverError || 'Failed to submit proposal');
+      }
+    }
+  );
+
+  const { execute: updateAndSubmitProposal, status: updateSubmitStatus } = useAction(
+    updateAndSubmitProposalAction,
+    {
+      onSuccess: () => {
+        toast.success('Proposal submitted successfully');
+        router.push(`/submission/${proposalId}`);
+      },
+      onError: ({ error }) => {
+        toast.error(error.serverError || 'Failed to submit proposal');
+      }
+    }
+  );
+
+  const isExecuting = createStatus === 'executing' || updateStatus === 'executing' || createSubmitStatus === 'executing' || updateSubmitStatus === 'executing';
 
   const onSubmit = (data: ProposalFormData) => {
     if (isEditing && proposalId) {
@@ -120,6 +157,29 @@ export function ProposalForm({
         submissionWindowId,
         centreCode
       });
+    }
+  };
+
+  const handleSubmitConfirmed = () => {
+    const formData = form.getValues();
+
+    if (isEditing && proposalId) {
+      updateAndSubmitProposal({ ...formData, id: proposalId });
+    } else {
+      createAndSubmitProposal({
+        ...formData,
+        submissionWindowId,
+        centreCode
+      });
+    }
+
+    setIsSubmitDialogOpen(false);
+  };
+
+  const handleSubmitClick = async () => {
+    const isValid = await form.trigger();
+    if (isValid) {
+      setIsSubmitDialogOpen(true);
     }
   };
 
@@ -752,13 +812,24 @@ export function ProposalForm({
 
         <div className='flex gap-4 pt-4'>
           <Button
+            type='button'
+            size='lg'
+            disabled={isExecuting}
+            onClick={handleSubmitClick}
+            className='flex-1'
+          >
+            <Send className='h-5 w-5 mr-2' />
+            {createSubmitStatus === 'executing' || updateSubmitStatus === 'executing' ? 'Submitting...' : 'Submit Proposal'}
+          </Button>
+          <Button
             type='submit'
             size='lg'
+            variant='secondary'
             disabled={isExecuting}
             className='flex-1'
           >
             <Save className='h-5 w-5 mr-2' />
-            {isExecuting ? 'Saving...' : isEditing ? 'Update Draft' : 'Save Draft'}
+            {createStatus === 'executing' || updateStatus === 'executing' ? 'Saving...' : isEditing ? 'Update Draft' : 'Save Draft'}
           </Button>
           <Button
             type='button'
@@ -770,6 +841,23 @@ export function ProposalForm({
           </Button>
         </div>
       </form>
+
+      <AlertDialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Submission</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to submit this proposal? Once submitted, you cannot modify it or submit another proposal for this submission window. This action is final.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleSubmitConfirmed}>
+              Confirm Submission
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Form>
   );
 }

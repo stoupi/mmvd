@@ -119,4 +119,23 @@
   body {
     @apply bg-background text-foreground;
   }
+  button,
+  a,
+  [role="button"],
+  [type="button"],
+  [type="submit"],
+  [type="reset"],
+  select,
+  input[type="checkbox"],
+  input[type="radio"] {
+    cursor: pointer;
+  }
+  label {
+    cursor: default;
+  }
+  label:has(+ input),
+  label:has(+ textarea),
+  label:has(+ select) {
+    cursor: default;
+  }
 }

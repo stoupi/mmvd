@@ -57,6 +57,44 @@ export const submitProposalAction = submissionAction
     return { success: true };
   });
 
+export const createAndSubmitProposalAction = submissionAction
+  .schema(proposalFormSchema.extend({
+    submissionWindowId: z.string(),
+    centreCode: z.string()
+  }))
+  .action(async ({ parsedInput, ctx }) => {
+    const proposal = await submissionService.createProposal({
+      ...parsedInput,
+      piUserId: ctx.userId
+    });
+
+    await submissionService.submitProposal(proposal.id);
+
+    revalidatePath('/submission');
+    return { success: true, proposalId: proposal.id };
+  });
+
+export const updateAndSubmitProposalAction = submissionAction
+  .schema(proposalFormSchema.extend({
+    id: z.string()
+  }))
+  .action(async ({ parsedInput, ctx }) => {
+    const { id, ...data } = parsedInput;
+
+    // Verify ownership
+    const proposal = await submissionService.getProposal(id);
+    if (!proposal || proposal.piUserId !== ctx.userId) {
+      throw new Error('Unauthorized');
+    }
+
+    await submissionService.updateProposal(id, data);
+    await submissionService.submitProposal(id);
+
+    revalidatePath(`/submission/${id}`);
+    revalidatePath('/submission');
+    return { success: true };
+  });
+
 export const deleteProposalAction = submissionAction
   .schema(z.object({ id: z.string() }))
   .action(async ({ parsedInput, ctx }) => {
