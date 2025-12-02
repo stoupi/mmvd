@@ -10,9 +10,9 @@ export default async function UsersPage() {
   const users = await getAllUsers();
 
   return (
-    <div className='container mx-auto py-8 max-w-7xl'>
+    <div className='p-8'>
       <div className='mb-6'>
-        <h1 className='text-3xl font-bold mb-2'>User Management</h1>
+        <h1 className='text-3xl font-bold mb-2'>Users</h1>
         <p className='text-muted-foreground'>
           Manage user accounts, permissions, and centre assignments
         </p>

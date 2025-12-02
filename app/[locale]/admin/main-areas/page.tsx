@@ -12,12 +12,12 @@ export default async function MainAreasPage() {
   const mainAreas = await getAllMainAreas();
 
   return (
-    <div className='container mx-auto py-8 max-w-5xl'>
+    <div className='p-8'>
       <div className='flex items-start justify-between mb-6'>
         <div>
-          <h1 className='text-3xl font-bold mb-2'>Main Research Areas</h1>
+          <h1 className='text-3xl font-bold mb-2'>Topics</h1>
           <p className='text-muted-foreground'>
-            Manage research areas for proposal classification
+            Manage research topics for abstract classification
           </p>
         </div>
         <CreateMainAreaDialog />

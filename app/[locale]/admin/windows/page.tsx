@@ -11,7 +11,7 @@ export default async function SubmissionWindowsPage() {
   const windows = await getAllSubmissionWindows();
 
   return (
-    <div className='container mx-auto py-8 max-w-6xl'>
+    <div className='p-8'>
       <div className='flex items-start justify-between mb-6'>
         <div>
           <h1 className='text-3xl font-bold mb-2'>Submission Windows</h1>

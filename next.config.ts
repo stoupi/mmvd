@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
 	typescript: {
 		ignoreBuildErrors: true,
 	},
+	webpack: (config) => {
+		config.externals = [...(config.externals || []), { canvas: 'canvas' }];
+		// Fix for Zod bundling issue
+		config.resolve.extensionAlias = {
+			'.js': ['.js', '.ts', '.tsx'],
+		};
+		return config;
+	},
 };
 
 export default withNextIntl(nextConfig);
