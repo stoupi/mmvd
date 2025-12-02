@@ -1,7 +1,6 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
 import { getCurrentWindow, getProposalsByPi } from '@/lib/services/submission';
 import { getTranslations } from 'next-intl/server';
-import { WindowStatus } from './components/window-status';
 import { ProposalList } from './components/proposal-list';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
@@ -42,19 +41,39 @@ export default async function SubmissionPage({
     !hasSubmittedInCurrentWindow &&
     !draftInCurrentWindow;
 
+  const daysRemaining = currentWindow
+    ? Math.ceil((new Date(currentWindow.submissionCloseAt).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+    : 0;
+
   return (
     <div className='container mx-auto py-8 max-w-6xl'>
-      <div className='flex items-center justify-between mb-6'>
-        <h1 className='text-3xl font-bold'>{t('title')}</h1>
+      <div className='mb-6'>
+        <h1 className='text-3xl font-bold mb-6'>{t('title')}</h1>
+        {currentWindow && (
+          <p className='text-lg text-black text-center' style={{ fontFamily: 'Georgia, serif' }}>
+            The submission window is open from{' '}
+            <strong>
+              {new Date(currentWindow.submissionOpenAt).toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+              })}
+            </strong>{' '}
+            to{' '}
+            <strong>
+              {new Date(currentWindow.submissionCloseAt).toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+              })}
+            </strong>{' '}
+            (<strong>{daysRemaining}</strong> {daysRemaining === 1 ? 'day' : 'days'} remaining).
+          </p>
+        )}
+        {!currentWindow && (
+          <p className='text-center text-muted-foreground'>{t('noActiveWindow')}</p>
+        )}
       </div>
-
-      {currentWindow && <WindowStatus window={currentWindow} />}
-
-      {!currentWindow && (
-        <div className='bg-muted p-6 rounded-lg mb-6'>
-          <p className='text-muted-foreground'>{t('noActiveWindow')}</p>
-        </div>
-      )}
 
       {canCreateNew && (
         <div className='mb-6'>
