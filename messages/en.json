@@ -142,5 +142,370 @@
       "legal": "© 2025 EACVI-MMVD Study. All rights reserved.",
       "piLogin": "Principal Investigator Login"
     }
+  },
+  "submission": {
+    "title": "Proposal Submission",
+    "dashboard": {
+      "title": "My Proposals",
+      "subtitle": "Manage your ancillary study proposals",
+      "newProposal": "New Proposal",
+      "noProposals": "No proposals yet",
+      "noProposalsDescription": "You haven't submitted any proposals yet. Create your first proposal when a submission window is open.",
+      "alreadySubmitted": "You have already submitted a proposal for the current submission window",
+      "noOpenWindow": "There is no open submission window at the moment",
+      "checkBackLater": "Please check back later when a new submission window opens"
+    },
+    "window": {
+      "status": "Window Status",
+      "submissionPeriod": "Submission Period",
+      "reviewDeadline": "Review Deadline",
+      "to": "to"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "SUBMITTED": "Submitted",
+      "UNDER_REVIEW": "Under Review",
+      "ACCEPTED": "Accepted",
+      "REJECTED": "Rejected",
+      "PRIORITIZED": "Prioritized"
+    },
+    "windowStatus": {
+      "PLANNED": "Planned",
+      "OPEN": "Open",
+      "CLOSED": "Closed",
+      "REVIEWING": "Under Review",
+      "COMPLETED": "Completed"
+    },
+    "list": {
+      "title": "Title",
+      "mainArea": "Main Area",
+      "window": "Submission Window",
+      "status": "Status",
+      "reviews": "Reviews",
+      "actions": "Actions",
+      "editDraft": "Edit Draft",
+      "viewDetails": "View Details",
+      "noReviews": "No reviews yet",
+      "reviewCount": "{count} review(s)"
+    },
+    "form": {
+      "title": "Proposal Form",
+      "centreCode": "Centre Code",
+      "proposalTitle": "Proposal Title",
+      "proposalTitlePlaceholder": "Enter a descriptive title for your proposal",
+      "mainArea": "Main Research Area",
+      "mainAreaPlaceholder": "Select the primary research area",
+      "mainAreaCount": "{count} proposals",
+      "background": "Background",
+      "backgroundPlaceholder": "Provide background information and rationale for the study",
+      "objectives": "Study Objectives",
+      "objectivesPlaceholder": "Describe the primary and secondary objectives",
+      "methods": "Methods",
+      "methodsPlaceholder": "Describe the methodology, data collection, and analysis approach",
+      "statisticalAnalysis": "Statistical Analysis Plan",
+      "statisticalAnalysisPlaceholder": "Describe the planned statistical methods and sample size considerations",
+      "expectedImpact": "Expected Impact (Optional)",
+      "expectedImpactPlaceholder": "Describe the potential clinical or scientific impact",
+      "references": "References (Optional)",
+      "referencesPlaceholder": "List key references in standard format",
+      "nPatients": "Number of Patients (Optional)",
+      "nPatientsPlaceholder": "Estimated sample size",
+      "statisticianName": "Statistician Name (Optional)",
+      "statisticianNamePlaceholder": "Name of collaborating statistician",
+      "saveDraft": "Save Draft",
+      "updateDraft": "Update Draft",
+      "saving": "Saving...",
+      "updating": "Updating...",
+      "requiredField": "This field is required",
+      "minLength": "Must be at least {min} characters",
+      "draftSaved": "Draft saved successfully",
+      "draftUpdated": "Draft updated successfully",
+      "saveFailed": "Failed to save draft",
+      "updateFailed": "Failed to update draft"
+    },
+    "new": {
+      "title": "New Proposal",
+      "subtitle": "Submit a new proposal for {window}",
+      "centreCodeRequired": "Centre Code Required",
+      "centreCodeMissing": "Your account does not have a centre code assigned. Please contact an administrator to set up your centre code before submitting proposals."
+    },
+    "edit": {
+      "title": "Edit Proposal Draft",
+      "subtitle": "{window}"
+    },
+    "detail": {
+      "editDraft": "Edit Draft",
+      "readyToSubmit": "Ready to submit?",
+      "submitWarning": "Once submitted, you will not be able to edit or delete this proposal.",
+      "sections": {
+        "background": "Background",
+        "objectives": "Objectives",
+        "methods": "Methods",
+        "statisticalAnalysis": "Statistical Analysis",
+        "expectedImpact": "Expected Impact",
+        "references": "References",
+        "additionalInfo": "Additional Information"
+      },
+      "metadata": {
+        "centreCode": "Centre Code",
+        "nPatients": "Number of Patients",
+        "statistician": "Statistician",
+        "created": "Created",
+        "submitted": "Submitted"
+      },
+      "info": {
+        "mainArea": "Main Area",
+        "window": "Submission Window",
+        "reviews": "{count} review(s)"
+      }
+    },
+    "actions": {
+      "submit": "Submit Proposal",
+      "delete": "Delete Draft",
+      "submitDialog": {
+        "title": "Submit Proposal?",
+        "description": "Are you sure you want to submit this proposal? Once submitted:",
+        "warning1": "You will not be able to edit the proposal",
+        "warning2": "You will not be able to delete the proposal",
+        "warning3": "The proposal will be sent for review",
+        "warning4": "You cannot submit another proposal for this submission window",
+        "finalWarning": "This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Yes, Submit Proposal",
+        "submitting": "Submitting..."
+      },
+      "deleteDialog": {
+        "title": "Delete Draft?",
+        "description": "Are you sure you want to delete this draft? This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Yes, Delete Draft",
+        "deleting": "Deleting..."
+      },
+      "submitSuccess": "Proposal submitted successfully!",
+      "submitError": "Failed to submit proposal",
+      "deleteSuccess": "Proposal deleted successfully",
+      "deleteError": "Failed to delete proposal"
+    }
+  },
+  "admin": {
+    "title": "Admin",
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "Manage users, submission windows, main areas, and proposals",
+      "statistics": {
+        "totalUsers": "Total Users",
+        "activeUsers": "{count} active users",
+        "proposals": "Proposals",
+        "proposalStats": "{submitted} submitted, {drafts} drafts",
+        "submissionWindows": "Submission Windows",
+        "openWindows": "{count} currently open"
+      },
+      "quickActions": {
+        "title": "Quick Actions",
+        "manageUsers": {
+          "title": "Manage Users",
+          "description": "View and edit user accounts"
+        },
+        "submissionWindows": {
+          "title": "Submission Windows",
+          "description": "Manage submission periods"
+        },
+        "mainAreas": {
+          "title": "Main Areas",
+          "description": "Manage research areas"
+        },
+        "allProposals": {
+          "title": "All Proposals",
+          "description": "View and manage proposals"
+        }
+      },
+      "recentWindows": {
+        "title": "Recent Submission Windows",
+        "viewAll": "View All",
+        "noWindows": "No submission windows created yet",
+        "proposalCount": "{count} proposals"
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "subtitle": "Manage user accounts, permissions, and centre assignments",
+      "table": {
+        "user": "User",
+        "centreCode": "Centre Code",
+        "permissions": "Permissions",
+        "activity": "Activity",
+        "status": "Status",
+        "actions": "Actions",
+        "noName": "No name",
+        "notAssigned": "Not assigned",
+        "proposalCount": "{count} proposals",
+        "reviewCount": "{count} reviews",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "permissions": {
+        "title": "Manage Permissions",
+        "subtitle": "Update permissions for {email}",
+        "noPermissions": "No permissions",
+        "submission": "Submission",
+        "submissionDesc": "Can submit and manage proposals",
+        "reviewing": "Reviewing",
+        "reviewingDesc": "Can review proposals",
+        "admin": "Admin",
+        "adminDesc": "Full administrative access",
+        "save": "Save",
+        "saving": "Saving...",
+        "cancel": "Cancel",
+        "success": "Permissions updated successfully",
+        "error": "Failed to update permissions"
+      },
+      "edit": {
+        "title": "Edit User Profile",
+        "subtitle": "Update user information for {email}",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "affiliation": "Affiliation",
+        "centreCode": "Centre Code",
+        "update": "Update",
+        "updating": "Updating...",
+        "cancel": "Cancel",
+        "success": "User updated successfully",
+        "error": "Failed to update user"
+      },
+      "toggleStatus": {
+        "deactivateTitle": "Deactivate User",
+        "activateTitle": "Activate User",
+        "deactivateDesc": "Are you sure you want to deactivate {name}? They will no longer be able to access the platform.",
+        "activateDesc": "Are you sure you want to activate {name}? They will regain access to the platform.",
+        "cancel": "Cancel",
+        "deactivate": "Deactivate",
+        "activate": "Activate",
+        "processing": "Processing...",
+        "deactivateSuccess": "User deactivated successfully",
+        "activateSuccess": "User activated successfully",
+        "error": "Failed to update user status"
+      },
+      "noUsers": "No users yet",
+      "noUsersDescription": "Users will appear here once they are created"
+    },
+    "mainAreas": {
+      "title": "Main Research Areas",
+      "subtitle": "Manage research areas for proposal classification",
+      "new": "New Main Area",
+      "count": "All Main Areas ({count})",
+      "noAreas": "No main areas yet",
+      "noAreasDescription": "Create your first main area to categorize proposals",
+      "proposalCount": "{count} proposals",
+      "create": {
+        "title": "Create Main Area",
+        "subtitle": "Add a new research area for proposal classification",
+        "label": "Label",
+        "labelPlaceholder": "e.g., Cardiac Imaging",
+        "description": "Description (Optional)",
+        "descriptionPlaceholder": "Brief description of this research area",
+        "create": "Create",
+        "creating": "Creating...",
+        "cancel": "Cancel",
+        "success": "Main area created successfully",
+        "error": "Failed to create main area"
+      },
+      "edit": {
+        "title": "Edit Main Area",
+        "subtitle": "Update the main area details",
+        "update": "Update",
+        "updating": "Updating...",
+        "cancel": "Cancel",
+        "success": "Main area updated successfully",
+        "error": "Failed to update main area"
+      },
+      "delete": {
+        "title": "Delete Main Area",
+        "confirmDesc": "Are you sure you want to delete {label}? This action cannot be undone.",
+        "cannotDeleteDesc": "Cannot delete {label} because it has {count} associated proposals. Please reassign or delete those proposals first.",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleting": "Deleting...",
+        "success": "Main area deleted successfully",
+        "error": "Failed to delete main area"
+      }
+    },
+    "windows": {
+      "title": "Submission Windows",
+      "subtitle": "Manage proposal submission periods and deadlines",
+      "new": "New Submission Window",
+      "count": "All Submission Windows ({count})",
+      "noWindows": "No submission windows yet",
+      "noWindowsDescription": "Create your first submission window to start accepting proposals",
+      "proposalCount": "{count} proposals",
+      "status": {
+        "PLANNED": "Planned",
+        "OPEN": "Open",
+        "CLOSED": "Closed",
+        "REVIEWING": "Under Review",
+        "COMPLETED": "Completed"
+      },
+      "table": {
+        "submission": "Submission:",
+        "reviewDeadline": "Review deadline:"
+      },
+      "create": {
+        "title": "Create Submission Window",
+        "subtitle": "Create a new submission period for proposals",
+        "name": "Window Name",
+        "namePlaceholder": "e.g., Q1 2025 Submission",
+        "submissionStart": "Submission Start Date",
+        "submissionEnd": "Submission End Date",
+        "submissionEndHelp": "Must be after start date",
+        "reviewDeadline": "Review Deadline",
+        "reviewDeadlineHelp": "Must be after submission end date",
+        "create": "Create",
+        "creating": "Creating...",
+        "cancel": "Cancel",
+        "success": "Submission window created successfully",
+        "error": "Failed to create submission window"
+      },
+      "edit": {
+        "title": "Edit Submission Window",
+        "subtitle": "Update the submission window details",
+        "update": "Update",
+        "updating": "Updating...",
+        "cancel": "Cancel",
+        "success": "Submission window updated successfully",
+        "error": "Failed to update submission window"
+      },
+      "delete": {
+        "title": "Delete Submission Window",
+        "confirmDesc": "Are you sure you want to delete {name}? This action cannot be undone.",
+        "cannotDeleteDesc": "Cannot delete {name} because it has {count} associated proposals. Please delete those proposals first.",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleting": "Deleting...",
+        "success": "Submission window deleted successfully",
+        "error": "Failed to delete submission window"
+      },
+      "statusUpdate": {
+        "success": "Window status updated successfully",
+        "error": "Failed to update window status"
+      }
+    },
+    "proposals": {
+      "title": "All Proposals",
+      "subtitle": "View and manage all proposals submitted across all windows",
+      "count": "All Proposals ({count})",
+      "noProposals": "No proposals yet",
+      "noProposalsDescription": "Proposals will appear here once they are created",
+      "table": {
+        "title": "Title",
+        "piCentre": "PI / Centre",
+        "mainArea": "Main Area",
+        "window": "Window",
+        "status": "Status",
+        "reviews": "Reviews",
+        "actions": "Actions",
+        "submitted": "Submitted:",
+        "reviewCount": "{count} review",
+        "reviewCountPlural": "{count} reviews"
+      }
+    }
   }
 }
