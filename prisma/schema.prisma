@@ -24,8 +24,21 @@ model User {
   updatedAt     DateTime  @updatedAt
   image         String?
 
+  // MMVD-specific fields
+  firstName     String?
+  lastName      String?
+  affiliation   String?
+  centreCode    String?
+  permissions   AppPermission[]  @default([])
+  isActive      Boolean   @default(true)
+  avatarUrl     String?
+
   sessions      Session[]
   accounts      Account[]
+
+  // MMVD relationships
+  proposalsAsPi  Proposal[] @relation("ProposalPi")
+  reviews        Review[]
 }
 
 model Session {
@@ -65,4 +78,154 @@ model Verification {
   expiresAt     DateTime
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+// MMVD Enums
+enum AppPermission {
+  SUBMISSION
+  REVIEWING
+  ADMIN
+}
+
+enum WindowStatus {
+  UPCOMING
+  OPEN
+  REVIEW
+  RESPONSE
+  CLOSED
+}
+
+enum ProposalStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  ACCEPTED
+  REJECTED
+  PRIORITIZED
+}
+
+enum ReviewStatus {
+  ASSIGNED
+  COMPLETED
+}
+
+enum ReviewDecision {
+  ACCEPT
+  REJECT
+  REVISE
+}
+
+enum OverlapAssessment {
+  NO
+  PARTIAL
+  MAJOR
+}
+
+// MMVD Models
+model SubmissionWindow {
+  id                    String        @id @default(cuid())
+  name                  String        @unique
+  submissionOpenAt      DateTime
+  submissionCloseAt     DateTime
+  reviewStartAt         DateTime
+  reviewDeadlineDefault DateTime
+  responseDeadline      DateTime
+  nextWindowOpensAt     DateTime?
+  status                WindowStatus  @default(UPCOMING)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  proposals             Proposal[]
+
+  @@index([status])
+}
+
+model MainArea {
+  id          String    @id @default(cuid())
+  label       String    @unique
+  description String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  proposals   Proposal[]
+}
+
+model Proposal {
+  id                  String          @id @default(cuid())
+  title               String
+  submissionWindowId  String
+  mainAreaId          String
+  piUserId            String
+  centreCode          String
+
+  // Content fields
+  background          String          @db.Text
+  objectives          String          @db.Text
+  methods             String          @db.Text
+  statisticalAnalysis String          @db.Text
+  expectedImpact      String?         @db.Text
+  references          String?         @db.Text
+
+  // Metadata
+  nPatients           Int?
+  statisticianName    String?
+  statsSentAt         DateTime?
+
+  status              ProposalStatus  @default(DRAFT)
+
+  // Timestamps
+  createdAt           DateTime        @default(now())
+  submittedAt         DateTime?
+  updatedAt           DateTime        @updatedAt
+
+  // Soft delete
+  isDeleted           Boolean         @default(false)
+
+  // Relations
+  submissionWindow    SubmissionWindow @relation(fields: [submissionWindowId], references: [id])
+  mainArea            MainArea         @relation(fields: [mainAreaId], references: [id])
+  piUser              User             @relation("ProposalPi", fields: [piUserId], references: [id])
+  reviews             Review[]
+
+  @@index([submissionWindowId])
+  @@index([piUserId])
+  @@index([status])
+  @@index([isDeleted])
+}
+
+model Review {
+  id              String            @id @default(cuid())
+  proposalId      String
+  reviewerId      String
+
+  // Assignment info
+  assignedAt      DateTime          @default(now())
+  deadline        DateTime
+  completedAt     DateTime?
+  status          ReviewStatus      @default(ASSIGNED)
+  isLate          Boolean           @default(false)
+
+  // Review content
+  decision        ReviewDecision?
+  overlap         OverlapAssessment?
+  overlapDetails  String?           @db.Text
+  commentsForPI   String?           @db.Text
+  commentsForAdmin String?          @db.Text
+
+  // Timestamps
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Soft delete
+  isDeleted       Boolean           @default(false)
+
+  // Relations
+  proposal        Proposal          @relation(fields: [proposalId], references: [id])
+  reviewer        User              @relation(fields: [reviewerId], references: [id])
+
+  @@unique([proposalId, reviewerId])
+  @@index([reviewerId])
+  @@index([status])
+  @@index([isDeleted])
 }

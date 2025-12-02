@@ -5,15 +5,29 @@ import { authClient } from '@/lib/auth-client';
 import { useRouter } from '@/app/i18n/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { getAvailableApps } from '@/lib/app-config';
+import { FileText, ClipboardCheck, Settings } from 'lucide-react';
+
+const iconMap = {
+	FileText,
+	ClipboardCheck,
+	Settings
+};
 
 export function Navbar() {
 	const t = useTranslations('navigation');
 	const router = useRouter();
 	const locale = useLocale();
+	const pathname = usePathname();
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
 
 	const { data: session, isPending } = authClient.useSession();
 	console.log({session});
+
+	const availableApps = session?.user?.permissions
+		? getAvailableApps(session.user.permissions)
+		: [];
 
 	const handleLogout = async () => {
 		setIsLoggingOut(true);
@@ -27,37 +41,43 @@ export function Navbar() {
 		}
 	};
 
-	const toggleLanguage = () => {
-		const newLocale = locale === 'en' ? 'fr' : 'en';
-		const currentPath = window.location.pathname.replace(`/${locale}`, '');
-		router.push(currentPath || '/', { locale: newLocale });
-	};
-
 	return (
 		<nav className='sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60'>
 			<div className='container mx-auto flex h-16 items-center justify-between px-4'>
-				<div className='flex items-center space-x-4'>
+				<div className='flex items-center space-x-8'>
 					<Link href='/' className='flex items-center space-x-2'>
 						<div className='h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center'>
-							<span className='text-white font-bold text-sm'>F</span>
+							<span className='text-white font-bold text-sm'>M</span>
 						</div>
 						<span className='font-bold text-xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>
-							{t('appName')}
+							MMVD
 						</span>
 					</Link>
+
+					{availableApps.length > 0 && (
+						<div className='hidden md:flex items-center space-x-1'>
+							{availableApps.map((app) => {
+								const Icon = iconMap[app.icon as keyof typeof iconMap];
+								const isActive = pathname.includes(app.path);
+								return (
+									<Link
+										key={app.id}
+										href={app.path}
+										className={`inline-flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+											isActive
+												? 'bg-blue-50 text-blue-700'
+												: 'text-gray-700 hover:bg-gray-100'
+										}`}>
+										<Icon className='h-4 w-4' />
+										<span>{app.name}</span>
+									</Link>
+								);
+							})}
+						</div>
+					)}
 				</div>
 
 				<div className='flex items-center space-x-4'>
-					{/* Language Switcher */}
-					<button
-						onClick={toggleLanguage}
-						className='inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 py-2'
-						title={
-							locale === 'en' ? 'Switch to French' : 'Passer en anglais'
-						}>
-						{locale === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
-					</button>
-
 					{isPending ? (
 						<div className='flex items-center space-x-2'>
 							<div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600'></div>

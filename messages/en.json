@@ -59,5 +59,88 @@
   "metadata": {
     "title": "FeedbackApp",
     "description": "User feedback application"
+  },
+  "landing": {
+    "hero": {
+      "title": "EACVI-MMVD Study",
+      "description": "A multicenter international registry for moderate and severe mitral regurgitation: advancing cardiac imaging research and patient outcomes",
+      "learnMore": "Learn More",
+      "investigatorLogin": "Login for investigators"
+    },
+    "principle": {
+      "title": "Study Principle",
+      "description": "The EACVI-MMVD study is a large-scale, multicenter registry designed to investigate moderate and severe mitral regurgitation through advanced multimodality imaging. Our goal is to improve diagnostic accuracy, treatment strategies, and patient outcomes through comprehensive data collection and collaborative research.",
+      "centres": "Participating Centres",
+      "patients": "Enrolled Patients",
+      "modalities": "Imaging Modalities"
+    },
+    "design": {
+      "title": "Study Design",
+      "overview": "Our study employs a robust methodological framework:",
+      "feature1": "Prospective and retrospective data collection from multiple international centres",
+      "feature2": "Comprehensive multimodality imaging assessment including echocardiography, cardiac MRI, and CT",
+      "feature3": "Long-term follow-up with standardized clinical endpoints",
+      "feature4": "Collaborative analysis with leading cardiovascular imaging experts"
+    },
+    "publications": {
+      "title": "Key Publications",
+      "pub1": {
+        "title": "Mitral Regurgitation Assessment Using Multimodality Imaging",
+        "journal": "European Heart Journal - Cardiovascular Imaging",
+        "year": "2023"
+      },
+      "pub2": {
+        "title": "Prognostic Value of Advanced Imaging in Moderate MR",
+        "journal": "JACC: Cardiovascular Imaging",
+        "year": "2022"
+      },
+      "pub3": {
+        "title": "International Registry Design and Methodology",
+        "journal": "Circulation: Cardiovascular Imaging",
+        "year": "2021"
+      }
+    },
+    "investigators": {
+      "title": "Principal Investigators",
+      "centre1": {
+        "name": "University Hospital Paris",
+        "city": "Paris, France",
+        "pi": "Dr. Marie Dubois"
+      },
+      "centre2": {
+        "name": "Charité Hospital",
+        "city": "Berlin, Germany",
+        "pi": "Prof. Hans Schmidt"
+      },
+      "centre3": {
+        "name": "Oxford Heart Centre",
+        "city": "Oxford, United Kingdom",
+        "pi": "Dr. James Thompson"
+      },
+      "centre4": {
+        "name": "Hospital San Raffaele",
+        "city": "Milan, Italy",
+        "pi": "Prof. Giuseppe Rossi"
+      },
+      "centre5": {
+        "name": "Hospital Clínic Barcelona",
+        "city": "Barcelona, Spain",
+        "pi": "Dr. Carmen García"
+      },
+      "centre6": {
+        "name": "Amsterdam UMC",
+        "city": "Amsterdam, Netherlands",
+        "pi": "Dr. Jan van der Berg"
+      }
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "For inquiries about collaboration, data access, or participation:",
+      "email": "contact@mmvd-study.org"
+    },
+    "footer": {
+      "legal": "© 2025 EACVI-MMVD Study. All rights reserved.",
+      "piLogin": "Principal Investigator Login"
+    }
   }
 }

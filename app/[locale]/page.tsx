@@ -1,16 +1,168 @@
 import { getTranslations } from 'next-intl/server';
+import { getTypedSession } from '@/lib/auth-helpers';
+import { redirect } from 'next/navigation';
+import { getDefaultApp } from '@/lib/app-config';
+import { Link } from '@/app/i18n/navigation';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Mail } from 'lucide-react';
 
-export default async function Home({
+export default async function LandingPage({
   params
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'home' });
-  
+  const t = await getTranslations({ locale, namespace: 'landing' });
+  const session = await getTypedSession();
+
+  if (session?.user?.permissions && session.user.permissions.length > 0) {
+    const defaultApp = getDefaultApp(session.user.permissions);
+    if (defaultApp) {
+      redirect(defaultApp);
+    }
+  }
+
   return (
-    <div>
-      <h1>{t('title')}</h1>
+    <div className='min-h-screen bg-gradient-to-b from-white to-blue-50'>
+      {/* Hero Section */}
+      <section className='container mx-auto px-4 py-20 text-center'>
+        <h1 className='text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>
+          {t('hero.title')}
+        </h1>
+        <p className='text-xl text-gray-600 mb-8 max-w-3xl mx-auto'>
+          {t('hero.description')}
+        </p>
+        <div className='flex justify-center gap-4'>
+          <Button size='lg' variant='outline' asChild>
+            <a href='#study-principle'>{t('hero.learnMore')}</a>
+          </Button>
+          <Button size='sm' variant='ghost' asChild>
+            <Link href='/login'>{t('hero.investigatorLogin')}</Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* Study Principle Section */}
+      <section id='study-principle' className='container mx-auto px-4 py-16'>
+        <Card>
+          <CardHeader>
+            <CardTitle className='text-3xl'>{t('principle.title')}</CardTitle>
+          </CardHeader>
+          <CardContent className='space-y-4'>
+            <p className='text-gray-700'>{t('principle.description')}</p>
+            <div className='grid md:grid-cols-3 gap-6 mt-6'>
+              <div className='text-center'>
+                <div className='text-4xl font-bold text-blue-600'>150+</div>
+                <div className='text-sm text-gray-600'>{t('principle.centres')}</div>
+              </div>
+              <div className='text-center'>
+                <div className='text-4xl font-bold text-blue-600'>5000+</div>
+                <div className='text-sm text-gray-600'>{t('principle.patients')}</div>
+              </div>
+              <div className='text-center'>
+                <div className='text-4xl font-bold text-blue-600'>3</div>
+                <div className='text-sm text-gray-600'>{t('principle.modalities')}</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Study Design Section */}
+      <section className='container mx-auto px-4 py-16'>
+        <Card>
+          <CardHeader>
+            <CardTitle className='text-3xl'>{t('design.title')}</CardTitle>
+          </CardHeader>
+          <CardContent className='space-y-4'>
+            <p className='text-gray-700'>{t('design.overview')}</p>
+            <ul className='list-disc list-inside space-y-2 text-gray-700'>
+              <li>{t('design.feature1')}</li>
+              <li>{t('design.feature2')}</li>
+              <li>{t('design.feature3')}</li>
+              <li>{t('design.feature4')}</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Publications Section */}
+      <section className='container mx-auto px-4 py-16'>
+        <Card>
+          <CardHeader>
+            <CardTitle className='text-3xl'>{t('publications.title')}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className='space-y-4'>
+              {[1, 2, 3].map((num) => (
+                <div key={num} className='border-l-4 border-blue-600 pl-4 py-2'>
+                  <h4 className='font-semibold text-gray-900'>
+                    {t(`publications.pub${num}.title`)}
+                  </h4>
+                  <p className='text-sm text-gray-600'>
+                    {t(`publications.pub${num}.journal`)} • {t(`publications.pub${num}.year`)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Investigators Section */}
+      <section className='container mx-auto px-4 py-16'>
+        <Card>
+          <CardHeader>
+            <CardTitle className='text-3xl'>{t('investigators.title')}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
+              {[1, 2, 3, 4, 5, 6].map((num) => (
+                <div key={num} className='border rounded-lg p-4'>
+                  <h4 className='font-semibold text-gray-900'>
+                    {t(`investigators.centre${num}.name`)}
+                  </h4>
+                  <p className='text-sm text-gray-600'>
+                    {t(`investigators.centre${num}.city`)}
+                  </p>
+                  <p className='text-sm text-blue-600'>
+                    {t(`investigators.centre${num}.pi`)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Contact Section */}
+      <section className='container mx-auto px-4 py-16 mb-16'>
+        <Card className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white'>
+          <CardHeader>
+            <CardTitle className='text-3xl text-white'>{t('contact.title')}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className='mb-4'>{t('contact.description')}</p>
+            <Button variant='secondary' asChild>
+              <a href={`mailto:${t('contact.email')}`} className='inline-flex items-center gap-2'>
+                <Mail className='h-4 w-4' />
+                {t('contact.email')}
+              </a>
+            </Button>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Footer */}
+      <footer className='border-t bg-white py-8'>
+        <div className='container mx-auto px-4 text-center'>
+          <p className='text-sm text-gray-600'>{t('footer.legal')}</p>
+          <Link href='/login' className='text-sm text-blue-600 hover:underline mt-2 inline-block'>
+            {t('footer.piLogin')}
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 }
