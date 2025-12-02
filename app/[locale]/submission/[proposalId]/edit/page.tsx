@@ -68,7 +68,11 @@ export default async function EditProposalPage({
     analysisDescription: proposal.analysisDescription || '',
     adjustmentCovariates: proposal.adjustmentCovariates || '',
     subgroupAnalyses: proposal.subgroupAnalyses || '',
-    targetJournals: proposal.targetJournals
+    targetJournals: [
+      proposal.targetJournals[0] || '',
+      proposal.targetJournals[1] || '',
+      proposal.targetJournals[2] || ''
+    ]
   };
 
   return (

@@ -134,12 +134,22 @@ export const proposalFormSchema = z.object({
 
   // Target journals
   targetJournals: z.array(z.string())
-    .max(3, 'Maximum 3 target journals allowed')
     .refine(
-      (arr) => arr.length > 0 && arr[0] && arr[0].trim().length > 0,
-      { message: 'At least one target journal is required' }
+      (arr) => {
+        // Only check that first journal (index 0) is filled
+        return arr.length > 0 && arr[0] && arr[0].trim().length > 0;
+      },
+      { message: 'Journal 1 is required' }
     )
-    .default([])
+    .transform((arr) => {
+      // Filter out empty strings from journals 2 and 3, but keep journal 1
+      if (arr.length === 0) return [];
+      const result = [arr[0]]; // Always keep journal 1
+      if (arr[1] && arr[1].trim()) result.push(arr[1]); // Add journal 2 if not empty
+      if (arr[2] && arr[2].trim()) result.push(arr[2]); // Add journal 3 if not empty
+      return result;
+    })
+    .default(['', '', ''])
 });
 
 export type ProposalFormData = z.infer<typeof proposalFormSchema>;

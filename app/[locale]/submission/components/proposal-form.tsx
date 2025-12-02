@@ -90,7 +90,7 @@ export function ProposalForm({
       analysisDescription: '',
       adjustmentCovariates: '',
       subgroupAnalyses: '',
-      targetJournals: []
+      targetJournals: ['', '', '']
     }
   });
 
@@ -800,7 +800,7 @@ export function ProposalForm({
                   <FormItem>
                     <FormLabel>Journal {index + 1} {index === 0 ? '*' : '(Optional)'}</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder='Journal name' />
+                      <Input {...field} value={field.value || ''} placeholder='Journal name' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

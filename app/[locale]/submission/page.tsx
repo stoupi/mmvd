@@ -45,6 +45,14 @@ export default async function SubmissionPage({
     ? Math.ceil((new Date(currentWindow.submissionCloseAt).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
     : 0;
 
+  // Separate proposals by window
+  const currentWindowProposals = currentWindow
+    ? proposals.filter((p) => p.submissionWindowId === currentWindow.id)
+    : [];
+  const previousWindowProposals = currentWindow
+    ? proposals.filter((p) => p.submissionWindowId !== currentWindow.id)
+    : proposals;
+
   return (
     <div className='container mx-auto py-8 max-w-6xl'>
       <div className='mb-6'>
@@ -78,22 +86,10 @@ export default async function SubmissionPage({
       {canCreateNew && (
         <div className='mb-6 flex justify-center'>
           <Link href='/submission/new'>
-            <Button size='lg' className='transition-all hover:scale-105 cursor-pointer'>
+            <Button size='lg' className='transition-all hover:scale-105'>
               <Plus className='h-5 w-5 mr-2' />
               New proposal
             </Button>
-          </Link>
-        </div>
-      )}
-
-      {draftInCurrentWindow && (
-        <div className='bg-blue-50 border-l-4 border-blue-600 p-6 mb-6'>
-          <h3 className='font-semibold text-blue-900 mb-2'>
-            {t('draftInProgress')}
-          </h3>
-          <p className='text-blue-700 mb-4'>{t('draftMessage')}</p>
-          <Link href={`/submission/${draftInCurrentWindow.id}/edit`}>
-            <Button variant='outline'>{t('continueDraft')}</Button>
           </Link>
         </div>
       )}
@@ -107,10 +103,25 @@ export default async function SubmissionPage({
         </div>
       )}
 
-      <div className='mt-8'>
-        <h2 className='text-2xl font-semibold mb-4'>{t('yourProposals')}</h2>
-        <ProposalList proposals={proposals} />
-      </div>
+      {currentWindow && currentWindowProposals.length > 0 && (
+        <div className='mt-8'>
+          <h2 className='text-2xl font-semibold mb-4'>Current Window Proposals</h2>
+          <ProposalList proposals={currentWindowProposals} />
+        </div>
+      )}
+
+      {previousWindowProposals.length > 0 && (
+        <div className='mt-8'>
+          <h2 className='text-2xl font-semibold mb-4'>Previous Submissions</h2>
+          <ProposalList proposals={previousWindowProposals} />
+        </div>
+      )}
+
+      {proposals.length === 0 && (
+        <div className='mt-8 text-center text-muted-foreground'>
+          <p>No proposals yet</p>
+        </div>
+      )}
     </div>
   );
 }

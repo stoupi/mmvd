@@ -148,6 +148,11 @@
     "noActiveWindow": "There is no active submission window at the moment",
     "newProposal": "New Proposal",
     "yourProposals": "Your Proposals",
+    "draftInProgress": "Draft in Progress",
+    "draftMessage": "You have a draft proposal for the current submission window. Continue editing to complete your submission.",
+    "continueDraft": "Continue Draft",
+    "alreadySubmitted": "Proposal Already Submitted",
+    "alreadySubmittedMessage": "You have already submitted a proposal for the current submission window. You cannot submit another proposal until the next window opens.",
     "dashboard": {
       "title": "My Proposals",
       "subtitle": "Manage your ancillary study proposals",
