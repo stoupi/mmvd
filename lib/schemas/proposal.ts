@@ -22,7 +22,7 @@ export const proposalFormSchema = z.object({
 
   mainAreaId: z.string().min(1, 'Main topic is required'),
 
-  secondaryTopics: z.array(z.string()).max(2, 'Maximum 2 secondary topics allowed').default([]),
+  secondaryTopics: z.array(z.string()).min(1, 'Secondary topic is required').max(2, 'Maximum 2 secondary topics allowed'),
 
   // Scientific background
   scientificBackground: z.string()
@@ -32,7 +32,7 @@ export const proposalFormSchema = z.object({
       { message: 'Scientific background must not exceed 200 words' }
     ),
 
-  literaturePosition: z.string().min(1, 'Literature position is required'),
+  literaturePosition: z.string().optional(),
 
   competingWork: z.array(competingWorkSchema)
     .max(10, 'Maximum 10 references allowed')

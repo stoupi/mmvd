@@ -76,11 +76,11 @@ export default async function SubmissionPage({
       </div>
 
       {canCreateNew && (
-        <div className='mb-6'>
+        <div className='mb-6 flex justify-center'>
           <Link href='/submission/new'>
-            <Button size='lg'>
+            <Button size='lg' className='transition-all hover:scale-105 cursor-pointer'>
               <Plus className='h-5 w-5 mr-2' />
-              {t('newProposal')}
+              New proposal
             </Button>
           </Link>
         </div>
