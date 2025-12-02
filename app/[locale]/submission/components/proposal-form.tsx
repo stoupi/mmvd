@@ -133,13 +133,13 @@ export function ProposalForm({
             const wordCount = countWords(field.value || '');
             return (
               <FormItem>
-                <FormLabel>Title *</FormLabel>
+                <div className='flex justify-between items-center'>
+                  <FormLabel className='text-lg font-bold'>Title of This Ancillary Study *</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 25 words</span>
+                </div>
                 <FormControl>
                   <Input {...field} placeholder='Enter proposal title' />
                 </FormControl>
-                <FormDescription>
-                  {wordCount} / 25 words
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             );
@@ -159,7 +159,7 @@ export function ProposalForm({
                       <SelectValue placeholder='Select main topic' />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent align='start'>
                     {mainAreas.map((area) => (
                       <SelectItem key={area.id} value={area.id}>
                         {area.label} ({proposalCounts[area.id] || 0})
@@ -191,10 +191,10 @@ export function ProposalForm({
                         <SelectValue placeholder='Select secondary topic' />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    <SelectContent align='start'>
                       {availableAreas.map((area) => (
                         <SelectItem key={area.id} value={area.id}>
-                          {area.label} ({proposalCounts[area.id] || 0})
+                          {area.label}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -213,17 +213,17 @@ export function ProposalForm({
             const wordCount = countWords(field.value || '');
             return (
               <FormItem>
-                <FormLabel>Scientific Background and Rationale *</FormLabel>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Scientific Background and Rationale *</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 200 words</span>
+                </div>
                 <FormControl>
                   <Textarea
                     {...field}
-                    placeholder='Position of the question within the existing literature and description of the unmet need addressed by the study'
+                    placeholder='Position the question within the existing literature and describe the unmet need addressed by the study'
                     rows={6}
                   />
                 </FormControl>
-                <FormDescription>
-                  {wordCount} / 200 words
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             );
@@ -237,17 +237,17 @@ export function ProposalForm({
             const wordCount = countWords(field.value || '');
             return (
               <FormItem>
-                <FormLabel>Primary Objective *</FormLabel>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Primary Objective of This Ancillary Study *</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 50 words</span>
+                </div>
                 <FormControl>
                   <Textarea
                     {...field}
-                    placeholder='State the primary objective (max 50 words)'
+                    placeholder='State the primary objective'
                     rows={3}
                   />
                 </FormControl>
-                <FormDescription>
-                  {wordCount} / 50 words
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             );
@@ -257,25 +257,31 @@ export function ProposalForm({
         <FormField
           control={form.control}
           name='secondaryObjectives'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Secondary Objectives (Optional)</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  value={Array.isArray(field.value) ? field.value.join('\n') : ''}
-                  onChange={(e) => {
-                    const lines = e.target.value.split('\n').filter(line => line.trim());
-                    field.onChange(lines);
-                  }}
-                  placeholder='Enter secondary objectives (one per line, maximum 3, 50 words per objective)'
-                  rows={4}
-                />
-              </FormControl>
-              <FormDescription>Maximum 3 objectives, 50 words per objective</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const allText = Array.isArray(field.value) ? field.value.join(' ') : '';
+            const wordCount = countWords(allText);
+            return (
+              <FormItem>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Secondary Objectives (Optional)</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 150 words</span>
+                </div>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    value={Array.isArray(field.value) ? field.value.join('\n') : ''}
+                    onChange={(e) => {
+                      const lines = e.target.value.split('\n').filter(line => line.trim());
+                      field.onChange(lines);
+                    }}
+                    placeholder='Enter secondary objectives (maximum 3)'
+                    rows={4}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
@@ -285,17 +291,17 @@ export function ProposalForm({
             const wordCount = countWords(field.value || '');
             return (
               <FormItem>
-                <FormLabel>Main Exposure Variable of Interest *</FormLabel>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Main Exposure Variable of Interest *</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 50 words</span>
+                </div>
                 <FormControl>
                   <Textarea
                     {...field}
-                    placeholder='Describe the main exposure variable of interest (max 50 words)'
+                    placeholder='Describe the main exposure variable of interest'
                     rows={3}
                   />
                 </FormControl>
-                <FormDescription>
-                  {wordCount} / 50 words
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             );
@@ -309,17 +315,17 @@ export function ProposalForm({
             const wordCount = countWords(field.value || '');
             return (
               <FormItem>
-                <FormLabel>Primary Endpoint *</FormLabel>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Primary Endpoint *</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 50 words</span>
+                </div>
                 <FormControl>
                   <Textarea
                     {...field}
-                    placeholder='Describe the primary endpoint (max 50 words)'
+                    placeholder='Describe the primary endpoint'
                     rows={3}
                   />
                 </FormControl>
-                <FormDescription>
-                  {wordCount} / 50 words
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             );
@@ -329,25 +335,31 @@ export function ProposalForm({
         <FormField
           control={form.control}
           name='secondaryEndpoints'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Secondary Endpoints (Optional)</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  value={Array.isArray(field.value) ? field.value.join('\n') : ''}
-                  onChange={(e) => {
-                    const lines = e.target.value.split('\n').filter(line => line.trim());
-                    field.onChange(lines);
-                  }}
-                  placeholder='Enter secondary endpoints (one per line, maximum 3, 50 words per endpoint)'
-                  rows={4}
-                />
-              </FormControl>
-              <FormDescription>Maximum 3 endpoints, 50 words per endpoint</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const allText = Array.isArray(field.value) ? field.value.join(' ') : '';
+            const wordCount = countWords(allText);
+            return (
+              <FormItem>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Secondary Endpoints (Optional)</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 150 words</span>
+                </div>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    value={Array.isArray(field.value) ? field.value.join('\n') : ''}
+                    onChange={(e) => {
+                      const lines = e.target.value.split('\n').filter(line => line.trim());
+                      field.onChange(lines);
+                    }}
+                    placeholder='Enter secondary endpoints (maximum 3)'
+                    rows={4}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
@@ -357,65 +369,31 @@ export function ProposalForm({
             const wordCount = countWords(field.value || '');
             return (
               <FormItem>
-                <FormLabel>Study Population with Selection Criteria *</FormLabel>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Study Population of This Ancillary Study *</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 100 words</span>
+                </div>
                 <FormControl>
                   <Textarea
                     {...field}
-                    placeholder='Describe the study population and selection criteria (max 100 words)'
+                    placeholder='Describe the targeted sub-cohort, specify inclusion/exclusion criteria'
                     rows={4}
                   />
                 </FormControl>
-                <FormDescription>
-                  {wordCount} / 100 words
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             );
           }}
         />
 
-        <FormField
-          control={form.control}
-          name='inclusionCriteria'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Targeted Sub-Cohort - Specific Inclusion Criteria</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder='List specific inclusion criteria (be as precise as possible)'
-                  rows={3}
-                />
-              </FormControl>
-              <FormDescription>Be as precise as possible, ideally with inclusion checkboxes</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        <FormField
-          control={form.control}
-          name='exclusionCriteria'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Targeted Sub-Cohort - Specific Exclusion Criteria</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder='List specific exclusion criteria (be as precise as possible)'
-                  rows={3}
-                />
-              </FormControl>
-              <FormDescription>Be as precise as possible, ideally with exclusion checkboxes</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className='space-y-4'>
+        <div className='space-y-2'>
+          <label className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
+            Data Requirements for This Ancillary Study *
+          </label>
           <p className='text-sm text-muted-foreground'>Select all data types required for this study</p>
 
-          <div className='grid md:grid-cols-2 gap-4'>
+          <div className='grid md:grid-cols-1 gap-4'>
             <FormField
               control={form.control}
               name='dataBaseline'
@@ -424,7 +402,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Baseline data</FormLabel>
+                  <FormLabel className='font-normal'>Baseline clinical data</FormLabel>
                 </FormItem>
               )}
             />
@@ -437,7 +415,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Biological samples</FormLabel>
+                  <FormLabel className='font-normal'>Biological data</FormLabel>
                 </FormItem>
               )}
             />
@@ -450,7 +428,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Transthoracic Echo (TTE)</FormLabel>
+                  <FormLabel className='font-normal'>TTE imaging data</FormLabel>
                 </FormItem>
               )}
             />
@@ -463,7 +441,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Transesophageal Echo (TOE)</FormLabel>
+                  <FormLabel className='font-normal'>TOE imaging data</FormLabel>
                 </FormItem>
               )}
             />
@@ -476,7 +454,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Stress Echo</FormLabel>
+                  <FormLabel className='font-normal'>Stress echocardiography imaging data</FormLabel>
                 </FormItem>
               )}
             />
@@ -489,7 +467,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Cardiac MRI (CMR)</FormLabel>
+                  <FormLabel className='font-normal'>CMR imaging data</FormLabel>
                 </FormItem>
               )}
             />
@@ -502,7 +480,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Cardiac CT</FormLabel>
+                  <FormLabel className='font-normal'>CT imaging data</FormLabel>
                 </FormItem>
               )}
             />
@@ -515,7 +493,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Right Heart Catheterization (RHC)</FormLabel>
+                  <FormLabel className='font-normal'>Right heart catheterization data</FormLabel>
                 </FormItem>
               )}
             />
@@ -528,7 +506,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Hospital Follow-up</FormLabel>
+                  <FormLabel className='font-normal'>In-hospital follow-up data (all-cause death and CV death)</FormLabel>
                 </FormItem>
               )}
             />
@@ -541,7 +519,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Clinical Follow-up</FormLabel>
+                  <FormLabel className='font-normal'>Clinical follow-up data at 1 year</FormLabel>
                 </FormItem>
               )}
             />
@@ -554,7 +532,7 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>TTE Follow-up</FormLabel>
+                  <FormLabel className='font-normal'>TTE follow-up data at 1 year (only if your institution is part of this option)</FormLabel>
                 </FormItem>
               )}
             />
@@ -567,16 +545,19 @@ export function ProposalForm({
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
-                  <FormLabel className='font-normal'>Core Lab data</FormLabel>
+                  <FormLabel className='font-normal'>Core Lab–derived data (only if your institution is part of this option)</FormLabel>
                 </FormItem>
               )}
             />
           </div>
         </div>
 
-        <div className='space-y-4'>
-          <FormLabel>Analysis Types</FormLabel>
-          <div className='grid md:grid-cols-2 gap-4'>
+        <div className='space-y-6'>
+          <label className='text-lg font-bold mb-6 block'>Statistical Analysis Plan *</label>
+
+          <div className='space-y-4'>
+            <FormLabel>Statistical Analysis Types</FormLabel>
+            <div className='grid md:grid-cols-2 gap-4'>
               <FormField
                 control={form.control}
                 name='analysisTypes'
@@ -674,78 +655,98 @@ export function ProposalForm({
           <FormField
             control={form.control}
             name='analysisDescription'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Analysis Description (Optional)</FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    placeholder='Describe the statistical analysis plan (max 50 words)'
-                    rows={3}
-                  />
-                </FormControl>
-                <FormDescription>Maximum 50 words</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='adjustmentCovariates'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Adjustment Covariates (Optional)</FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    placeholder='List adjustment covariates (max 50 words)'
-                    rows={2}
-                  />
-                </FormControl>
-                <FormDescription>Maximum 50 words</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='subgroupAnalyses'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Subgroup Analyses (Optional)</FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    placeholder='Describe subgroup analyses (max 50 words)'
-                    rows={2}
-                  />
-                </FormControl>
-                <FormDescription>Maximum 50 words</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-        <p className='text-sm text-muted-foreground'>Maximum 3 target journals</p>
-
-        {[0, 1, 2].map((index) => (
-            <FormField
-              key={index}
-              control={form.control}
-              name={`targetJournals.${index}` as any}
-              render={({ field }) => (
+            render={({ field }) => {
+              const wordCount = countWords(field.value || '');
+              return (
                 <FormItem>
-                  <FormLabel>Journal {index + 1} {index === 0 ? '' : '(Optional)'}</FormLabel>
+                  <div className='flex justify-between items-center'>
+                    <FormLabel>Detailed Statistical Analysis Plan</FormLabel>
+                    <span className='text-sm text-muted-foreground'>{wordCount} / 100 words</span>
+                  </div>
                   <FormControl>
-                    <Input {...field} placeholder='Journal name' />
+                    <Textarea
+                      {...field}
+                      placeholder='Describe the analyses planned for this study'
+                      rows={4}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )}
-            />
-        ))}
+              );
+            }}
+          />
+
+        <FormField
+          control={form.control}
+          name='adjustmentCovariates'
+          render={({ field }) => {
+            const wordCount = countWords(field.value || '');
+            return (
+              <FormItem>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Adjustment Covariates (Optional)</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 50 words</span>
+                </div>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder='If multivariable analysis with adjustment is planned, list clinically relevant covariates'
+                    rows={2}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+
+        <FormField
+          control={form.control}
+          name='subgroupAnalyses'
+          render={({ field }) => {
+            const wordCount = countWords(field.value || '');
+            return (
+              <FormItem>
+                <div className='flex justify-between items-center'>
+                  <FormLabel>Subgroup Analyses (Optional)</FormLabel>
+                  <span className='text-sm text-muted-foreground'>{wordCount} / 50 words</span>
+                </div>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder='Describe subgroup analyses'
+                    rows={2}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        </div>
+
+        <div className='space-y-6'>
+          <label className='text-lg font-bold mb-6 block'>Potential Target Journals *</label>
+
+          <div className='grid grid-cols-3 gap-4'>
+            {[0, 1, 2].map((index) => (
+              <FormField
+                key={index}
+                control={form.control}
+                name={`targetJournals.${index}` as any}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Journal {index + 1} {index === 0 ? '' : '(Optional)'}</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Journal name' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
+          </div>
+        </div>
 
         <div className='flex gap-4 pt-4'>
           <Button

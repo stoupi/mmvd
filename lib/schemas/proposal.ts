@@ -106,11 +106,11 @@ export const proposalFormSchema = z.object({
   analysisTypes: z.array(z.enum(['logistic', 'cox', 'propensity', 'ml'])).default([]),
 
   analysisDescription: z.string()
+    .min(1, 'Analysis description is required')
     .refine(
-      (val) => !val || countWords(val) <= 50,
-      { message: 'Analysis description must not exceed 50 words' }
-    )
-    .optional(),
+      (val) => countWords(val) <= 100,
+      { message: 'Analysis description must not exceed 100 words' }
+    ),
 
   adjustmentCovariates: z.string()
     .refine(

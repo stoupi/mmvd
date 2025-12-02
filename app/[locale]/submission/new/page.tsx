@@ -51,7 +51,7 @@ export default async function NewProposalPage() {
   return (
     <div className='container mx-auto py-8 max-w-4xl'>
       <div className='mb-6'>
-        <h1 className='text-3xl font-bold mb-2'>New Proposal</h1>
+        <h1 className='text-3xl font-bold mb-2'>New Proposal of Ancillary Study</h1>
         <p className='text-muted-foreground'>
           Submit a new proposal for {currentWindow.name}
         </p>
