@@ -77,16 +77,51 @@ interface CreateProposalInput {
   title: string;
   submissionWindowId: string;
   mainAreaId: string;
+  secondaryTopics?: string[];
   piUserId: string;
   centreCode: string;
-  background: string;
-  objectives: string;
-  methods: string;
-  statisticalAnalysis: string;
-  expectedImpact?: string;
-  references?: string;
-  nPatients?: number;
-  statisticianName?: string;
+
+  // Scientific background
+  scientificBackground: string;
+  literaturePosition: string;
+  competingWork?: any;
+
+  // Objectives
+  primaryObjective: string;
+  secondaryObjectives?: string[];
+
+  // Study design
+  mainExposure: string;
+  primaryEndpoint: string;
+  secondaryEndpoints?: string[];
+
+  // Population
+  studyPopulation: string;
+  inclusionCriteria?: string;
+  exclusionCriteria?: string;
+
+  // Data requirements
+  dataBaseline?: boolean;
+  dataBiological?: boolean;
+  dataTTE?: boolean;
+  dataTOE?: boolean;
+  dataStressEcho?: boolean;
+  dataCMR?: boolean;
+  dataCT?: boolean;
+  dataRHC?: boolean;
+  dataHospitalFollowup?: boolean;
+  dataClinicalFollowup?: boolean;
+  dataTTEFollowup?: boolean;
+  dataCoreLab?: boolean;
+
+  // Statistical analysis
+  analysisTypes?: string[];
+  analysisDescription?: string;
+  adjustmentCovariates?: string;
+  subgroupAnalyses?: string;
+
+  // Target journals
+  targetJournals?: string[];
 }
 
 export async function createProposal(data: CreateProposalInput) {
@@ -114,14 +149,49 @@ export async function createProposal(data: CreateProposalInput) {
 interface UpdateProposalInput {
   title?: string;
   mainAreaId?: string;
-  background?: string;
-  objectives?: string;
-  methods?: string;
-  statisticalAnalysis?: string;
-  expectedImpact?: string;
-  references?: string;
-  nPatients?: number;
-  statisticianName?: string;
+  secondaryTopics?: string[];
+
+  // Scientific background
+  scientificBackground?: string;
+  literaturePosition?: string;
+  competingWork?: any;
+
+  // Objectives
+  primaryObjective?: string;
+  secondaryObjectives?: string[];
+
+  // Study design
+  mainExposure?: string;
+  primaryEndpoint?: string;
+  secondaryEndpoints?: string[];
+
+  // Population
+  studyPopulation?: string;
+  inclusionCriteria?: string;
+  exclusionCriteria?: string;
+
+  // Data requirements
+  dataBaseline?: boolean;
+  dataBiological?: boolean;
+  dataTTE?: boolean;
+  dataTOE?: boolean;
+  dataStressEcho?: boolean;
+  dataCMR?: boolean;
+  dataCT?: boolean;
+  dataRHC?: boolean;
+  dataHospitalFollowup?: boolean;
+  dataClinicalFollowup?: boolean;
+  dataTTEFollowup?: boolean;
+  dataCoreLab?: boolean;
+
+  // Statistical analysis
+  analysisTypes?: string[];
+  analysisDescription?: string;
+  adjustmentCovariates?: string;
+  subgroupAnalyses?: string;
+
+  // Target journals
+  targetJournals?: string[];
 }
 
 export async function updateProposal(id: string, data: UpdateProposalInput) {

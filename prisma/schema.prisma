@@ -153,40 +153,72 @@ model MainArea {
 
 model Proposal {
   id                  String          @id @default(cuid())
-  title               String
+
+  // Basic info
+  title               String          // max 25 words
   submissionWindowId  String
   mainAreaId          String
+  secondaryTopics     String[]        @default([]) // max 2
   piUserId            String
   centreCode          String
 
-  // Content fields
-  background          String          @db.Text
-  objectives          String          @db.Text
-  methods             String          @db.Text
-  statisticalAnalysis String          @db.Text
-  expectedImpact      String?         @db.Text
-  references          String?         @db.Text
+  // Scientific background
+  scientificBackground String         @db.Text // max 200 words
+  literaturePosition   String         @db.Text // unmet need description
+  competingWork        Json           // array of {doi, pmid, journal, nPatients}
 
-  // Metadata
-  nPatients           Int?
-  statisticianName    String?
-  statsSentAt         DateTime?
+  // Objectives
+  primaryObjective     String         @db.Text // max 50 words
+  secondaryObjectives  String[]       @default([]) // max 3, 50 words each
 
-  status              ProposalStatus  @default(DRAFT)
+  // Study design
+  mainExposure         String         @db.Text // max 50 words
+  primaryEndpoint      String         @db.Text // max 50 words
+  secondaryEndpoints   String[]       @default([]) // max 3, 50 words each
+
+  // Population
+  studyPopulation      String         @db.Text // max 100 words
+  inclusionCriteria    String?        @db.Text
+  exclusionCriteria    String?        @db.Text
+
+  // Data requirements (checkboxes)
+  dataBaseline         Boolean        @default(false)
+  dataBiological       Boolean        @default(false)
+  dataTTE              Boolean        @default(false)
+  dataTOE              Boolean        @default(false)
+  dataStressEcho       Boolean        @default(false)
+  dataCMR              Boolean        @default(false)
+  dataCT               Boolean        @default(false)
+  dataRHC              Boolean        @default(false)
+  dataHospitalFollowup Boolean        @default(false)
+  dataClinicalFollowup Boolean        @default(false)
+  dataTTEFollowup      Boolean        @default(false)
+  dataCoreLab          Boolean        @default(false)
+
+  // Statistical analysis
+  analysisTypes        String[]       @default([]) // checkboxes: logistic, cox, propensity, ml
+  analysisDescription  String?        @db.Text // max 50 words
+  adjustmentCovariates String?        @db.Text // max 50 words
+  subgroupAnalyses     String?        @db.Text // max 50 words
+
+  // Target journals
+  targetJournals       String[]       @default([]) // max 3
+
+  status               ProposalStatus @default(DRAFT)
 
   // Timestamps
-  createdAt           DateTime        @default(now())
-  submittedAt         DateTime?
-  updatedAt           DateTime        @updatedAt
+  createdAt            DateTime       @default(now())
+  submittedAt          DateTime?
+  updatedAt            DateTime       @updatedAt
 
   // Soft delete
-  isDeleted           Boolean         @default(false)
+  isDeleted            Boolean        @default(false)
 
   // Relations
-  submissionWindow    SubmissionWindow @relation(fields: [submissionWindowId], references: [id])
-  mainArea            MainArea         @relation(fields: [mainAreaId], references: [id])
-  piUser              User             @relation("ProposalPi", fields: [piUserId], references: [id])
-  reviews             Review[]
+  submissionWindow     SubmissionWindow @relation(fields: [submissionWindowId], references: [id])
+  mainArea             MainArea         @relation(fields: [mainAreaId], references: [id])
+  piUser               User             @relation("ProposalPi", fields: [piUserId], references: [id])
+  reviews              Review[]
 
   @@index([submissionWindowId])
   @@index([piUserId])
