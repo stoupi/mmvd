@@ -12,16 +12,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AlertCircle, LogIn, Eye, EyeOff } from 'lucide-react';
 import { loginAction } from '../actions';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { GoogleButton } from '../../components/auth/google-button';
 import { authClient } from '@/lib/auth-client';
 
-interface LoginFormProps {
-	showSignupLink?: boolean;
-}
-
-export function LoginForm({ showSignupLink = true }: LoginFormProps) {
+export function LoginForm() {
 	const t = useTranslations('auth');
 	const locale = useLocale();
 	const router = useRouter();
@@ -182,19 +177,6 @@ export function LoginForm({ showSignupLink = true }: LoginFormProps) {
 						<p>{t('userCredentials')}: demo@company.com / password</p>
 						<p>{t('adminCredentials')}: admin@company.com / admin123</p>
 					</div>
-
-					{showSignupLink && (
-						<div className='text-center'>
-							<p className='text-sm text-muted-foreground'>
-								{t('noAccount')}{' '}
-								<Link
-									href={`/${locale}/signup`}
-									className='font-medium text-primary hover:underline'>
-									{t('signUp')}
-								</Link>
-							</p>
-						</div>
-					)}
 				</CardContent>
 			</Card>
 		</div>

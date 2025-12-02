@@ -120,19 +120,11 @@ export function Navbar() {
 							</button>
 						</div>
 					) : (
-						<div className='flex items-center space-x-3'>
-							<Link
-								href='/login'
-								className='inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
-								{t('login')}
-							</Link>
-
-							<Link
-								href={`/signup`}
-								className='inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 h-9 px-4 py-2 shadow-md'>
-								{t('signup')}
-							</Link>
-						</div>
+						<Link
+							href='/login'
+							className='inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 h-9 px-4 py-2 shadow-md'>
+							{t('login')}
+						</Link>
 					)}
 				</div>
 			</div>
