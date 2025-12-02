@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { getTypedSession } from '@/lib/auth-helpers';
-import { redirect } from 'next/navigation';
+import { redirect } from '@/app/i18n/navigation';
 import { getDefaultApp } from '@/lib/app-config';
 import { Link } from '@/app/i18n/navigation';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,7 @@ export default async function LandingPage({
   if (session?.user?.permissions && session.user.permissions.length > 0) {
     const defaultApp = getDefaultApp(session.user.permissions);
     if (defaultApp) {
-      redirect(defaultApp);
+      redirect({ href: defaultApp, locale });
     }
   }
 

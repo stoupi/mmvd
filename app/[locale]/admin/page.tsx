@@ -14,19 +14,19 @@ import {
 } from 'lucide-react';
 
 const statusColors = {
-  PLANNED: 'bg-gray-500',
+  UPCOMING: 'bg-gray-500',
   OPEN: 'bg-green-500',
-  CLOSED: 'bg-orange-500',
-  REVIEWING: 'bg-blue-500',
-  COMPLETED: 'bg-purple-500'
+  REVIEW: 'bg-blue-500',
+  RESPONSE: 'bg-yellow-500',
+  CLOSED: 'bg-orange-500'
 };
 
 const statusLabels = {
-  PLANNED: 'Planned',
+  UPCOMING: 'Upcoming',
   OPEN: 'Open',
-  CLOSED: 'Closed',
-  REVIEWING: 'Under Review',
-  COMPLETED: 'Completed'
+  REVIEW: 'Under Review',
+  RESPONSE: 'Response Period',
+  CLOSED: 'Closed'
 };
 
 export default async function AdminDashboardPage() {
@@ -167,8 +167,8 @@ export default async function AdminDashboardPage() {
                       </Badge>
                     </div>
                     <p className='text-sm text-muted-foreground'>
-                      {new Date(window.submissionStart).toLocaleDateString()} -{' '}
-                      {new Date(window.submissionEnd).toLocaleDateString()}
+                      {new Date(window.submissionOpenAt).toLocaleDateString()} -{' '}
+                      {new Date(window.submissionCloseAt).toLocaleDateString()}
                     </p>
                   </div>
                   <div className='flex items-center gap-4'>

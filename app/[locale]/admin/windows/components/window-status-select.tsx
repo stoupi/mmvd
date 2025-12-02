@@ -20,11 +20,11 @@ interface WindowStatusSelectProps {
 }
 
 const statusLabels = {
-  PLANNED: 'Planned',
+  UPCOMING: 'Upcoming',
   OPEN: 'Open',
-  CLOSED: 'Closed',
-  REVIEWING: 'Under Review',
-  COMPLETED: 'Completed'
+  REVIEW: 'Under Review',
+  RESPONSE: 'Response Period',
+  CLOSED: 'Closed'
 };
 
 export function WindowStatusSelect({ window }: WindowStatusSelectProps) {

@@ -37,29 +37,47 @@ export const updateUserProfileSchema = z.object({
 // Submission Window Schemas
 export const submissionWindowSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),
-  submissionStart: z.coerce.date(),
-  submissionEnd: z.coerce.date(),
-  reviewDeadline: z.coerce.date()
+  submissionOpenAt: z.coerce.date(),
+  submissionCloseAt: z.coerce.date(),
+  reviewStartAt: z.coerce.date(),
+  reviewDeadlineDefault: z.coerce.date(),
+  responseDeadline: z.coerce.date(),
+  nextWindowOpensAt: z.coerce.date().optional()
 }).refine(
-  (data) => data.submissionEnd > data.submissionStart,
+  (data) => data.submissionCloseAt > data.submissionOpenAt,
   {
-    message: 'Submission end date must be after start date',
-    path: ['submissionEnd']
+    message: 'Submission close date must be after open date',
+    path: ['submissionCloseAt']
   }
 ).refine(
-  (data) => data.reviewDeadline > data.submissionEnd,
+  (data) => data.reviewStartAt >= data.submissionCloseAt,
   {
-    message: 'Review deadline must be after submission end date',
-    path: ['reviewDeadline']
+    message: 'Review start must be on or after submission close date',
+    path: ['reviewStartAt']
+  }
+).refine(
+  (data) => data.reviewDeadlineDefault > data.reviewStartAt,
+  {
+    message: 'Review deadline must be after review start date',
+    path: ['reviewDeadlineDefault']
+  }
+).refine(
+  (data) => data.responseDeadline > data.reviewDeadlineDefault,
+  {
+    message: 'Response deadline must be after review deadline',
+    path: ['responseDeadline']
   }
 );
 
 export const updateSubmissionWindowSchema = z.object({
   id: z.string(),
   name: z.string().min(3, 'Name must be at least 3 characters').optional(),
-  submissionStart: z.coerce.date().optional(),
-  submissionEnd: z.coerce.date().optional(),
-  reviewDeadline: z.coerce.date().optional()
+  submissionOpenAt: z.coerce.date().optional(),
+  submissionCloseAt: z.coerce.date().optional(),
+  reviewStartAt: z.coerce.date().optional(),
+  reviewDeadlineDefault: z.coerce.date().optional(),
+  responseDeadline: z.coerce.date().optional(),
+  nextWindowOpensAt: z.coerce.date().optional()
 });
 
 export const updateWindowStatusSchema = z.object({

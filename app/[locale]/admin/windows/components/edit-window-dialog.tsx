@@ -36,9 +36,12 @@ interface EditWindowDialogProps {
   window: {
     id: string;
     name: string;
-    submissionStart: Date;
-    submissionEnd: Date;
-    reviewDeadline: Date;
+    submissionOpenAt: Date;
+    submissionCloseAt: Date;
+    reviewStartAt: Date;
+    reviewDeadlineDefault: Date;
+    responseDeadline: Date;
+    nextWindowOpensAt: Date | null;
     status: WindowStatus;
   };
 }
@@ -50,9 +53,12 @@ export function EditWindowDialog({ window }: EditWindowDialogProps) {
     resolver: zodResolver(submissionWindowSchema),
     defaultValues: {
       name: window.name,
-      submissionStart: window.submissionStart as any,
-      submissionEnd: window.submissionEnd as any,
-      reviewDeadline: window.reviewDeadline as any
+      submissionOpenAt: window.submissionOpenAt as any,
+      submissionCloseAt: window.submissionCloseAt as any,
+      reviewStartAt: window.reviewStartAt as any,
+      reviewDeadlineDefault: window.reviewDeadlineDefault as any,
+      responseDeadline: window.responseDeadline as any,
+      nextWindowOpensAt: window.nextWindowOpensAt as any
     }
   });
 
@@ -102,10 +108,10 @@ export function EditWindowDialog({ window }: EditWindowDialogProps) {
             <div className='grid grid-cols-2 gap-4'>
               <FormField
                 control={form.control}
-                name='submissionStart'
+                name='submissionOpenAt'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Submission Start Date</FormLabel>
+                    <FormLabel>Submission Opens</FormLabel>
                     <FormControl>
                       <Input
                         type='date'
@@ -123,10 +129,10 @@ export function EditWindowDialog({ window }: EditWindowDialogProps) {
               />
               <FormField
                 control={form.control}
-                name='submissionEnd'
+                name='submissionCloseAt'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Submission End Date</FormLabel>
+                    <FormLabel>Submission Closes</FormLabel>
                     <FormControl>
                       <Input
                         type='date'
@@ -138,38 +144,99 @@ export function EditWindowDialog({ window }: EditWindowDialogProps) {
                         }
                       />
                     </FormControl>
-                    <FormDescription className='text-xs'>
-                      Must be after start date
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <FormField
-              control={form.control}
-              name='reviewDeadline'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Review Deadline</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='date'
-                      {...field}
-                      value={
-                        field.value
-                          ? new Date(field.value).toISOString().split('T')[0]
-                          : ''
-                      }
-                    />
-                  </FormControl>
-                  <FormDescription className='text-xs'>
-                    Must be after submission end date
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className='grid grid-cols-2 gap-4'>
+              <FormField
+                control={form.control}
+                name='reviewStartAt'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Review Starts</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='date'
+                        {...field}
+                        value={
+                          field.value
+                            ? new Date(field.value).toISOString().split('T')[0]
+                            : ''
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='reviewDeadlineDefault'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Review Deadline</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='date'
+                        {...field}
+                        value={
+                          field.value
+                            ? new Date(field.value).toISOString().split('T')[0]
+                            : ''
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className='grid grid-cols-2 gap-4'>
+              <FormField
+                control={form.control}
+                name='responseDeadline'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Response Deadline</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='date'
+                        {...field}
+                        value={
+                          field.value
+                            ? new Date(field.value).toISOString().split('T')[0]
+                            : ''
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='nextWindowOpensAt'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Next Window Opens (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='date'
+                        {...field}
+                        value={
+                          field.value
+                            ? new Date(field.value).toISOString().split('T')[0]
+                            : ''
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <div className='flex justify-end gap-2'>
               <Button
                 type='button'

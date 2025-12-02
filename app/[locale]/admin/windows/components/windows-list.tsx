@@ -11,9 +11,12 @@ import type { WindowStatus } from '@prisma/client';
 interface SubmissionWindow {
   id: string;
   name: string;
-  submissionStart: Date;
-  submissionEnd: Date;
-  reviewDeadline: Date;
+  submissionOpenAt: Date;
+  submissionCloseAt: Date;
+  reviewStartAt: Date;
+  reviewDeadlineDefault: Date;
+  responseDeadline: Date;
+  nextWindowOpensAt: Date | null;
   status: WindowStatus;
   _count: {
     proposals: number;
@@ -25,19 +28,19 @@ interface WindowsListProps {
 }
 
 const statusColors = {
-  PLANNED: 'bg-gray-500',
+  UPCOMING: 'bg-gray-500',
   OPEN: 'bg-green-500',
-  CLOSED: 'bg-orange-500',
-  REVIEWING: 'bg-blue-500',
-  COMPLETED: 'bg-purple-500'
+  REVIEW: 'bg-blue-500',
+  RESPONSE: 'bg-yellow-500',
+  CLOSED: 'bg-orange-500'
 };
 
 const statusLabels = {
-  PLANNED: 'Planned',
+  UPCOMING: 'Upcoming',
   OPEN: 'Open',
-  CLOSED: 'Closed',
-  REVIEWING: 'Under Review',
-  COMPLETED: 'Completed'
+  REVIEW: 'Under Review',
+  RESPONSE: 'Response Period',
+  CLOSED: 'Closed'
 };
 
 export function WindowsList({ windows }: WindowsListProps) {
@@ -58,15 +61,16 @@ export function WindowsList({ windows }: WindowsListProps) {
                 {window._count.proposals} {window._count.proposals === 1 ? 'proposal' : 'proposals'}
               </Badge>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-muted-foreground'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground'>
               <div>
                 <span className='font-medium'>Submission:</span>{' '}
-                {new Date(window.submissionStart).toLocaleDateString()} -{' '}
-                {new Date(window.submissionEnd).toLocaleDateString()}
+                {new Date(window.submissionOpenAt).toLocaleDateString()} -{' '}
+                {new Date(window.submissionCloseAt).toLocaleDateString()}
               </div>
               <div>
-                <span className='font-medium'>Review deadline:</span>{' '}
-                {new Date(window.reviewDeadline).toLocaleDateString()}
+                <span className='font-medium'>Review:</span>{' '}
+                {new Date(window.reviewStartAt).toLocaleDateString()} -{' '}
+                {new Date(window.reviewDeadlineDefault).toLocaleDateString()}
               </div>
             </div>
           </div>

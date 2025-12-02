@@ -96,14 +96,17 @@ export async function updateUserProfile(
 // Submission Windows Management
 export async function createSubmissionWindow(data: {
   name: string;
-  submissionStart: Date;
-  submissionEnd: Date;
-  reviewDeadline: Date;
+  submissionOpenAt: Date;
+  submissionCloseAt: Date;
+  reviewStartAt: Date;
+  reviewDeadlineDefault: Date;
+  responseDeadline: Date;
+  nextWindowOpensAt?: Date;
 }) {
   return prisma.submissionWindow.create({
     data: {
       ...data,
-      status: 'PLANNED'
+      status: 'UPCOMING'
     }
   });
 }
@@ -112,9 +115,12 @@ export async function updateSubmissionWindow(
   id: string,
   data: {
     name?: string;
-    submissionStart?: Date;
-    submissionEnd?: Date;
-    reviewDeadline?: Date;
+    submissionOpenAt?: Date;
+    submissionCloseAt?: Date;
+    reviewStartAt?: Date;
+    reviewDeadlineDefault?: Date;
+    responseDeadline?: Date;
+    nextWindowOpensAt?: Date;
   }
 ) {
   return prisma.submissionWindow.update({
@@ -151,7 +157,7 @@ export async function getAllSubmissionWindows() {
         select: { proposals: true }
       }
     },
-    orderBy: { submissionStart: 'desc' }
+    orderBy: { submissionOpenAt: 'desc' }
   });
 }
 
