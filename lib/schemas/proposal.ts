@@ -49,8 +49,11 @@ export const proposalFormSchema = z.object({
   secondaryObjectives: z.array(z.string())
     .max(3, 'Maximum 3 secondary objectives allowed')
     .refine(
-      (arr) => arr.every(val => countWords(val) <= 50),
-      { message: 'Each secondary objective must not exceed 50 words' }
+      (arr) => {
+        const totalWords = arr.reduce((sum, val) => sum + countWords(val), 0);
+        return totalWords <= 150;
+      },
+      { message: 'Secondary objectives must not exceed 150 words total' }
     )
     .default([]),
 
@@ -72,8 +75,11 @@ export const proposalFormSchema = z.object({
   secondaryEndpoints: z.array(z.string())
     .max(3, 'Maximum 3 secondary endpoints allowed')
     .refine(
-      (arr) => arr.every(val => countWords(val) <= 50),
-      { message: 'Each secondary endpoint must not exceed 50 words' }
+      (arr) => {
+        const totalWords = arr.reduce((sum, val) => sum + countWords(val), 0);
+        return totalWords <= 150;
+      },
+      { message: 'Secondary endpoints must not exceed 150 words total' }
     )
     .default([]),
 
@@ -127,7 +133,13 @@ export const proposalFormSchema = z.object({
     .optional(),
 
   // Target journals
-  targetJournals: z.array(z.string()).max(3, 'Maximum 3 target journals allowed').default([])
+  targetJournals: z.array(z.string())
+    .max(3, 'Maximum 3 target journals allowed')
+    .refine(
+      (arr) => arr.length > 0 && arr[0] && arr[0].trim().length > 0,
+      { message: 'At least one target journal is required' }
+    )
+    .default([])
 });
 
 export type ProposalFormData = z.infer<typeof proposalFormSchema>;

@@ -125,7 +125,7 @@ export function ProposalForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
         <FormField
           control={form.control}
           name='title'
@@ -387,13 +387,15 @@ export function ProposalForm({
         />
 
 
-        <div className='space-y-2'>
-          <label className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-            Data Requirements for This Ancillary Study *
-          </label>
-          <p className='text-sm text-muted-foreground'>Select all data types required for this study</p>
+        <div className='space-y-6'>
+          <div className='space-y-2'>
+            <label className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
+              Data Requirements for This Ancillary Study *
+            </label>
+            <p className='text-sm text-muted-foreground'>Select all data types required for this study</p>
+          </div>
 
-          <div className='grid md:grid-cols-1 gap-4'>
+          <div className='grid md:grid-cols-1 gap-3'>
             <FormField
               control={form.control}
               name='dataBaseline'
@@ -552,12 +554,12 @@ export function ProposalForm({
           </div>
         </div>
 
-        <div className='space-y-6'>
-          <label className='text-lg font-bold mb-6 block'>Statistical Analysis Plan *</label>
+        <div className='space-y-6 pt-8 border-t'>
+          <label className='text-lg font-bold block mb-4'>Statistical Analysis Plan</label>
 
           <div className='space-y-4'>
             <FormLabel>Statistical Analysis Types</FormLabel>
-            <div className='grid md:grid-cols-2 gap-4'>
+            <div className='grid md:grid-cols-2 gap-3'>
               <FormField
                 control={form.control}
                 name='analysisTypes'
@@ -660,7 +662,7 @@ export function ProposalForm({
               return (
                 <FormItem>
                   <div className='flex justify-between items-center'>
-                    <FormLabel>Detailed Statistical Analysis Plan</FormLabel>
+                    <FormLabel>Detailed Statistical Analysis Plan *</FormLabel>
                     <span className='text-sm text-muted-foreground'>{wordCount} / 100 words</span>
                   </div>
                   <FormControl>
@@ -725,8 +727,8 @@ export function ProposalForm({
         />
         </div>
 
-        <div className='space-y-6'>
-          <label className='text-lg font-bold mb-6 block'>Potential Target Journals *</label>
+        <div className='space-y-6 pt-8 border-t'>
+          <label className='text-lg font-bold block mb-4'>Potential Target Journals</label>
 
           <div className='grid grid-cols-3 gap-4'>
             {[0, 1, 2].map((index) => (
@@ -736,7 +738,7 @@ export function ProposalForm({
                 name={`targetJournals.${index}` as any}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Journal {index + 1} {index === 0 ? '' : '(Optional)'}</FormLabel>
+                    <FormLabel>Journal {index + 1} {index === 0 ? '*' : '(Optional)'}</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder='Journal name' />
                     </FormControl>
