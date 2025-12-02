@@ -4,7 +4,7 @@ import { Link } from '@/app/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from '@/app/i18n/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { getAvailableApps } from '@/lib/app-config';
 import { FileText, ClipboardCheck, Settings } from 'lucide-react';
@@ -21,6 +21,7 @@ export function Navbar() {
 	const locale = useLocale();
 	const pathname = usePathname();
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
+	const [isMounted, setIsMounted] = useState(false);
 
 	const { data: session, isPending } = authClient.useSession();
 	console.log({session});
@@ -28,6 +29,10 @@ export function Navbar() {
 	const availableApps = session?.user?.permissions
 		? getAvailableApps(session.user.permissions)
 		: [];
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
 
 	const handleLogout = async () => {
 		setIsLoggingOut(true);
@@ -54,7 +59,7 @@ export function Navbar() {
 						</span>
 					</Link>
 
-					{availableApps.length > 0 && (
+					{isMounted && availableApps.length > 0 && (
 						<div className='hidden md:flex items-center space-x-1'>
 							{availableApps.map((app) => {
 								const Icon = iconMap[app.icon as keyof typeof iconMap];
