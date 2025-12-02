@@ -145,6 +145,8 @@
   },
   "submission": {
     "title": "Proposal Submission",
+    "noActiveWindow": "There is no active submission window at the moment",
+    "newProposal": "New Proposal",
     "dashboard": {
       "title": "My Proposals",
       "subtitle": "Manage your ancillary study proposals",
