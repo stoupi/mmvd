@@ -24,11 +24,14 @@ export function Navbar() {
 	const [isMounted, setIsMounted] = useState(false);
 
 	const { data: session, isPending } = authClient.useSession();
-	console.log({session});
+	console.log('Session data:', session);
+	console.log('User permissions:', session?.user?.permissions);
 
 	const availableApps = session?.user?.permissions
 		? getAvailableApps(session.user.permissions)
 		: [];
+
+	console.log('Available apps:', availableApps);
 
 	useEffect(() => {
 		setIsMounted(true);

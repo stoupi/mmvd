@@ -16,6 +16,40 @@ export const auth = betterAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 		},
 	},
+	user: {
+		additionalFields: {
+			firstName: {
+				type: 'string',
+				required: false,
+			},
+			lastName: {
+				type: 'string',
+				required: false,
+			},
+			affiliation: {
+				type: 'string',
+				required: false,
+			},
+			centreCode: {
+				type: 'string',
+				required: false,
+			},
+			permissions: {
+				type: 'string[]',
+				defaultValue: [],
+				required: false,
+			},
+			isActive: {
+				type: 'boolean',
+				defaultValue: true,
+				required: false,
+			},
+			avatarUrl: {
+				type: 'string',
+				required: false,
+			},
+		},
+	},
 	secret: process.env.BETTER_AUTH_SECRET!,
 	baseURL: process.env.NEXT_PUBLIC_APP_URL!,
 	plugins: [nextCookies()],
