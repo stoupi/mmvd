@@ -44,6 +44,8 @@ interface ProposalWithRelations extends Proposal {
 
 interface ProposalListProps {
   proposals: ProposalWithRelations[];
+  windowName?: string;
+  windowStatus: SubmissionWindowStatus;
 }
 
 const statusColors: Record<ProposalStatus, string> = {
@@ -178,7 +180,7 @@ function DeleteProposalButton({ proposalId, proposalTitle }: { proposalId: strin
   );
 }
 
-export function ProposalList({ proposals }: ProposalListProps) {
+export function ProposalList({ proposals, windowStatus }: ProposalListProps) {
   if (proposals.length === 0) {
     return (
       <div className='text-center py-12 text-muted-foreground'>
@@ -188,57 +190,39 @@ export function ProposalList({ proposals }: ProposalListProps) {
   }
 
   return (
-    <div className='border rounded-lg'>
+    <div className='border rounded-lg overflow-x-auto'>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead colSpan={4} className='text-left bg-blue-50'>Window Information</TableHead>
-            <TableHead colSpan={5} className='text-left bg-green-50'>Proposal Information</TableHead>
-            <TableHead rowSpan={2} className='text-right align-middle'>Actions</TableHead>
-          </TableRow>
-          <TableRow>
-            <TableHead className='bg-blue-50'>Name</TableHead>
-            <TableHead className='bg-blue-50'>Status</TableHead>
-            <TableHead className='bg-blue-50'>Opening</TableHead>
-            <TableHead className='bg-blue-50'>Closing</TableHead>
-            <TableHead className='bg-green-50'>Title</TableHead>
-            <TableHead className='bg-green-50'>Main Topic</TableHead>
-            <TableHead className='bg-green-50'>Created</TableHead>
-            <TableHead className='bg-green-50'>Submitted</TableHead>
-            <TableHead className='bg-green-50'>Status</TableHead>
+            <TableHead className='w-32'>Status</TableHead>
+            <TableHead className='min-w-96'>Title</TableHead>
+            <TableHead>Main Topic</TableHead>
+            <TableHead>Created</TableHead>
+            <TableHead>Submitted</TableHead>
+            <TableHead className='text-right'>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {proposals.map((proposal) => (
             <TableRow key={proposal.id}>
-              <TableCell className='bg-blue-50/30'>{proposal.submissionWindow.name}</TableCell>
-              <TableCell className='bg-blue-50/30'>
-                <Badge className={windowStatusColors[proposal.submissionWindow.status]}>
-                  {windowStatusLabels[proposal.submissionWindow.status]}
-                </Badge>
-              </TableCell>
-              <TableCell className='bg-blue-50/30'>
-                {new Date(proposal.submissionWindow.submissionOpenAt).toLocaleDateString()}
-              </TableCell>
-              <TableCell className='bg-blue-50/30'>
-                {new Date(proposal.submissionWindow.submissionCloseAt).toLocaleDateString()}
-              </TableCell>
-              <TableCell className='bg-green-50/30 font-medium max-w-xs truncate'>
-                {proposal.title}
-              </TableCell>
-              <TableCell className='bg-green-50/30'>{proposal.mainArea.label}</TableCell>
-              <TableCell className='bg-green-50/30'>
-                {new Date(proposal.createdAt).toLocaleDateString()}
-              </TableCell>
-              <TableCell className='bg-green-50/30'>
-                {proposal.submittedAt
-                  ? new Date(proposal.submittedAt).toLocaleDateString()
-                  : '-'}
-              </TableCell>
-              <TableCell className='bg-green-50/30'>
+              <TableCell>
                 <Badge className={statusColors[proposal.status]}>
                   {statusLabels[proposal.status]}
                 </Badge>
+              </TableCell>
+              <TableCell className='font-medium'>
+                <div className='max-w-96 overflow-x-auto whitespace-nowrap'>
+                  {proposal.title}
+                </div>
+              </TableCell>
+              <TableCell>{proposal.mainArea.label}</TableCell>
+              <TableCell>
+                {new Date(proposal.createdAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell>
+                {proposal.submittedAt
+                  ? new Date(proposal.submittedAt).toLocaleDateString()
+                  : '-'}
               </TableCell>
               <TableCell className='text-right'>
                 <div className='flex gap-2 justify-end'>

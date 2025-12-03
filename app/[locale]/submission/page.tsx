@@ -3,6 +3,7 @@ import { getCurrentWindow, getProposalsByPi } from '@/lib/services/submission';
 import { getTranslations } from 'next-intl/server';
 import { ProposalList } from './components/proposal-list';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Link } from '@/app/i18n/navigation';
 import { Plus } from 'lucide-react';
 
@@ -45,16 +46,26 @@ export default async function SubmissionPage({
     ? Math.ceil((new Date(currentWindow.submissionCloseAt).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
     : 0;
 
-  // Separate proposals by window
-  const currentWindowProposals = currentWindow
-    ? proposals.filter((p) => p.submissionWindowId === currentWindow.id)
-    : [];
-  const previousWindowProposals = currentWindow
-    ? proposals.filter((p) => p.submissionWindowId !== currentWindow.id)
-    : proposals;
+  // Group proposals by window
+  const proposalsByWindow = proposals.reduce((acc, proposal) => {
+    const windowId = proposal.submissionWindowId;
+    if (!acc[windowId]) {
+      acc[windowId] = {
+        window: proposal.submissionWindow,
+        proposals: []
+      };
+    }
+    acc[windowId].proposals.push(proposal);
+    return acc;
+  }, {} as Record<string, { window: typeof proposals[0]['submissionWindow']; proposals: typeof proposals }>);
+
+  // Sort windows by date (most recent first)
+  const sortedWindows = Object.values(proposalsByWindow).sort((a, b) =>
+    new Date(b.window.submissionOpenAt).getTime() - new Date(a.window.submissionOpenAt).getTime()
+  );
 
   return (
-    <div className='container mx-auto py-8 max-w-6xl'>
+    <div className='container mx-auto py-8 max-w-full px-4'>
       <div className='mb-6'>
         <h1 className='text-3xl font-bold mb-6'>{t('title')}</h1>
         {currentWindow && (
@@ -103,21 +114,32 @@ export default async function SubmissionPage({
         </div>
       )}
 
-      {currentWindow && currentWindowProposals.length > 0 && (
-        <div className='mt-8'>
-          <h2 className='text-2xl font-semibold mb-4'>Current Window Proposals</h2>
-          <ProposalList proposals={currentWindowProposals} />
-        </div>
-      )}
-
-      {previousWindowProposals.length > 0 && (
-        <div className='mt-8'>
-          <h2 className='text-2xl font-semibold mb-4'>Previous Submissions</h2>
-          <ProposalList proposals={previousWindowProposals} />
-        </div>
-      )}
-
-      {proposals.length === 0 && (
+      {sortedWindows.length > 0 ? (
+        sortedWindows.map(({ window, proposals: windowProposals }) => (
+          <div key={window.id} className='mt-8'>
+            <div className='flex items-center gap-4 mb-4'>
+              <h2 className='text-2xl font-semibold'>{window.name}</h2>
+              <Badge className={
+                window.status === 'OPEN' ? 'bg-green-500' :
+                window.status === 'CLOSED' ? 'bg-red-500' :
+                window.status === 'REVIEWING' ? 'bg-yellow-500' :
+                window.status === 'COMPLETED' ? 'bg-blue-500' :
+                'bg-gray-400'
+              }>
+                {window.status === 'OPEN' ? 'Open' :
+                 window.status === 'CLOSED' ? 'Closed' :
+                 window.status === 'REVIEWING' ? 'Reviewing' :
+                 window.status === 'COMPLETED' ? 'Completed' :
+                 'Planned'}
+              </Badge>
+              <span className='text-muted-foreground'>
+                ({new Date(window.submissionOpenAt).toLocaleDateString()} - {new Date(window.submissionCloseAt).toLocaleDateString()})
+              </span>
+            </div>
+            <ProposalList proposals={windowProposals} windowName={window.name} windowStatus={window.status} />
+          </div>
+        ))
+      ) : (
         <div className='mt-8 text-center text-muted-foreground'>
           <p>No proposals yet</p>
         </div>
