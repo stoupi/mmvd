@@ -125,17 +125,18 @@ interface CreateProposalInput {
 }
 
 export async function createProposal(data: CreateProposalInput) {
-  // Validation: one proposal per centre per window
-  const existing = await prisma.proposal.findFirst({
+  // Validation: only one SUBMITTED proposal per centre per window (multiple drafts allowed)
+  const existingSubmitted = await prisma.proposal.findFirst({
     where: {
       submissionWindowId: data.submissionWindowId,
       centreCode: data.centreCode,
-      isDeleted: false
+      isDeleted: false,
+      status: 'SUBMITTED'
     }
   });
 
-  if (existing) {
-    throw new Error('A proposal already exists for this centre in this window');
+  if (existingSubmitted) {
+    throw new Error('A proposal has already been submitted for this centre in this window');
   }
 
   return prisma.proposal.create({
