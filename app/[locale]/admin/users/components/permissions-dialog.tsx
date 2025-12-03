@@ -39,6 +39,12 @@ const PERMISSION_DESCRIPTIONS = {
   ADMIN: 'Full administrative access'
 };
 
+const PERMISSION_COLORS = {
+  SUBMISSION: 'bg-blue-100 text-blue-700 border-blue-200',
+  REVIEWING: 'bg-green-100 text-green-700 border-green-200',
+  ADMIN: 'bg-purple-100 text-purple-700 border-purple-200'
+} as const;
+
 export function PermissionsDialog({ user }: PermissionsDialogProps) {
   const [open, setOpen] = useState(false);
   const [selectedPermissions, setSelectedPermissions] = useState<AppPermission[]>(
@@ -76,7 +82,11 @@ export function PermissionsDialog({ user }: PermissionsDialogProps) {
             <Badge variant='outline'>No permissions</Badge>
           ) : (
             user.permissions.map((permission) => (
-              <Badge key={permission} variant='secondary' className='text-xs'>
+              <Badge
+                key={permission}
+                variant='outline'
+                className={`text-xs ${PERMISSION_COLORS[permission]}`}
+              >
                 {PERMISSION_LABELS[permission]}
               </Badge>
             ))

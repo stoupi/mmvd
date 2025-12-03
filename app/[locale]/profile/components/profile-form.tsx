@@ -59,10 +59,10 @@ export function ProfileForm({ affiliation }: ProfileFormProps) {
   if (!isEditing) {
     return (
       <div className='flex items-center justify-between'>
-        <div className='w-48'>
+        <div className='w-48 flex items-center'>
           <span className='text-sm font-medium'>Affiliation</span>
         </div>
-        <div className='flex-1'>
+        <div className='flex-1 flex items-center'>
           <span className='text-sm'>{affiliation || '-'}</span>
         </div>
         <div className='w-32 flex justify-end'>
@@ -82,8 +82,8 @@ export function ProfileForm({ affiliation }: ProfileFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className='flex items-start justify-between gap-4'>
-          <div className='w-48'>
+        <div className='flex items-center justify-between gap-4'>
+          <div className='w-48 flex items-center'>
             <span className='text-sm font-medium'>Affiliation</span>
           </div>
           <div className='flex-1'>
@@ -93,25 +93,26 @@ export function ProfileForm({ affiliation }: ProfileFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} placeholder='University Hospital' />
+                    <Input {...field} placeholder='University Hospital' className='h-9' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <div className='w-32 flex justify-end gap-2'>
+          <div className='w-32 flex justify-end gap-2 flex-shrink-0'>
             <Button
               type='button'
               variant='ghost'
               size='sm'
               onClick={handleCancel}
               disabled={status === 'executing'}
+              className='w-16'
             >
               Cancel
             </Button>
-            <Button type='submit' size='sm' disabled={status === 'executing'}>
-              {status === 'executing' ? 'Saving...' : 'Save'}
+            <Button type='submit' size='sm' disabled={status === 'executing'} className='w-16'>
+              {status === 'executing' ? '...' : 'Save'}
             </Button>
           </div>
         </div>
