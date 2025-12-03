@@ -1,70 +1,100 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { requireAuth } from '@/lib/auth-guard';
+import { getUserProfile } from '@/lib/services/profile';
+import { ProfileForm } from './components/profile-form';
+import { AvatarUpload } from './components/avatar-upload';
+import { redirect } from 'next/navigation';
 
-export default async function ProfilePage({
-  params
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+export default async function ProfilePage() {
+  const session = await requireAuth();
+  const user = await getUserProfile(session.user.id);
 
-  if (!session) {
-    redirect("/login");
+  if (!user) {
+    redirect('/');
   }
 
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'profile' });
-
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              {t('title')}
-            </h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              {t('welcome')}
-            </p>
+    <div className='p-8 max-w-4xl mx-auto'>
+      <div className='mb-8'>
+        <h1 className='text-3xl font-bold mb-2'>My Profile</h1>
+        <p className='text-muted-foreground'>
+          View and manage your profile information
+        </p>
+      </div>
+
+      <div className='space-y-8'>
+        <div className='bg-white rounded-lg p-6 border'>
+          <div className='flex items-start gap-6'>
+            <div className='flex-shrink-0'>
+              <AvatarUpload
+                currentAvatarUrl={user.avatarUrl}
+                userName={user.firstName && user.lastName
+                  ? `${user.title ? user.title + ' ' : ''}${user.firstName} ${user.lastName}`
+                  : user.email
+                }
+              />
+            </div>
+            <div className='flex-1'>
+              <h2 className='text-xl font-semibold mb-4'>Profile Photo</h2>
+              <p className='text-sm text-muted-foreground'>
+                Upload a profile photo to personalize your account. The photo will be displayed throughout the application.
+              </p>
+            </div>
           </div>
-          <div className="border-t border-gray-200">
-            <dl>
-              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Name</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {session.user.name || "Not provided"}
-                </dd>
+        </div>
+
+        <div className='bg-white rounded-lg p-6 border'>
+          <h2 className='text-xl font-semibold mb-6'>Personal Information</h2>
+
+          <div className='space-y-6 mb-8'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              <div>
+                <label className='text-sm font-medium text-muted-foreground'>Title</label>
+                <p className='text-base mt-1'>
+                  {user.title || 'None'}
+                </p>
               </div>
-              <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Email address</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {session.user.email}
-                </dd>
+              <div>
+                <label className='text-sm font-medium text-muted-foreground'>Email</label>
+                <p className='text-base mt-1'>{user.email}</p>
               </div>
-              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Email verified</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {session.user.emailVerified ? "Yes" : "No"}
-                </dd>
+            </div>
+
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              <div>
+                <label className='text-sm font-medium text-muted-foreground'>First Name</label>
+                <p className='text-base mt-1'>{user.firstName || '-'}</p>
               </div>
-              <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">User ID</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-mono text-xs">
-                  {session.user.id}
-                </dd>
+              <div>
+                <label className='text-sm font-medium text-muted-foreground'>Last Name</label>
+                <p className='text-base mt-1'>{user.lastName || '-'}</p>
               </div>
-              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Account created</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {new Date(session.user.createdAt).toLocaleDateString()}
-                </dd>
+            </div>
+
+            <div>
+              <label className='text-sm font-medium text-muted-foreground'>Permissions</label>
+              <div className='flex gap-2 mt-2'>
+                {user.permissions.length > 0 ? (
+                  user.permissions.map((permission) => (
+                    <span
+                      key={permission}
+                      className='px-3 py-1 bg-primary/10 text-primary rounded-md text-sm font-medium'
+                    >
+                      {permission}
+                    </span>
+                  ))
+                ) : (
+                  <span className='text-sm text-muted-foreground'>No permissions</span>
+                )}
               </div>
-            </dl>
+            </div>
           </div>
+
+          <h3 className='text-lg font-semibold mb-4'>Editable Information</h3>
+          <ProfileForm
+            centreCode={user.centreCode || ''}
+            centreName={user.centreName || ''}
+            affiliation={user.affiliation || ''}
+          />
         </div>
       </div>
     </div>

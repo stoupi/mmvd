@@ -2,6 +2,7 @@
   "navigation": {
     "home": "Home",
     "profile": "Profile",
+    "myProfile": "My Profile",
     "login": "Login",
     "logout": "Logout",
     "signup": "Sign up",

@@ -11,6 +11,17 @@ const nextConfig: NextConfig = {
 	typescript: {
 		ignoreBuildErrors: true,
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '**',
+			},
+		],
+		dangerouslyAllowSVG: true,
+		contentDispositionType: 'attachment',
+		contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+	},
 	webpack: (config) => {
 		config.externals = [...(config.externals || []), { canvas: 'canvas' }];
 		// Fix for Zod bundling issue

@@ -26,7 +26,15 @@ export const auth = betterAuth({
 				type: 'string',
 				required: false,
 			},
+			title: {
+				type: 'string',
+				required: false,
+			},
 			affiliation: {
+				type: 'string',
+				required: false,
+			},
+			centreName: {
 				type: 'string',
 				required: false,
 			},

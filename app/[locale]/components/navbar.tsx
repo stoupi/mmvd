@@ -7,7 +7,14 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { getAvailableApps } from '@/lib/app-config';
-import { FileText, ClipboardCheck, Settings } from 'lucide-react';
+import { FileText, ClipboardCheck, Settings, User, LogOut } from 'lucide-react';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import Image from 'next/image';
 
 const iconMap = {
 	FileText,
@@ -95,37 +102,55 @@ export function Navbar() {
 						</div>
 					) : session?.user ? (
 						<div className='flex items-center space-x-4'>
-							<div className='hidden sm:flex items-center space-x-2'>
-								<div className='h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center'>
-									<span className='text-white text-sm font-medium'>
-										{session.user.name?.charAt(0).toUpperCase() ||
-											session.user.email.charAt(0).toUpperCase()}
-									</span>
-								</div>
-								<span className='text-sm font-medium text-gray-700'>
-									{session.user.name || session.user.email}
-								</span>
-							</div>
-
-							<Link
-								href='/profile'
-								className='inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
-								{t('profile')}
-							</Link>
-
-							<button
-								onClick={handleLogout}
-								disabled={isLoggingOut}
-								className='inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 px-4 py-2'>
-								{isLoggingOut ? (
-									<>
-										<div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 mr-2'></div>
-										{t('loggingOut')}
-									</>
-								) : (
-									t('logout')
-								)}
-							</button>
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<button className='hidden sm:flex items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer focus:outline-none'>
+										<div className='h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center overflow-hidden'>
+											{session.user.avatarUrl ? (
+												<Image
+													src={session.user.avatarUrl}
+													alt={session.user.name || session.user.email}
+													width={32}
+													height={32}
+													className='h-full w-full object-cover'
+												/>
+											) : (
+												<span className='text-white text-sm font-medium'>
+													{session.user.name?.charAt(0).toUpperCase() ||
+														session.user.email.charAt(0).toUpperCase()}
+												</span>
+											)}
+										</div>
+										<span className='text-sm font-medium text-gray-700'>
+											{session.user.name || session.user.email}
+										</span>
+									</button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent align='end' className='w-48'>
+									<DropdownMenuItem asChild>
+										<Link href='/profile' className='flex items-center cursor-pointer'>
+											<User className='h-4 w-4 mr-2' />
+											{t('myProfile')}
+										</Link>
+									</DropdownMenuItem>
+									<DropdownMenuItem
+										onClick={handleLogout}
+										disabled={isLoggingOut}
+										className='flex items-center cursor-pointer'>
+										{isLoggingOut ? (
+											<>
+												<div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 mr-2'></div>
+												{t('loggingOut')}
+											</>
+										) : (
+											<>
+												<LogOut className='h-4 w-4 mr-2' />
+												{t('logout')}
+											</>
+										)}
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
 						</div>
 					) : (
 						<Link
