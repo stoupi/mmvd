@@ -1,6 +1,5 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
 import { getAllUsers } from '@/lib/services/admin';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users } from 'lucide-react';
 import { UsersTable } from './components/users-table';
 import { CreateUserDialog } from './components/create-user-dialog';
@@ -12,32 +11,27 @@ export default async function UsersPage() {
 
   return (
     <div className='p-8'>
-      <div className='mb-6'>
-        <h1 className='text-3xl font-bold mb-2'>Users</h1>
-        <p className='text-muted-foreground'>
-          Manage user accounts, permissions, and centre assignments
-        </p>
+      <div className='mb-6 flex items-start justify-between'>
+        <div>
+          <h1 className='text-3xl font-bold mb-2'>Users</h1>
+          <p className='text-muted-foreground'>
+            Manage user accounts, permissions, and centre assignments
+          </p>
+        </div>
+        <CreateUserDialog />
       </div>
 
-      <Card>
-        <CardHeader className='flex flex-row items-center justify-between space-y-0'>
-          <CardTitle>All Users ({users.length})</CardTitle>
-          <CreateUserDialog />
-        </CardHeader>
-        <CardContent>
-          {users.length === 0 ? (
-            <div className='text-center py-8'>
-              <Users className='h-12 w-12 mx-auto text-muted-foreground mb-4' />
-              <h3 className='text-lg font-semibold mb-2'>No users yet</h3>
-              <p className='text-sm text-muted-foreground'>
-                Users will appear here once they are created
-              </p>
-            </div>
-          ) : (
-            <UsersTable users={users} />
-          )}
-        </CardContent>
-      </Card>
+      {users.length === 0 ? (
+        <div className='text-center py-8'>
+          <Users className='h-12 w-12 mx-auto text-muted-foreground mb-4' />
+          <h3 className='text-lg font-semibold mb-2'>No users yet</h3>
+          <p className='text-sm text-muted-foreground'>
+            Users will appear here once they are created
+          </p>
+        </div>
+      ) : (
+        <UsersTable users={users} />
+      )}
     </div>
   );
 }

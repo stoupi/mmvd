@@ -21,7 +21,9 @@ interface User {
   email: string;
   firstName: string | null;
   lastName: string | null;
+  title: string | null;
   affiliation: string | null;
+  centreName: string | null;
   centreCode: string | null;
   permissions: AppPermission[];
   isActive: boolean;
@@ -38,12 +40,14 @@ interface UsersTableProps {
 
 export function UsersTable({ users }: UsersTableProps) {
   return (
-    <div className='rounded-md border'>
+    <div className='rounded-md border bg-white'>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>User</TableHead>
             <TableHead>Centre Code</TableHead>
+            <TableHead>Centre Name</TableHead>
+            <TableHead>Email</TableHead>
             <TableHead>Permissions</TableHead>
             <TableHead>Activity</TableHead>
             <TableHead>Status</TableHead>
@@ -54,23 +58,27 @@ export function UsersTable({ users }: UsersTableProps) {
           {users.map((user) => (
             <TableRow key={user.id}>
               <TableCell>
-                <div>
-                  <div className='font-medium'>
-                    {user.firstName && user.lastName
-                      ? `${user.firstName} ${user.lastName}`
-                      : 'No name'}
-                  </div>
-                  <div className='text-sm text-muted-foreground'>{user.email}</div>
-                  {user.affiliation && (
-                    <div className='text-xs text-muted-foreground'>{user.affiliation}</div>
-                  )}
+                <div className='font-medium'>
+                  {user.title && `${user.title} `}
+                  {user.firstName && user.lastName
+                    ? `${user.firstName} ${user.lastName}`
+                    : 'No name'}
                 </div>
               </TableCell>
               <TableCell>
                 {user.centreCode ? (
                   <Badge variant='outline'>{user.centreCode}</Badge>
                 ) : (
-                  <span className='text-sm text-muted-foreground'>Not assigned</span>
+                  <span className='text-sm text-muted-foreground'>-</span>
+                )}
+              </TableCell>
+              <TableCell>
+                {user.centreName || <span className='text-sm text-muted-foreground'>-</span>}
+              </TableCell>
+              <TableCell>
+                <div className='text-sm'>{user.email}</div>
+                {user.affiliation && (
+                  <div className='text-xs text-muted-foreground'>{user.affiliation}</div>
                 )}
               </TableCell>
               <TableCell>
@@ -100,7 +108,7 @@ export function UsersTable({ users }: UsersTableProps) {
                   <EditUserDialog user={user} />
                   <ToggleUserStatusDialog
                     userId={user.id}
-                    userName={`${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
+                    userName={`${user.title ? user.title + ' ' : ''}${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
                     currentStatus={user.isActive}
                   />
                 </div>
