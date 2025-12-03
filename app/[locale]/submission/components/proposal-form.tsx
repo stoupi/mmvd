@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { proposalFormSchema, type ProposalFormData } from '@/lib/schemas/proposal';
+import { proposalFormSchemaValidated, type ProposalFormData } from '@/lib/schemas/proposal';
 import { useAction } from 'next-safe-action/hooks';
 import { createProposalAction, updateProposalAction, createAndSubmitProposalAction, updateAndSubmitProposalAction } from '@/lib/actions/proposal-actions';
 import { useRouter } from '@/app/i18n/navigation';
@@ -60,7 +60,7 @@ export function ProposalForm({
   };
 
   const form = useForm<ProposalFormData>({
-    resolver: zodResolver(proposalFormSchema),
+    resolver: zodResolver(proposalFormSchemaValidated),
     defaultValues: initialData || {
       title: '',
       mainAreaId: '',
@@ -615,6 +615,11 @@ export function ProposalForm({
               )}
             />
           </div>
+          {form.formState.errors.dataBaseline && (
+            <p className='text-sm font-medium text-destructive'>
+              {form.formState.errors.dataBaseline.message}
+            </p>
+          )}
         </div>
 
         <div className='space-y-6 pt-8 border-t'>

@@ -11,7 +11,7 @@ const competingWorkSchema = z.object({
   nPatients: z.number().min(0, 'Number of patients must be positive').optional()
 });
 
-export const proposalFormSchema = z.object({
+const proposalFormSchemaBase = z.object({
   // Basic info
   title: z.string()
     .min(1, 'Title is required')
@@ -151,5 +151,23 @@ export const proposalFormSchema = z.object({
     })
     .default(['', '', ''])
 });
+
+// Export the base schema for use with .extend()
+export const proposalFormSchema = proposalFormSchemaBase;
+
+// Export a validated schema with refinements for form validation
+export const proposalFormSchemaValidated = proposalFormSchemaBase.refine(
+  (data) => {
+    // At least one data requirement must be selected
+    return data.dataBaseline || data.dataBiological || data.dataTTE ||
+           data.dataTOE || data.dataStressEcho || data.dataCMR ||
+           data.dataCT || data.dataRHC || data.dataHospitalFollowup ||
+           data.dataClinicalFollowup || data.dataTTEFollowup || data.dataCoreLab;
+  },
+  {
+    message: 'At least one data requirement must be selected',
+    path: ['dataBaseline']
+  }
+);
 
 export type ProposalFormData = z.infer<typeof proposalFormSchema>;

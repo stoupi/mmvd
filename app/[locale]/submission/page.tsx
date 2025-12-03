@@ -39,8 +39,7 @@ export default async function SubmissionPage({
 
   const canCreateNew =
     currentWindow?.status === 'OPEN' &&
-    !hasSubmittedInCurrentWindow &&
-    !draftInCurrentWindow;
+    !hasSubmittedInCurrentWindow;
 
   const daysRemaining = currentWindow
     ? Math.ceil((new Date(currentWindow.submissionCloseAt).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
@@ -123,7 +122,15 @@ export default async function SubmissionPage({
                 {window.status === 'OPEN' ? 'Open' : 'Closed'}
               </Badge>
               <span className='text-muted-foreground'>
-                ({new Date(window.submissionOpenAt).toLocaleDateString()} - {new Date(window.submissionCloseAt).toLocaleDateString()})
+                ({new Date(window.submissionOpenAt).toLocaleDateString('en-US', {
+                  month: '2-digit',
+                  day: '2-digit',
+                  year: 'numeric'
+                })} - {new Date(window.submissionCloseAt).toLocaleDateString('en-US', {
+                  month: '2-digit',
+                  day: '2-digit',
+                  year: 'numeric'
+                })})
               </span>
             </div>
             <ProposalList proposals={windowProposals} windowName={window.name} windowStatus={window.status} />

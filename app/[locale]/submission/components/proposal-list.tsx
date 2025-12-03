@@ -174,6 +174,9 @@ export function ProposalList({ proposals, windowStatus }: ProposalListProps) {
     );
   }
 
+  // Check if there's already a submitted proposal in this window
+  const hasSubmittedProposal = proposals.some(p => p.status === 'SUBMITTED');
+
   return (
     <div className='border rounded-lg overflow-x-auto'>
       <Table>
@@ -202,11 +205,19 @@ export function ProposalList({ proposals, windowStatus }: ProposalListProps) {
               </TableCell>
               <TableCell className='w-48'>{proposal.mainArea.label}</TableCell>
               <TableCell className='w-32'>
-                {new Date(proposal.createdAt).toLocaleDateString()}
+                {new Date(proposal.createdAt).toLocaleDateString('en-US', {
+                  month: '2-digit',
+                  day: '2-digit',
+                  year: 'numeric'
+                })}
               </TableCell>
               <TableCell className='w-32'>
                 {proposal.submittedAt
-                  ? new Date(proposal.submittedAt).toLocaleDateString()
+                  ? new Date(proposal.submittedAt).toLocaleDateString('en-US', {
+                      month: '2-digit',
+                      day: '2-digit',
+                      year: 'numeric'
+                    })
                   : '-'}
               </TableCell>
               <TableCell className='text-right'>
@@ -226,9 +237,36 @@ export function ProposalList({ proposals, windowStatus }: ProposalListProps) {
                             <p>Edit draft</p>
                           </TooltipContent>
                         </Tooltip>
-                        <SubmitProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                        {!hasSubmittedProposal ? (
+                          <SubmitProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                        ) : (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button size='sm' variant='secondary' disabled>
+                                Already Submitted
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>You have already submitted a proposal for this window</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
                         <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
                       </>
+                    )}
+                    {windowStatus === 'OPEN' && proposal.status === 'SUBMITTED' && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link href={`/submission/${proposal.id}`}>
+                            <Button size='sm' variant='outline'>
+                              <Eye className='h-4 w-4' />
+                            </Button>
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>View proposal</p>
+                        </TooltipContent>
+                      </Tooltip>
                     )}
                     {windowStatus !== 'OPEN' && (
                       <>
