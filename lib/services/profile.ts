@@ -21,14 +21,12 @@ export async function getUserProfile(userId: string) {
 
 export async function updateOwnProfile(
   userId: string,
-  data: { affiliation?: string; centreCode: string; centreName: string }
+  data: { affiliation?: string }
 ) {
   return prisma.user.update({
     where: { id: userId },
     data: {
-      affiliation: data.affiliation,
-      centreCode: data.centreCode,
-      centreName: data.centreName
+      affiliation: data.affiliation
     },
     select: {
       id: true,
@@ -49,6 +47,17 @@ export async function updateAvatar(userId: string, avatarUrl: string) {
   return prisma.user.update({
     where: { id: userId },
     data: { avatarUrl },
+    select: {
+      id: true,
+      avatarUrl: true
+    }
+  });
+}
+
+export async function deleteAvatar(userId: string) {
+  return prisma.user.update({
+    where: { id: userId },
+    data: { avatarUrl: null },
     select: {
       id: true,
       avatarUrl: true

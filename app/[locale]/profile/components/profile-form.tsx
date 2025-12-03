@@ -1,105 +1,119 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'next-safe-action/hooks';
 import { updateOwnProfileAction } from '@/lib/actions/profile-actions';
-import { updateOwnProfileSchema } from '@/lib/schemas/profile';
-import type { z } from 'zod';
+import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 
-type ProfileFormData = z.infer<typeof updateOwnProfileSchema>;
+const affiliationSchema = z.object({
+  affiliation: z.string().optional().transform(val => val === '' ? undefined : val)
+});
+
+type AffiliationFormData = z.infer<typeof affiliationSchema>;
 
 interface ProfileFormProps {
-  centreCode: string;
-  centreName: string;
   affiliation: string;
 }
 
-export function ProfileForm({ centreCode, centreName, affiliation }: ProfileFormProps) {
-  const form = useForm<ProfileFormData>({
-    resolver: zodResolver(updateOwnProfileSchema),
+export function ProfileForm({ affiliation }: ProfileFormProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const form = useForm<AffiliationFormData>({
+    resolver: zodResolver(affiliationSchema),
     defaultValues: {
-      centreCode,
-      centreName,
       affiliation: affiliation || ''
     }
   });
 
   const { execute, status } = useAction(updateOwnProfileAction, {
     onSuccess: () => {
-      toast.success('Profile updated successfully');
+      toast.success('Affiliation updated successfully');
+      setIsEditing(false);
     },
     onError: ({ error }) => {
-      toast.error(error.serverError || 'Failed to update profile');
+      toast.error(error.serverError || 'Failed to update affiliation');
     }
   });
 
-  const onSubmit = (data: ProfileFormData) => {
+  const onSubmit = (data: AffiliationFormData) => {
     execute(data);
   };
 
+  const handleCancel = () => {
+    form.reset({ affiliation: affiliation || '' });
+    setIsEditing(false);
+  };
+
+  if (!isEditing) {
+    return (
+      <div className='flex items-center justify-between'>
+        <div className='w-48'>
+          <span className='text-sm font-medium'>Affiliation</span>
+        </div>
+        <div className='flex-1'>
+          <span className='text-sm'>{affiliation || '-'}</span>
+        </div>
+        <div className='w-32 flex justify-end'>
+          <Button
+            type='button'
+            variant='outline'
+            size='sm'
+            onClick={() => setIsEditing(true)}
+          >
+            Change
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-        <div className='grid grid-cols-[120px_1fr] gap-4'>
-          <FormField
-            control={form.control}
-            name='centreCode'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Centre Code *</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder='001' maxLength={3} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='centreName'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Centre Name *</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder='Paris Centre' />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <FormField
-          control={form.control}
-          name='affiliation'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Affiliation</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder='University Hospital' />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className='flex justify-end'>
-          <Button type='submit' disabled={status === 'executing'}>
-            {status === 'executing' ? 'Saving...' : 'Save Changes'}
-          </Button>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className='flex items-start justify-between gap-4'>
+          <div className='w-48'>
+            <span className='text-sm font-medium'>Affiliation</span>
+          </div>
+          <div className='flex-1'>
+            <FormField
+              control={form.control}
+              name='affiliation'
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input {...field} placeholder='University Hospital' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className='w-32 flex justify-end gap-2'>
+            <Button
+              type='button'
+              variant='ghost'
+              size='sm'
+              onClick={handleCancel}
+              disabled={status === 'executing'}
+            >
+              Cancel
+            </Button>
+            <Button type='submit' size='sm' disabled={status === 'executing'}>
+              {status === 'executing' ? 'Saving...' : 'Save'}
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

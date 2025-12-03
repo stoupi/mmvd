@@ -20,3 +20,11 @@ export const updateAvatarAction = authenticatedAction
     revalidatePath('/profile');
     return { success: true, user };
   });
+
+export const deleteAvatarAction = authenticatedAction
+  .schema(schemas.deleteAvatarSchema)
+  .action(async ({ ctx }) => {
+    const user = await profileService.deleteAvatar(ctx.userId);
+    revalidatePath('/profile');
+    return { success: true, user };
+  });

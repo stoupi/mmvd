@@ -2,9 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { useAction } from 'next-safe-action/hooks';
-import { updateAvatarAction } from '@/lib/actions/profile-actions';
+import { updateAvatarAction, deleteAvatarAction } from '@/lib/actions/profile-actions';
 import { Button } from '@/components/ui/button';
-import { Camera, Loader2 } from 'lucide-react';
+import { Upload, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import Image from 'next/image';
 
@@ -18,7 +18,7 @@ export function AvatarUpload({ currentAvatarUrl, userName }: AvatarUploadProps) 
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { execute, status } = useAction(updateAvatarAction, {
+  const { execute: executeUpdate } = useAction(updateAvatarAction, {
     onSuccess: () => {
       toast.success('Profile photo updated successfully');
       setUploading(false);
@@ -27,6 +27,16 @@ export function AvatarUpload({ currentAvatarUrl, userName }: AvatarUploadProps) 
       toast.error(error.serverError || 'Failed to update profile photo');
       setPreview(currentAvatarUrl);
       setUploading(false);
+    }
+  });
+
+  const { execute: executeDelete, status: deleteStatus } = useAction(deleteAvatarAction, {
+    onSuccess: () => {
+      toast.success('Profile photo removed successfully');
+      setPreview(null);
+    },
+    onError: ({ error }) => {
+      toast.error(error.serverError || 'Failed to remove profile photo');
     }
   });
 
@@ -39,8 +49,8 @@ export function AvatarUpload({ currentAvatarUrl, userName }: AvatarUploadProps) 
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('Image size must be less than 5MB');
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('Image size must be less than 10MB');
       return;
     }
 
@@ -50,7 +60,7 @@ export function AvatarUpload({ currentAvatarUrl, userName }: AvatarUploadProps) 
     reader.onloadend = () => {
       const base64 = reader.result as string;
       setPreview(base64);
-      execute({ avatarUrl: base64 });
+      executeUpdate({ avatarUrl: base64 });
     };
     reader.onerror = () => {
       toast.error('Failed to read image file');
@@ -63,6 +73,10 @@ export function AvatarUpload({ currentAvatarUrl, userName }: AvatarUploadProps) 
     fileInputRef.current?.click();
   };
 
+  const handleRemove = () => {
+    executeDelete({});
+  };
+
   const getInitials = () => {
     const names = userName.split(' ');
     if (names.length >= 2) {
@@ -72,19 +86,19 @@ export function AvatarUpload({ currentAvatarUrl, userName }: AvatarUploadProps) 
   };
 
   return (
-    <div className='flex flex-col items-center gap-4'>
+    <div className='flex items-center gap-6'>
       <div className='relative'>
-        <div className='h-32 w-32 rounded-full overflow-hidden bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center'>
+        <div className='h-24 w-24 rounded-full overflow-hidden bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center'>
           {preview ? (
             <Image
               src={preview}
               alt={userName}
-              width={128}
-              height={128}
+              width={96}
+              height={96}
               className='h-full w-full object-cover'
             />
           ) : (
-            <span className='text-white text-4xl font-bold'>
+            <span className='text-white text-3xl font-bold'>
               {getInitials()}
             </span>
           )}
@@ -96,24 +110,44 @@ export function AvatarUpload({ currentAvatarUrl, userName }: AvatarUploadProps) 
         )}
       </div>
 
-      <input
-        ref={fileInputRef}
-        type='file'
-        accept='image/*'
-        onChange={handleFileChange}
-        className='hidden'
-      />
+      <div className='flex flex-col gap-2'>
+        <div className='flex gap-2'>
+          <input
+            ref={fileInputRef}
+            type='file'
+            accept='image/*'
+            onChange={handleFileChange}
+            className='hidden'
+          />
 
-      <Button
-        type='button'
-        variant='outline'
-        size='sm'
-        onClick={handleButtonClick}
-        disabled={uploading || status === 'executing'}
-      >
-        <Camera className='h-4 w-4 mr-2' />
-        {preview ? 'Change Photo' : 'Upload Photo'}
-      </Button>
+          <Button
+            type='button'
+            variant='outline'
+            size='sm'
+            onClick={handleButtonClick}
+            disabled={uploading || deleteStatus === 'executing'}
+          >
+            <Upload className='h-4 w-4 mr-2' />
+            Upload image
+          </Button>
+
+          {preview && (
+            <Button
+              type='button'
+              variant='ghost'
+              size='sm'
+              onClick={handleRemove}
+              disabled={uploading || deleteStatus === 'executing'}
+              className='text-muted-foreground hover:text-foreground'
+            >
+              Remove
+            </Button>
+          )}
+        </div>
+        <p className='text-xs text-muted-foreground'>
+          *png, jpeg files up to 10MB at least 400px by 400px
+        </p>
+      </div>
     </div>
   );
 }
