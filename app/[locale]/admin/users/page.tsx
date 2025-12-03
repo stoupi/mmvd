@@ -3,6 +3,7 @@ import { getAllUsers } from '@/lib/services/admin';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users } from 'lucide-react';
 import { UsersTable } from './components/users-table';
+import { CreateUserDialog } from './components/create-user-dialog';
 
 export default async function UsersPage() {
   await requirePermissionGuard('ADMIN');
@@ -19,8 +20,9 @@ export default async function UsersPage() {
       </div>
 
       <Card>
-        <CardHeader>
+        <CardHeader className='flex flex-row items-center justify-between space-y-0'>
           <CardTitle>All Users ({users.length})</CardTitle>
+          <CreateUserDialog />
         </CardHeader>
         <CardContent>
           {users.length === 0 ? (

@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
-import type { AppPermission, WindowStatus } from '@prisma/client';
+import type { AppPermission, WindowStatus } from '@/app/generated/prisma';
+import { createId } from '@paralleldrive/cuid2';
 
 // Main Areas Management
 export async function createMainArea(data: { label: string; description?: string }) {
@@ -90,6 +91,42 @@ export async function updateUserProfile(
   return prisma.user.update({
     where: { id: userId },
     data
+  });
+}
+
+export async function createUser(data: {
+  email: string;
+  firstName: string;
+  lastName: string;
+  title?: string;
+  affiliation?: string;
+  centreName: string;
+  centreCode: string;
+  permissions: AppPermission[];
+}) {
+  const existingUser = await prisma.user.findUnique({
+    where: { email: data.email }
+  });
+
+  if (existingUser) {
+    throw new Error('A user with this email already exists');
+  }
+
+  return prisma.user.create({
+    data: {
+      id: createId(),
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      name: `${data.firstName} ${data.lastName}`,
+      title: data.title || null,
+      affiliation: data.affiliation || null,
+      centreName: data.centreName,
+      centreCode: data.centreCode,
+      permissions: data.permissions,
+      isActive: true,
+      emailVerified: false
+    }
   });
 }
 

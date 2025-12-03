@@ -99,3 +99,12 @@ export const deleteSubmissionWindowAction = adminAction
     revalidatePath('/admin/windows');
     return { success: true };
   });
+
+// User Actions
+export const createUserAction = adminAction
+  .schema(schemas.createUserSchema)
+  .action(async ({ parsedInput }) => {
+    const user = await adminService.createUser(parsedInput);
+    revalidatePath('/admin/users');
+    return { success: true, user };
+  });

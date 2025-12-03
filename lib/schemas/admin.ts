@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { AppPermission, WindowStatus } from '@prisma/client';
+import { AppPermission, WindowStatus } from '@/app/generated/prisma';
 
 // Main Area Schemas
 export const mainAreaSchema = z.object({
@@ -16,6 +16,17 @@ export const deleteMainAreaSchema = z.object({
 });
 
 // User Management Schemas
+export const createUserSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  title: z.string().optional().transform(val => val === '' ? undefined : val),
+  affiliation: z.string().optional().transform(val => val === '' ? undefined : val),
+  centreCode: z.string().regex(/^\d{3}$/, 'Centre code must be 3 digits'),
+  centreName: z.string().min(1, 'Centre name is required'),
+  permissions: z.array(z.nativeEnum(AppPermission)).default([])
+});
+
 export const updateUserPermissionsSchema = z.object({
   userId: z.string(),
   permissions: z.array(z.nativeEnum(AppPermission))
@@ -30,7 +41,9 @@ export const updateUserProfileSchema = z.object({
   userId: z.string(),
   firstName: z.string().min(1, 'First name is required').optional(),
   lastName: z.string().min(1, 'Last name is required').optional(),
+  title: z.string().optional(),
   affiliation: z.string().optional(),
+  centreName: z.string().optional(),
   centreCode: z.string().optional()
 });
 
