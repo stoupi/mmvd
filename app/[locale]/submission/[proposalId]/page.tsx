@@ -48,6 +48,7 @@ export default async function ProposalDetailPage({
 
   const mainAreas = await getMainAreas();
   const isDraft = proposal.status === 'DRAFT';
+  const isWindowOpen = proposal.submissionWindow.status === 'OPEN';
 
   const initialData = {
     title: proposal.title,
@@ -96,7 +97,7 @@ export default async function ProposalDetailPage({
             {statusLabels[proposal.status]}
           </Badge>
         </div>
-        {isDraft && (
+        {isDraft && isWindowOpen && (
           <Link href={`/submission/${proposalId}/edit`}>
             <Button variant='outline'>
               <Edit className='h-4 w-4 mr-2' />
@@ -106,11 +107,16 @@ export default async function ProposalDetailPage({
         )}
       </div>
 
-      <p className='text-muted-foreground mb-6'>
-        {proposal.submissionWindow.name}
-      </p>
+      <div className='flex items-center gap-3 mb-6'>
+        <p className='text-muted-foreground'>
+          {proposal.submissionWindow.name}
+        </p>
+        <Badge className={isWindowOpen ? 'bg-green-500' : 'bg-red-500'}>
+          {isWindowOpen ? 'Open' : 'Closed'}
+        </Badge>
+      </div>
 
-      {isDraft && (
+      {isDraft && isWindowOpen && (
         <Card className='mb-6 border-blue-200 bg-blue-50'>
           <CardContent className='pt-6'>
             <div className='flex items-start justify-between'>

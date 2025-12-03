@@ -29,7 +29,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Trash2, Pencil, Send } from 'lucide-react';
+import { Trash2, Pencil, Send, Eye } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import { deleteProposalAction, submitProposalAction } from '@/lib/actions/proposal-actions';
 import { toast } from 'sonner';
@@ -66,21 +66,6 @@ const statusLabels: Record<ProposalStatus, string> = {
   PRIORITIZED: 'Prioritized'
 };
 
-const windowStatusColors: Record<SubmissionWindowStatus, string> = {
-  PLANNED: 'bg-gray-400',
-  OPEN: 'bg-green-500',
-  CLOSED: 'bg-red-500',
-  REVIEWING: 'bg-yellow-500',
-  COMPLETED: 'bg-blue-500'
-};
-
-const windowStatusLabels: Record<SubmissionWindowStatus, string> = {
-  PLANNED: 'Planned',
-  OPEN: 'Open',
-  CLOSED: 'Closed',
-  REVIEWING: 'Reviewing',
-  COMPLETED: 'Completed'
-};
 
 function SubmitProposalButton({ proposalId, proposalTitle }: { proposalId: string; proposalTitle: string }) {
   const router = useRouter();
@@ -195,55 +180,76 @@ export function ProposalList({ proposals, windowStatus }: ProposalListProps) {
         <TableHeader>
           <TableRow>
             <TableHead className='w-32'>Status</TableHead>
-            <TableHead className='min-w-96'>Title</TableHead>
-            <TableHead>Main Topic</TableHead>
-            <TableHead>Created</TableHead>
-            <TableHead>Submitted</TableHead>
-            <TableHead className='text-right'>Actions</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead className='w-48'>Main Topic</TableHead>
+            <TableHead className='w-32'>Created</TableHead>
+            <TableHead className='w-32'>Submitted</TableHead>
+            <TableHead className='w-48 text-right'>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {proposals.map((proposal) => (
             <TableRow key={proposal.id}>
-              <TableCell>
+              <TableCell className='w-32'>
                 <Badge className={statusColors[proposal.status]}>
                   {statusLabels[proposal.status]}
                 </Badge>
               </TableCell>
               <TableCell className='font-medium'>
-                <div className='max-w-96 overflow-x-auto whitespace-nowrap'>
+                <div className='overflow-x-auto whitespace-nowrap'>
                   {proposal.title}
                 </div>
               </TableCell>
-              <TableCell>{proposal.mainArea.label}</TableCell>
-              <TableCell>
+              <TableCell className='w-48'>{proposal.mainArea.label}</TableCell>
+              <TableCell className='w-32'>
                 {new Date(proposal.createdAt).toLocaleDateString()}
               </TableCell>
-              <TableCell>
+              <TableCell className='w-32'>
                 {proposal.submittedAt
                   ? new Date(proposal.submittedAt).toLocaleDateString()
                   : '-'}
               </TableCell>
               <TableCell className='text-right'>
-                <div className='flex gap-2 justify-end'>
-                  {proposal.status === 'DRAFT' && (
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Link href={`/submission/${proposal.id}/edit`}>
-                            <Button size='sm' variant='outline'>
-                              <Pencil className='h-4 w-4' />
-                            </Button>
-                          </Link>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Edit draft</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      <SubmitProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
-                      <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
-                    </TooltipProvider>
-                  )}
+                <div className='flex gap-2 justify-end w-[180px] ml-auto'>
+                  <TooltipProvider>
+                    {windowStatus === 'OPEN' && proposal.status === 'DRAFT' && (
+                      <>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Link href={`/submission/${proposal.id}/edit`}>
+                              <Button size='sm' variant='outline'>
+                                <Pencil className='h-4 w-4' />
+                              </Button>
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Edit draft</p>
+                          </TooltipContent>
+                        </Tooltip>
+                        <SubmitProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                        <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                      </>
+                    )}
+                    {windowStatus !== 'OPEN' && (
+                      <>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Link href={`/submission/${proposal.id}`}>
+                              <Button size='sm' variant='outline'>
+                                <Eye className='h-4 w-4' />
+                              </Button>
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>View proposal</p>
+                          </TooltipContent>
+                        </Tooltip>
+                        {proposal.status === 'DRAFT' && (
+                          <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                        )}
+                      </>
+                    )}
+                  </TooltipProvider>
                 </div>
               </TableCell>
             </TableRow>

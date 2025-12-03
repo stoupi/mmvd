@@ -119,18 +119,8 @@ export default async function SubmissionPage({
           <div key={window.id} className='mt-8'>
             <div className='flex items-center gap-4 mb-4'>
               <h2 className='text-2xl font-semibold'>{window.name}</h2>
-              <Badge className={
-                window.status === 'OPEN' ? 'bg-green-500' :
-                window.status === 'CLOSED' ? 'bg-red-500' :
-                window.status === 'REVIEWING' ? 'bg-yellow-500' :
-                window.status === 'COMPLETED' ? 'bg-blue-500' :
-                'bg-gray-400'
-              }>
-                {window.status === 'OPEN' ? 'Open' :
-                 window.status === 'CLOSED' ? 'Closed' :
-                 window.status === 'REVIEWING' ? 'Reviewing' :
-                 window.status === 'COMPLETED' ? 'Completed' :
-                 'Planned'}
+              <Badge className={window.status === 'OPEN' ? 'bg-green-500' : 'bg-red-500'}>
+                {window.status === 'OPEN' ? 'Open' : 'Closed'}
               </Badge>
               <span className='text-muted-foreground'>
                 ({new Date(window.submissionOpenAt).toLocaleDateString()} - {new Date(window.submissionCloseAt).toLocaleDateString()})
