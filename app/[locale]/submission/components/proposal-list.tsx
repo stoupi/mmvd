@@ -1,9 +1,40 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+'use client';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
-import type { Proposal, ProposalStatus, SubmissionWindow, MainArea, Review } from '@/app/generated/prisma';
-import { FileText, Calendar, Users } from 'lucide-react';
+import type { Proposal, ProposalStatus, SubmissionWindow, MainArea, Review, SubmissionWindowStatus } from '@/app/generated/prisma';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { Trash2, Pencil, Send } from 'lucide-react';
+import { useAction } from 'next-safe-action/hooks';
+import { deleteProposalAction, submitProposalAction } from '@/lib/actions/proposal-actions';
+import { toast } from 'sonner';
+import { useRouter } from '@/app/i18n/navigation';
+import { useState } from 'react';
 
 interface ProposalWithRelations extends Proposal {
   submissionWindow: SubmissionWindow;
@@ -33,77 +64,208 @@ const statusLabels: Record<ProposalStatus, string> = {
   PRIORITIZED: 'Prioritized'
 };
 
+const windowStatusColors: Record<SubmissionWindowStatus, string> = {
+  PLANNED: 'bg-gray-400',
+  OPEN: 'bg-green-500',
+  CLOSED: 'bg-red-500',
+  REVIEWING: 'bg-yellow-500',
+  COMPLETED: 'bg-blue-500'
+};
+
+const windowStatusLabels: Record<SubmissionWindowStatus, string> = {
+  PLANNED: 'Planned',
+  OPEN: 'Open',
+  CLOSED: 'Closed',
+  REVIEWING: 'Reviewing',
+  COMPLETED: 'Completed'
+};
+
+function SubmitProposalButton({ proposalId, proposalTitle }: { proposalId: string; proposalTitle: string }) {
+  const router = useRouter();
+
+  const { execute: submitProposal, status } = useAction(submitProposalAction, {
+    onSuccess: () => {
+      toast.success('Proposal submitted successfully');
+      router.refresh();
+    },
+    onError: ({ error }) => {
+      toast.error(error.serverError || 'Failed to submit proposal');
+    }
+  });
+
+  const handleSubmit = () => {
+    submitProposal({ id: proposalId });
+  };
+
+  return (
+    <Tooltip>
+      <AlertDialog>
+        <TooltipTrigger asChild>
+          <AlertDialogTrigger asChild>
+            <Button size='sm' variant='default' disabled={status === 'executing'}>
+              <Send className='h-4 w-4' />
+            </Button>
+          </AlertDialogTrigger>
+        </TooltipTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Submit Proposal?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to submit "{proposalTitle}"? Once submitted, you cannot modify it or submit another proposal for this submission window. This action is final.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleSubmit}>
+              {status === 'executing' ? 'Submitting...' : 'Submit Proposal'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <TooltipContent>
+        <p>Submit proposal</p>
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
+function DeleteProposalButton({ proposalId, proposalTitle }: { proposalId: string; proposalTitle: string }) {
+  const router = useRouter();
+
+  const { execute: deleteProposal, status } = useAction(deleteProposalAction, {
+    onSuccess: () => {
+      toast.success('Draft deleted successfully');
+      router.refresh();
+    },
+    onError: ({ error }) => {
+      toast.error(error.serverError || 'Failed to delete draft');
+    }
+  });
+
+  const handleDelete = () => {
+    deleteProposal({ id: proposalId });
+  };
+
+  return (
+    <Tooltip>
+      <AlertDialog>
+        <TooltipTrigger asChild>
+          <AlertDialogTrigger asChild>
+            <Button size='sm' variant='destructive' disabled={status === 'executing'}>
+              <Trash2 className='h-4 w-4' />
+            </Button>
+          </AlertDialogTrigger>
+        </TooltipTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Draft?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{proposalTitle}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className='bg-destructive text-destructive-foreground hover:bg-destructive/90'>
+              {status === 'executing' ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <TooltipContent>
+        <p>Delete draft</p>
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
 export function ProposalList({ proposals }: ProposalListProps) {
   if (proposals.length === 0) {
     return (
-      <Card>
-        <CardContent className='py-12 text-center text-muted-foreground'>
-          <FileText className='h-12 w-12 mx-auto mb-4 opacity-50' />
-          <p>No proposals yet</p>
-        </CardContent>
-      </Card>
+      <div className='text-center py-12 text-muted-foreground'>
+        <p>No proposals yet</p>
+      </div>
     );
   }
 
   return (
-    <div className='space-y-4'>
-      {proposals.map((proposal) => (
-        <Card key={proposal.id} className='hover:shadow-md transition-shadow'>
-          <CardHeader>
-            <div className='flex items-start justify-between'>
-              <div className='flex-1'>
-                <CardTitle className='text-lg mb-2'>{proposal.title}</CardTitle>
-                <div className='flex flex-wrap gap-2 text-sm text-muted-foreground'>
-                  <div className='flex items-center gap-1'>
-                    <FileText className='h-4 w-4' />
-                    <span>{proposal.mainArea.label}</span>
-                  </div>
-                  <div className='flex items-center gap-1'>
-                    <Calendar className='h-4 w-4' />
-                    <span>{proposal.submissionWindow.name}</span>
-                  </div>
-                  {proposal.reviews.length > 0 && (
-                    <div className='flex items-center gap-1'>
-                      <Users className='h-4 w-4' />
-                      <span>{proposal.reviews.length} review(s)</span>
-                    </div>
+    <div className='border rounded-lg'>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead colSpan={4} className='text-left bg-blue-50'>Window Information</TableHead>
+            <TableHead colSpan={5} className='text-left bg-green-50'>Proposal Information</TableHead>
+            <TableHead rowSpan={2} className='text-right align-middle'>Actions</TableHead>
+          </TableRow>
+          <TableRow>
+            <TableHead className='bg-blue-50'>Name</TableHead>
+            <TableHead className='bg-blue-50'>Status</TableHead>
+            <TableHead className='bg-blue-50'>Opening</TableHead>
+            <TableHead className='bg-blue-50'>Closing</TableHead>
+            <TableHead className='bg-green-50'>Title</TableHead>
+            <TableHead className='bg-green-50'>Main Topic</TableHead>
+            <TableHead className='bg-green-50'>Created</TableHead>
+            <TableHead className='bg-green-50'>Submitted</TableHead>
+            <TableHead className='bg-green-50'>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {proposals.map((proposal) => (
+            <TableRow key={proposal.id}>
+              <TableCell className='bg-blue-50/30'>{proposal.submissionWindow.name}</TableCell>
+              <TableCell className='bg-blue-50/30'>
+                <Badge className={windowStatusColors[proposal.submissionWindow.status]}>
+                  {windowStatusLabels[proposal.submissionWindow.status]}
+                </Badge>
+              </TableCell>
+              <TableCell className='bg-blue-50/30'>
+                {new Date(proposal.submissionWindow.submissionOpenAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell className='bg-blue-50/30'>
+                {new Date(proposal.submissionWindow.submissionCloseAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell className='bg-green-50/30 font-medium max-w-xs truncate'>
+                {proposal.title}
+              </TableCell>
+              <TableCell className='bg-green-50/30'>{proposal.mainArea.label}</TableCell>
+              <TableCell className='bg-green-50/30'>
+                {new Date(proposal.createdAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell className='bg-green-50/30'>
+                {proposal.submittedAt
+                  ? new Date(proposal.submittedAt).toLocaleDateString()
+                  : '-'}
+              </TableCell>
+              <TableCell className='bg-green-50/30'>
+                <Badge className={statusColors[proposal.status]}>
+                  {statusLabels[proposal.status]}
+                </Badge>
+              </TableCell>
+              <TableCell className='text-right'>
+                <div className='flex gap-2 justify-end'>
+                  {proposal.status === 'DRAFT' && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link href={`/submission/${proposal.id}/edit`}>
+                            <Button size='sm' variant='outline'>
+                              <Pencil className='h-4 w-4' />
+                            </Button>
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Edit draft</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <SubmitProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                      <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                    </TooltipProvider>
                   )}
                 </div>
-              </div>
-              <Badge className={statusColors[proposal.status]}>
-                {statusLabels[proposal.status]}
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className='flex items-center justify-between'>
-              <div className='text-sm text-muted-foreground'>
-                {proposal.submittedAt ? (
-                  <span>
-                    Submitted: {new Date(proposal.submittedAt).toLocaleDateString()}
-                  </span>
-                ) : (
-                  <span>Created: {new Date(proposal.createdAt).toLocaleDateString()}</span>
-                )}
-              </div>
-              <div className='flex gap-2'>
-                {proposal.status === 'DRAFT' && (
-                  <Link href={`/submission/${proposal.id}/edit`}>
-                    <Button size='sm' variant='outline'>
-                      Edit Draft
-                    </Button>
-                  </Link>
-                )}
-                <Link href={`/submission/${proposal.id}`}>
-                  <Button size='sm' variant='default'>
-                    View Details
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }

@@ -35,6 +35,7 @@ interface ProposalFormProps {
   centreCode: string;
   isEditing?: boolean;
   proposalCounts?: Record<string, number>;
+  readOnly?: boolean;
 }
 
 export function ProposalForm({
@@ -44,7 +45,8 @@ export function ProposalForm({
   submissionWindowId,
   centreCode,
   isEditing = false,
-  proposalCounts = {}
+  proposalCounts = {},
+  readOnly = false
 }: ProposalFormProps) {
   const router = useRouter();
   const [secondaryObjectivesCount, setSecondaryObjectivesCount] = useState(initialData?.secondaryObjectives?.length || 0);
@@ -186,6 +188,7 @@ export function ProposalForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+        <fieldset disabled={readOnly} className='space-y-8'>
         <FormField
           control={form.control}
           name='title'
@@ -809,37 +812,40 @@ export function ProposalForm({
             ))}
           </div>
         </div>
+        </fieldset>
 
-        <div className='flex gap-4 pt-4'>
-          <Button
-            type='button'
-            size='lg'
-            disabled={isExecuting}
-            onClick={handleSubmitClick}
-            className='flex-1'
-          >
-            <Send className='h-5 w-5 mr-2' />
-            {createSubmitStatus === 'executing' || updateSubmitStatus === 'executing' ? 'Submitting...' : 'Submit Proposal'}
-          </Button>
-          <Button
-            type='submit'
-            size='lg'
-            variant='secondary'
-            disabled={isExecuting}
-            className='flex-1'
-          >
-            <Save className='h-5 w-5 mr-2' />
-            {createStatus === 'executing' || updateStatus === 'executing' ? 'Saving...' : isEditing ? 'Update Draft' : 'Save Draft'}
-          </Button>
-          <Button
-            type='button'
-            size='lg'
-            variant='outline'
-            onClick={() => router.back()}
-          >
-            Cancel
-          </Button>
-        </div>
+        {!readOnly && (
+          <div className='flex gap-4 pt-4'>
+            <Button
+              type='button'
+              size='lg'
+              disabled={isExecuting}
+              onClick={handleSubmitClick}
+              className='flex-1'
+            >
+              <Send className='h-5 w-5 mr-2' />
+              {createSubmitStatus === 'executing' || updateSubmitStatus === 'executing' ? 'Submitting...' : 'Submit Proposal'}
+            </Button>
+            <Button
+              type='submit'
+              size='lg'
+              variant='secondary'
+              disabled={isExecuting}
+              className='flex-1'
+            >
+              <Save className='h-5 w-5 mr-2' />
+              {createStatus === 'executing' || updateStatus === 'executing' ? 'Saving...' : isEditing ? 'Update Draft' : 'Save Draft'}
+            </Button>
+            <Button
+              type='button'
+              size='lg'
+              variant='outline'
+              onClick={() => router.back()}
+            >
+              Cancel
+            </Button>
+          </div>
+        )}
       </form>
 
       <AlertDialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
