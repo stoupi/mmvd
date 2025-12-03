@@ -6,7 +6,7 @@ import { FileText, Calendar, FolderOpen, Users, LayoutDashboard } from 'lucide-r
 
 const menuItems = [
   {
-    label: 'Abstracts',
+    label: 'Proposals',
     href: '/admin',
     icon: FileText
   },

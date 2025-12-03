@@ -38,6 +38,7 @@ interface EditUserDialogProps {
     lastName: string | null;
     affiliation: string | null;
     centreCode: string | null;
+    centreName: string | null;
   };
 }
 
@@ -50,7 +51,8 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
       firstName: user.firstName || '',
       lastName: user.lastName || '',
       affiliation: user.affiliation || '',
-      centreCode: user.centreCode || ''
+      centreCode: user.centreCode || '',
+      centreName: user.centreName || ''
     }
   });
 
@@ -130,7 +132,20 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
                 <FormItem>
                   <FormLabel>Centre Code</FormLabel>
                   <FormControl>
-                    <Input placeholder='e.g., CTR001' {...field} />
+                    <Input placeholder='001' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='centreName'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Centre Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Paris Centre' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

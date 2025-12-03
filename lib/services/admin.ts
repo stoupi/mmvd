@@ -231,7 +231,10 @@ export async function getAllSubmissionWindows() {
 export async function getAllProposals() {
   return prisma.proposal.findMany({
     where: {
-      isDeleted: false
+      isDeleted: false,
+      status: {
+        not: 'DRAFT'
+      }
     },
     include: {
       piUser: {
