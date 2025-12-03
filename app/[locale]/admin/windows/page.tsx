@@ -22,24 +22,21 @@ export default async function SubmissionWindowsPage() {
         <CreateWindowDialog />
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>All Submission Windows ({windows.length})</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {windows.length === 0 ? (
-            <div className='text-center py-8'>
+      {windows.length === 0 ? (
+        <Card>
+          <CardContent className='py-12'>
+            <div className='text-center'>
               <Calendar className='h-12 w-12 mx-auto text-muted-foreground mb-4' />
               <h3 className='text-lg font-semibold mb-2'>No submission windows yet</h3>
               <p className='text-sm text-muted-foreground mb-4'>
                 Create your first submission window to start accepting proposals
               </p>
             </div>
-          ) : (
-            <WindowsList windows={windows} />
-          )}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      ) : (
+        <WindowsList windows={windows} />
+      )}
     </div>
   );
 }

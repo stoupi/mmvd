@@ -19,11 +19,8 @@ interface WindowStatusSelectProps {
   };
 }
 
-const statusLabels = {
-  UPCOMING: 'Upcoming',
+const statusLabels: Record<string, string> = {
   OPEN: 'Open',
-  REVIEW: 'Under Review',
-  RESPONSE: 'Response Period',
   CLOSED: 'Closed'
 };
 
@@ -37,13 +34,18 @@ export function WindowStatusSelect({ window }: WindowStatusSelectProps) {
     }
   });
 
-  const handleStatusChange = (newStatus: WindowStatus) => {
-    execute({ id: window.id, status: newStatus });
+  const handleStatusChange = (newStatus: string) => {
+    execute({ id: window.id, status: newStatus as WindowStatus });
   };
+
+  // Display current status even if it's not OPEN or CLOSED
+  const displayStatus = window.status === 'OPEN' || window.status === 'CLOSED'
+    ? window.status
+    : 'CLOSED';
 
   return (
     <Select
-      value={window.status}
+      value={displayStatus}
       onValueChange={handleStatusChange}
       disabled={status === 'executing'}
     >

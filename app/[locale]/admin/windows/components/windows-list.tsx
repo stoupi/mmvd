@@ -27,20 +27,12 @@ interface WindowsListProps {
   windows: SubmissionWindow[];
 }
 
-const statusColors = {
-  UPCOMING: 'bg-gray-500',
-  OPEN: 'bg-green-500',
-  REVIEW: 'bg-blue-500',
-  RESPONSE: 'bg-yellow-500',
-  CLOSED: 'bg-orange-500'
+const getStatusColor = (status: WindowStatus) => {
+  return status === 'OPEN' ? 'bg-green-500' : 'bg-red-500';
 };
 
-const statusLabels = {
-  UPCOMING: 'Upcoming',
-  OPEN: 'Open',
-  REVIEW: 'Under Review',
-  RESPONSE: 'Response Period',
-  CLOSED: 'Closed'
+const getStatusLabel = (status: WindowStatus) => {
+  return status === 'OPEN' ? 'Open' : 'Closed';
 };
 
 export function WindowsList({ windows }: WindowsListProps) {
@@ -49,21 +41,20 @@ export function WindowsList({ windows }: WindowsListProps) {
       {windows.map((window) => (
         <div
           key={window.id}
-          className='flex items-start justify-between p-4 border rounded-lg'
+          className='flex items-start justify-between p-4 border rounded-lg bg-white'
         >
           <div className='flex-1'>
             <div className='flex items-center gap-2 mb-2'>
               <h3 className='font-semibold'>{window.name}</h3>
-              <Badge className={statusColors[window.status]}>
-                {statusLabels[window.status]}
+              <Badge className={getStatusColor(window.status)}>
+                {getStatusLabel(window.status)}
               </Badge>
               <Badge variant='outline'>
-                {window._count.proposals} {window._count.proposals === 1 ? 'proposal' : 'proposals'}
+                {window._count.proposals} {window._count.proposals === 1 ? 'proposal submitted' : 'proposals submitted'}
               </Badge>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground'>
               <div>
-                <span className='font-medium'>Submission:</span>{' '}
                 {new Date(window.submissionOpenAt).toLocaleDateString()} -{' '}
                 {new Date(window.submissionCloseAt).toLocaleDateString()}
               </div>

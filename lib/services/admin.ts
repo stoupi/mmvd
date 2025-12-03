@@ -154,7 +154,14 @@ export async function getAllSubmissionWindows() {
   return prisma.submissionWindow.findMany({
     include: {
       _count: {
-        select: { proposals: true }
+        select: {
+          proposals: {
+            where: {
+              status: 'SUBMITTED',
+              isDeleted: false
+            }
+          }
+        }
       }
     },
     orderBy: { submissionOpenAt: 'desc' }
