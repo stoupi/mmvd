@@ -56,6 +56,12 @@ export async function getAllUsers() {
       permissions: true,
       isActive: true,
       createdAt: true,
+      reviewTopics: {
+        select: {
+          id: true,
+          label: true
+        }
+      },
       _count: {
         select: {
           proposalsAsPi: true,
@@ -128,6 +134,20 @@ export async function createUser(data: {
       permissions: data.permissions,
       isActive: true,
       emailVerified: false
+    }
+  });
+}
+
+export async function updateUserReviewTopics(userId: string, mainAreaIds: string[]) {
+  return prisma.user.update({
+    where: { id: userId },
+    data: {
+      reviewTopics: {
+        set: mainAreaIds.map(id => ({ id }))
+      }
+    },
+    include: {
+      reviewTopics: true
     }
   });
 }

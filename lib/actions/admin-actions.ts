@@ -108,3 +108,14 @@ export const createUserAction = adminAction
     revalidatePath('/admin/users');
     return { success: true, user };
   });
+
+export const updateUserReviewTopicsAction = adminAction
+  .schema(schemas.updateUserReviewTopicsSchema)
+  .action(async ({ parsedInput }) => {
+    const user = await adminService.updateUserReviewTopics(
+      parsedInput.userId,
+      parsedInput.mainAreaIds
+    );
+    revalidatePath('/admin/users');
+    return { success: true, user };
+  });

@@ -47,6 +47,11 @@ export const updateUserProfileSchema = z.object({
   centreCode: z.string().optional()
 });
 
+export const updateUserReviewTopicsSchema = z.object({
+  userId: z.string(),
+  mainAreaIds: z.array(z.string())
+});
+
 // Submission Window Schemas
 export const submissionWindowSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),

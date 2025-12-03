@@ -41,6 +41,7 @@ model User {
   // MMVD relationships
   proposalsAsPi  Proposal[] @relation("ProposalPi")
   reviews        Review[]
+  reviewTopics   MainArea[] @relation("ReviewerTopics")
 }
 
 model Session {
@@ -151,6 +152,7 @@ model MainArea {
   updatedAt   DateTime  @updatedAt
 
   proposals   Proposal[]
+  reviewers   User[]     @relation("ReviewerTopics")
 }
 
 model Proposal {

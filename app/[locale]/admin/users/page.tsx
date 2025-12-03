@@ -1,5 +1,5 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
-import { getAllUsers } from '@/lib/services/admin';
+import { getAllUsers, getAllMainAreas } from '@/lib/services/admin';
 import { Users } from 'lucide-react';
 import { UsersTable } from './components/users-table';
 import { CreateUserDialog } from './components/create-user-dialog';
@@ -7,7 +7,15 @@ import { CreateUserDialog } from './components/create-user-dialog';
 export default async function UsersPage() {
   await requirePermissionGuard('ADMIN');
 
-  const users = await getAllUsers();
+  const [users, mainAreasData] = await Promise.all([
+    getAllUsers(),
+    getAllMainAreas()
+  ]);
+
+  const allMainAreas = mainAreasData.map(area => ({
+    id: area.id,
+    label: area.label
+  }));
 
   return (
     <div className='p-8'>
@@ -30,7 +38,7 @@ export default async function UsersPage() {
           </p>
         </div>
       ) : (
-        <UsersTable users={users} />
+        <UsersTable users={users} allMainAreas={allMainAreas} />
       )}
     </div>
   );

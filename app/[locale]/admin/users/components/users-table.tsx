@@ -23,7 +23,13 @@ import { Edit, CheckCircle, XCircle, ArrowUpDown, ArrowUp, ArrowDown } from 'luc
 import { EditUserDialog } from './edit-user-dialog';
 import { PermissionsDialog } from './permissions-dialog';
 import { ToggleUserStatusDialog } from './toggle-user-status-dialog';
-import type { AppPermission } from '@prisma/client';
+import { ReviewTopicsDialog } from './review-topics-dialog';
+import type { AppPermission } from '@/app/generated/prisma';
+
+interface ReviewTopic {
+  id: string;
+  label: string;
+}
 
 interface User {
   id: string;
@@ -37,6 +43,7 @@ interface User {
   permissions: AppPermission[];
   isActive: boolean;
   createdAt: Date;
+  reviewTopics: ReviewTopic[];
   _count: {
     proposalsAsPi: number;
     reviews: number;
@@ -45,12 +52,13 @@ interface User {
 
 interface UsersTableProps {
   users: User[];
+  allMainAreas: ReviewTopic[];
 }
 
 type SortField = 'name' | 'centreCode' | 'email' | 'status';
 type SortOrder = 'asc' | 'desc';
 
-export function UsersTable({ users }: UsersTableProps) {
+export function UsersTable({ users, allMainAreas }: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [permissionFilter, setPermissionFilter] = useState<string>('all');
@@ -193,6 +201,7 @@ export function UsersTable({ users }: UsersTableProps) {
               </button>
             </TableHead>
             <TableHead>Permissions</TableHead>
+            <TableHead>Review Topics</TableHead>
             <TableHead>Activity</TableHead>
             <TableHead>
               <button
@@ -235,6 +244,15 @@ export function UsersTable({ users }: UsersTableProps) {
               </TableCell>
               <TableCell>
                 <PermissionsDialog user={user} />
+              </TableCell>
+              <TableCell>
+                <ReviewTopicsDialog
+                  userId={user.id}
+                  userName={`${user.title ? user.title + ' ' : ''}${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
+                  isReviewer={user.permissions.includes('REVIEWING')}
+                  currentTopics={user.reviewTopics}
+                  allMainAreas={allMainAreas}
+                />
               </TableCell>
               <TableCell>
                 <div className='text-sm'>
