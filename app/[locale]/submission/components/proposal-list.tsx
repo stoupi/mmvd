@@ -179,21 +179,21 @@ export function ProposalList({ proposals, windowStatus }: ProposalListProps) {
 
   return (
     <div className='border rounded-lg overflow-x-auto'>
-      <Table>
+      <Table className='table-fixed w-full'>
         <TableHeader>
           <TableRow>
-            <TableHead className='w-32'>Status</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead className='w-48'>Main Topic</TableHead>
-            <TableHead className='w-32'>Created</TableHead>
-            <TableHead className='w-32'>Submitted</TableHead>
-            <TableHead className='w-48 text-right'>Actions</TableHead>
+            <TableHead className='w-[120px]'>Status</TableHead>
+            <TableHead className='w-auto'>Title</TableHead>
+            <TableHead className='w-[180px]'>Main Topic</TableHead>
+            <TableHead className='w-[120px]'>Created</TableHead>
+            <TableHead className='w-[120px]'>Submitted</TableHead>
+            <TableHead className='w-[200px] text-right'>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {proposals.map((proposal) => (
             <TableRow key={proposal.id}>
-              <TableCell className='w-32'>
+              <TableCell className='w-[120px]'>
                 <Badge className={statusColors[proposal.status]}>
                   {statusLabels[proposal.status]}
                 </Badge>
@@ -203,15 +203,15 @@ export function ProposalList({ proposals, windowStatus }: ProposalListProps) {
                   {proposal.title}
                 </div>
               </TableCell>
-              <TableCell className='w-48'>{proposal.mainArea.label}</TableCell>
-              <TableCell className='w-32'>
+              <TableCell className='w-[180px]'>{proposal.mainArea.label}</TableCell>
+              <TableCell className='w-[120px]'>
                 {new Date(proposal.createdAt).toLocaleDateString('en-US', {
                   month: '2-digit',
                   day: '2-digit',
                   year: 'numeric'
                 })}
               </TableCell>
-              <TableCell className='w-32'>
+              <TableCell className='w-[120px]'>
                 {proposal.submittedAt
                   ? new Date(proposal.submittedAt).toLocaleDateString('en-US', {
                       month: '2-digit',
@@ -220,8 +220,8 @@ export function ProposalList({ proposals, windowStatus }: ProposalListProps) {
                     })
                   : '-'}
               </TableCell>
-              <TableCell className='text-right'>
-                <div className='flex gap-2 justify-end w-[180px] ml-auto'>
+              <TableCell className='text-right w-[200px]'>
+                <div className='flex gap-2 justify-end'>
                   <TooltipProvider>
                     {windowStatus === 'OPEN' && proposal.status === 'DRAFT' && (
                       <>

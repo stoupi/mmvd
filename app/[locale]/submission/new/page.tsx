@@ -3,6 +3,9 @@ import { getCurrentWindow, getMainAreas, getProposalCountByMainArea } from '@/li
 import { redirect } from 'next/navigation';
 import { ProposalForm } from '../components/proposal-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Link } from '@/app/i18n/navigation';
+import { ArrowLeft } from 'lucide-react';
 
 export default async function NewProposalPage() {
   const session = await requirePermissionGuard('SUBMISSION');
@@ -51,6 +54,12 @@ export default async function NewProposalPage() {
   return (
     <div className='container mx-auto py-8 max-w-4xl'>
       <div className='mb-6'>
+        <Link href='/submission'>
+          <Button variant='ghost' size='sm' className='mb-4'>
+            <ArrowLeft className='h-4 w-4 mr-2' />
+            Back to proposals
+          </Button>
+        </Link>
         <h1 className='text-3xl font-bold mb-2'>New Proposal of Ancillary Study</h1>
         <p className='text-muted-foreground'>
           Submit a new proposal for {currentWindow.name}

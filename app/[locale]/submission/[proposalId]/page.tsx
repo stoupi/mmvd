@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
-import { Edit } from 'lucide-react';
+import { Edit, ArrowLeft } from 'lucide-react';
 import { ProposalActions } from '../components/proposal-actions';
 import { ProposalForm } from '../components/proposal-form';
 
@@ -90,6 +90,12 @@ export default async function ProposalDetailPage({
 
   return (
     <div className='container mx-auto py-8 max-w-4xl'>
+      <Link href='/submission'>
+        <Button variant='ghost' size='sm' className='mb-4'>
+          <ArrowLeft className='h-4 w-4 mr-2' />
+          Back to proposals
+        </Button>
+      </Link>
       <div className='mb-6 flex items-center justify-between'>
         <div className='flex items-center gap-3'>
           <h1 className='text-3xl font-bold'>Proposal Details</h1>

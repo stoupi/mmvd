@@ -1,8 +1,13 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
-import { getProposal, getMainAreas, getProposalCountByMainArea } from '@/lib/services/submission';
+import { getProposal, getMainAreas, getProposalCountByMainArea, getProposalsByPi } from '@/lib/services/submission';
 import { redirect, notFound } from 'next/navigation';
 import { ProposalForm } from '../../components/proposal-form';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Link } from '@/app/i18n/navigation';
+import { ArrowLeft } from 'lucide-react';
+import { ProposalActions } from '../../components/proposal-actions';
 
 export default async function EditProposalPage({
   params
@@ -29,6 +34,13 @@ export default async function EditProposalPage({
   }
 
   const mainAreas = await getMainAreas();
+  const isWindowOpen = proposal.submissionWindow.status === 'OPEN';
+
+  // Check if user has already submitted a proposal in this window
+  const allProposals = await getProposalsByPi(session.user.id);
+  const hasSubmittedInWindow = allProposals.some(
+    (p) => p.submissionWindowId === proposal.submissionWindowId && p.status === 'SUBMITTED'
+  );
 
   // Get proposal counts for each main area
   const proposalCounts: Record<string, number> = {};
@@ -78,11 +90,38 @@ export default async function EditProposalPage({
   return (
     <div className='container mx-auto py-8 max-w-4xl'>
       <div className='mb-6'>
+        <Link href='/submission'>
+          <Button variant='ghost' size='sm' className='mb-4'>
+            <ArrowLeft className='h-4 w-4 mr-2' />
+            Back to proposals
+          </Button>
+        </Link>
         <h1 className='text-3xl font-bold mb-2'>Edit Proposal Draft</h1>
-        <p className='text-muted-foreground'>
-          {proposal.submissionWindow.name}
-        </p>
+        <div className='flex items-center gap-3'>
+          <p className='text-muted-foreground'>
+            {proposal.submissionWindow.name}
+          </p>
+          <Badge className={isWindowOpen ? 'bg-green-500' : 'bg-red-500'}>
+            {isWindowOpen ? 'Open' : 'Closed'}
+          </Badge>
+        </div>
       </div>
+
+      {isWindowOpen && !hasSubmittedInWindow && (
+        <Card className='mb-6 border-blue-200 bg-blue-50'>
+          <CardContent className='pt-6'>
+            <div className='flex items-start justify-between'>
+              <div>
+                <h3 className='font-semibold text-blue-900 mb-1'>Ready to submit?</h3>
+                <p className='text-sm text-blue-700'>
+                  Once submitted, you will not be able to edit or delete this proposal.
+                </p>
+              </div>
+              <ProposalActions proposalId={proposalId} />
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardContent className='pt-6'>
