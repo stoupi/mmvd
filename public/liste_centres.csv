@@ -1,89 +1,89 @@
-﻿code;name;address;city;postalCode;countryCode;patientCount
-001;Frantz Fanon Hospital;Route  d'Attatba Zabana  BP 151;Blida;09010;DZ;17
-002;Medizinischen Universität (Tirol Kliniken);Anichstraße 35;Innsbruck;A-6020;AT;188
-004;Ziekenhuis Oost Limburg;ZOL Genk, campus Sint-Jan, Synaps Park 1;Genk;3600;BE;36
-006;CHU Saint Pierre - Porte de Hal;Rue Haute, 322;Bruxelles;1000;BE;54
-007;ULB - Hôpital Erasme;808, route de Lennik;Bruxelles;1070;BE;18
-008;Cliniques Universitaires Saint-Luc;Avenue Hippocrate;Bruxelles;B-1200;BE;25
-009;Universitair Ziekenhuis Brussel;Laarbeeklaan 101;Bruxelles;1090 Jette;BE;123
-013;Institut Universitaire de Cardiologie et de Pneumologie de Québec - Université Laval;2725, chemin Sainte-Foy;Quebec;G1V 4G5;CA;163
-014;University Hospital Centre Zagreb;12 Kišpatićeva St;Zagreb;10 000;HR;118
-016;Nicosia Heart Center;Ifigenias 35A, Apt 103-104, 1st Floor;Nicosie;2007;CY;19
-018;APHP - Lariboisière;2, rue Ambroise Paré;Paris;75010;FR;45
-019;CHU d'Amiens Sud;Avenue René Laënnec;Amiens;80000;FR;222
-021;CHU de Besançon - Jean Minjoz;1, boulevard Fleming;Besançon;25000;FR;19
-022;CHU de Bordeaux - Haut Lévêque;1, avenue Magellan;Pessac;33600;FR;14
-023;CHU de Brest - La Cavale Blanche;Boulevard Tanguy Prigent;Brest;29200;FR;37
-025;CHD Felix Guyon;Allée des Topazes;Saint-Denis-de-la-Réunion;97400;FR;111
-026;CHRU de Lille - Cardiologique (Coeur-Poumon);Boulevard du Pr. J. Leclerc;Lille;59000;FR;90
-027;GHICL - Saint Philibert;Rue du Grand But;Lomme;59462;FR;35
-028;IH Jacques Cartier;6, avenue Noyer Lambert;Massy;91300;FR;80
-029;Clinique du Millénaire;220, boulevard Pénélope;Montpellier;34960;FR;41
-030;CHU de Montpellier - Arnaud de Villeneuve;371, avenue du Doyen Gaston Giraud;Montpellier;34295;FR;22
-031;CHU de Nantes - Hôtel Dieu;Place Alexis Ricordeau;Nantes;44000;FR;122
-033;Institut Mutualiste Montsouris;42, boulevard Jourdan;Paris;75014;FR;56
-036;CHU de Rennes - Pontchaillou;2, rue Henri Le Guilloux;Rennes;35000;FR;52
-037;CHU de Rouen - Charles Nicolle;1, rue de Germont;Rouen;76000;FR;107
-039;CHRU de Strasbourg - Civil;1, Place de l'Hôpital  ;Strasbourg;67091;FR;23
-041;CHRU de Tours - Trousseau;Avenue de la République;Chambray-lès-Tours;37170;FR;72
-043;CHRU de Dijon - Bocage;14 rue Paul Gaffarel;Dijon;21079;FR;33
-044;CHT Gaston-Bourret;110, boulevard Joseph-Wamytan;Nouméa;98849;FR;12
-045;Aversi Clinic;27b Vazha Pshavela Ave;Tbilissi;0160;GE;15
-046;Charité Universitätsmedizin - Virchow;Augustenburger Platz 1;Berlin;13353;DE;31
-050;Charité Universitätsmedizin - Franklin;Hindenburgdamm 30;Berlin;12203;DE;43
-054;Charité Universitätsmedizin - Mitte;Charitéplatz 1;Berlin;10117;DE;78
-057;Thoracic Diseases General Hospital Sotiria;Mesogion, 152;Athènes;11527;GR;15
-058;AHEPA Hospital;Kiriakidi 1;Thessaloniki;546 36;GR;175
-059;Papageorgiou General Hospital;Agiou Pavlou;Thessaloniki;76 564 29 Ευκαρπία;GR;42
-066;University General Hospital of Heraklion;Leof. Panepistimiou;Iraklio;715 00;GR;33
-068;University General Hospital Attikon;Rimini street, 1;Athènes;12462;GR;50
-069;Shaheed Rajaie Cardiovascular, Medical & Research Center;Valiasr Ave Niayesh Intersection;Tehran;1995614331;IR;409
-071;Policlinico Universitario Campus Bio-Medico;Via Alvaro del Portillo, 200;ROMA;00128;IT;21
-072;Azienda Ospedaliera Universitaria Integrata;Piazzale Aristide Stefani, 1;Verona;37126;IT;125
-073;Ospedale Santa Maria del Carmine di Rovereto;Corso Verona, 4;Rovereto;38068;IT;81
-074;Centro Cardiologico Monzino IRCCS;Via Privata Carlo Parea, 4;Milano;20138;IT;304
-076;Auxologico San Luca;Piazzale Brescia, 20;Milan;20149;IT;24
-080;Sapienza Università di Roma Azienda Ospedaliero-Universitaria Policlinico Umberto;viale del Policlinico, 155;Roma;00161;IT;43
-081;Azienda Ospedaliera Universitaria Senese;Viale Bracci, 16;Siena;53100;IT;349
-084;University of Tsukuba Hospital;Amakubo 2-1-1;Tsukuba;Ibaraki 305-8576;JP;74
-085;Ogaki Municipal Hospital;4-86 Minaminokawa-cho;Ogaki;503-8502;JP;177
-088;Kindai University;3 Chome-4-1 Kowakae, Higashiosaka;Osaka;577-8502;JP;163
-090;Gifu University Hospital;1-1 Yanagido;Gifu;501-1112;JP;27
-093;Hyogo Medical University;1-1 Mukogawacho;Nishinomiya;Hyogo 663-8131;JP;34
-094;Toho University Ohashi Medical Center;2-17-6 Ohashi, Meguro-ku;Tokyo;153-8515;JP;104
-095;Nagoya University Hospital;65 Tsurumai-cho, Showa-ku;Nagoya;466-8560;JP;17
-097;Kobe City Hospital Organization General Hospital;4-6, Minatojima-Nakamachi;HYOGO;650-0046;JP;263
-098;Kitano Hospital;2-4-20 Ogimachi, Kita-ku;Osaka;530-8480;JP;17
-100;Tottori University Hospital;36-1 Nishicho;Yonago;683-8504;JP;24
-101;Juntendo University;2-1-1 Hongo, Bunkyo-ku;Tokyo;113-8421;JP;355
-104;Vilnius University Hospital Santaros Klinikos;Santariskiu st. 2;Vilnius;08406;LT;42
-107;University Clinic of Cardiology Skopje;Mother Teresa 17;Skopje;1000;MK;27
-109;Punjab Institut of Cardiology;Jail Rd, Shadman 1 Shadman;Lahore;Lahore;PK;134
-110;Medical University of Warsaw;Banacha 1a Str.;Warsaw;02-091;PL;164
-112;Centralny Szpital Kliniczny MSWiA w Warszawie;ul. Woloska 137;Varsovie;02-507;PL;30
-119;University of Zielona Gora, Collegium Medicum;Zyty 28;Zielona Góra;65-046;PL;17
-120;Institute of Maritime and Tropical Medicine, Medical University of Gdansk;Powstania Styczniowego 9b;Gdynia;81-519;PL;15
-122;National Institute of Cardiology;Wołoska 137;Warsaw;02-507;PL;23
-124;Center for Invasive Cardiology, Electrotherapy and Angiology;ul. Kilińskiego 68;Nowy Sącz;33-300;PL;21
-125;Institute of Heart Diseases;Borowska 213;Wrocław;50-367;PL;59
-126;Military Institute of Medicine - National Research Institute;Szaserow 128;Warsaw;04-141;PL;199
-131;Pope John Paul II Province Hospital;John Paul II Avenue 10;Zamość;22-400;PL;22
-132;Medical University of Gdansk;Smoluchowskiego 17;Gdansk;80-214;PL;80
-142;Hospital CUF Tejo;Av. 24 de Julho 171A;LISBOA;1350-352;PT;21
-148;University and Emergency Hospital of Bucharest;Splaiul Independenței 169;Bucareșt;050098;RO;29
-150;Military Medical Academy;17 Crnotravska St.;Belgrade;11040;RS;39
-151;Clinical Center of Serbia;Dr Subotica No 6;Serbia;11000;RS;37
-152;University Medical Centre Maribor;Ljubljanska ulica 5;Maribor;2000;SI;130
-154;University Medical Centre Ljubljana;Zaloska cesta 7;Ljubljana;1000;SI;52
-158;University of Health Sciences Istanbul Mehmet Akif Ersoy Thoracic and Cardiovascular Surgery Training and Research Hospital;İstasyon, Turgut Özal Bulvari 11;İstanbul;34303 Küçükçekmece;TR;132
-160;University of Health Sciences, Istanbul Başakşehir Çam and Sakura City Hospital;Olimpiyat Blv Rd, Başakşehir;Istanbul;34480;TR;58
-162;"Educational and Research Medical Center ""UNIVERSITY HOSPITAL"" of Zaporizhzhia State Medical University";83 Аc. Amosova Str;Zaporizhzhia;69063;UA;16
-163;Lviv Regional Cardiological Clinic;Pekarska St, 69;Lviv;79010;UA;18
-165;OLV;Moorselbaan 164;Aalst;93000;BE;28
-166;CHU ISSAD HASSANI BENI MESSOUS;Rue Ibrahim Hadjeras;Alger;16206;DZ;126
-167;CHU de Tizi Ouzou;Rue Lamali Ahmed;Tizi Ouzou;15000;DZ;24
-168;CHU d'Oran;Boulevard Docteur Benzerdjeb;Oran;31000;DZ;63
-170;Heart Center Luzern;Seidenhofstrasse 9;Luzern;6003;CH;16
-171;Memorial Bahcelievler Hospital;Adnan Kahveci Blv. No: 227 Bahçelievler;Istanbul;34180;TR;74
-172;Gazi University Hospital;Mevlana Blv. No:29;Yenimahalle/Ankara;06560;TR;109
-173;University of Medicine and Pharmacy of Craiova;Strada Petru Rares 2;Craiova;200349;RO;72
+﻿;code;name;address;city;postalCode;countryCode;patientCount
+ok;001;Frantz Fanon Hospital;Route  d'Attatba Zabana  BP 151;Blida;09010;DZ;17
+;002;Medizinischen Universität (Tirol Kliniken);Anichstraße 35;Innsbruck;A-6020;AT;188
+ok;004;Ziekenhuis Oost Limburg;ZOL Genk, campus Sint-Jan, Synaps Park 1;Genk;3600;BE;36
+ok;006;CHU Saint Pierre - Porte de Hal;Rue Haute, 322;Bruxelles;1000;BE;54
+ok;007;ULB - Hôpital Erasme;808, route de Lennik;Bruxelles;1070;BE;18
+ok;008;Cliniques Universitaires Saint-Luc;Avenue Hippocrate;Bruxelles;B-1200;BE;25
+ok;009;Universitair Ziekenhuis Brussel;Laarbeeklaan 101;Bruxelles;1090 Jette;BE;123
+ok;013;Institut Universitaire de Cardiologie et de Pneumologie de Québec - Université Laval;2725, chemin Sainte-Foy;Quebec;G1V 4G5;CA;163
+;014;University Hospital Centre Zagreb;12 Kišpatićeva St;Zagreb;10 000;HR;118
+;016;Nicosia Heart Center;Ifigenias 35A, Apt 103-104, 1st Floor;Nicosie;2007;CY;19
+ok;018;APHP - Lariboisière;2, rue Ambroise Paré;Paris;75010;FR;45
+no;019;CHU d'Amiens Sud;Avenue René Laënnec;Amiens;80000;FR;222
+ok;021;CHU de Besançon - Jean Minjoz;1, boulevard Fleming;Besançon;25000;FR;19
+ok;022;CHU de Bordeaux - Haut Lévêque;1, avenue Magellan;Pessac;33600;FR;14
+ok;023;CHU de Brest - La Cavale Blanche;Boulevard Tanguy Prigent;Brest;29200;FR;37
+ok;025;CHD Felix Guyon;Allée des Topazes;Saint-Denis-de-la-Réunion;97400;FR;111
+no;026;CHRU de Lille - Cardiologique (Coeur-Poumon);Boulevard du Pr. J. Leclerc;Lille;59000;FR;90
+ok;027;GHICL - Saint Philibert;Rue du Grand But;Lomme;59462;FR;35
+ok;028;IH Jacques Cartier;6, avenue Noyer Lambert;Massy;91300;FR;80
+ok;029;Clinique du Millénaire;220, boulevard Pénélope;Montpellier;34960;FR;41
+ok;030;CHU de Montpellier - Arnaud de Villeneuve;371, avenue du Doyen Gaston Giraud;Montpellier;34295;FR;22
+ok;031;CHU de Nantes - Hôtel Dieu;Place Alexis Ricordeau;Nantes;44000;FR;122
+ok;033;Institut Mutualiste Montsouris;42, boulevard Jourdan;Paris;75014;FR;56
+ok;036;CHU de Rennes - Pontchaillou;2, rue Henri Le Guilloux;Rennes;35000;FR;52
+ok;037;CHU de Rouen - Charles Nicolle;1, rue de Germont;Rouen;76000;FR;107
+ok;039;CHRU de Strasbourg - Civil;1, Place de l'Hôpital  ;Strasbourg;67091;FR;23
+ok;041;CHRU de Tours - Trousseau;Avenue de la République;Chambray-lès-Tours;37170;FR;72
+ok;043;CHRU de Dijon - Bocage;14 rue Paul Gaffarel;Dijon;21079;FR;33
+ko;044;CHT Gaston-Bourret;110, boulevard Joseph-Wamytan;Nouméa;98849;FR;12
+;045;Aversi Clinic;27b Vazha Pshavela Ave;Tbilissi;0160;GE;15
+;046;Charité Universitätsmedizin - Virchow;Augustenburger Platz 1;Berlin;13353;DE;31
+;050;Charité Universitätsmedizin - Franklin;Hindenburgdamm 30;Berlin;12203;DE;43
+;054;Charité Universitätsmedizin - Mitte;Charitéplatz 1;Berlin;10117;DE;78
+ok;057;Thoracic Diseases General Hospital Sotiria;Mesogion, 152;Athènes;11527;GR;15
+;058;AHEPA Hospital;Kiriakidi 1;Thessaloniki;546 36;GR;175
+;059;Papageorgiou General Hospital;Agiou Pavlou;Thessaloniki;76 564 29 Ευκαρπία;GR;42
+;066;University General Hospital of Heraklion;Leof. Panepistimiou;Iraklio;715 00;GR;33
+;068;University General Hospital Attikon;Rimini street, 1;Athènes;12462;GR;50
+;069;Shaheed Rajaie Cardiovascular, Medical & Research Center;Valiasr Ave Niayesh Intersection;Tehran;1995614331;IR;409
+;071;Policlinico Universitario Campus Bio-Medico;Via Alvaro del Portillo, 200;ROMA;00128;IT;21
+;072;Azienda Ospedaliera Universitaria Integrata;Piazzale Aristide Stefani, 1;Verona;37126;IT;125
+;073;Ospedale Santa Maria del Carmine di Rovereto;Corso Verona, 4;Rovereto;38068;IT;81
+;074;Centro Cardiologico Monzino IRCCS;Via Privata Carlo Parea, 4;Milano;20138;IT;304
+;076;Auxologico San Luca;Piazzale Brescia, 20;Milan;20149;IT;24
+;080;Sapienza Università di Roma Azienda Ospedaliero-Universitaria Policlinico Umberto;viale del Policlinico, 155;Roma;00161;IT;43
+;081;Azienda Ospedaliera Universitaria Senese;Viale Bracci, 16;Siena;53100;IT;349
+ok;084;University of Tsukuba Hospital;Amakubo 2-1-1;Tsukuba;Ibaraki 305-8576;JP;74
+;085;Ogaki Municipal Hospital;4-86 Minaminokawa-cho;Ogaki;503-8502;JP;177
+ok;088;Kindai University;3 Chome-4-1 Kowakae, Higashiosaka;Osaka;577-8502;JP;163
+;090;Gifu University Hospital;1-1 Yanagido;Gifu;501-1112;JP;27
+ok;093;Hyogo Medical University;1-1 Mukogawacho;Nishinomiya;Hyogo 663-8131;JP;34
+ok;094;Toho University Ohashi Medical Center;2-17-6 Ohashi, Meguro-ku;Tokyo;153-8515;JP;104
+;095;Nagoya University Hospital;65 Tsurumai-cho, Showa-ku;Nagoya;466-8560;JP;17
+ok;097;Kobe City Hospital Organization General Hospital;4-6, Minatojima-Nakamachi;HYOGO;650-0046;JP;263
+;098;Kitano Hospital;2-4-20 Ogimachi, Kita-ku;Osaka;530-8480;JP;17
+ok;100;Tottori University Hospital;36-1 Nishicho;Yonago;683-8504;JP;24
+ok;101;Juntendo University;2-1-1 Hongo, Bunkyo-ku;Tokyo;113-8421;JP;355
+;104;Vilnius University Hospital Santaros Klinikos;Santariskiu st. 2;Vilnius;08406;LT;42
+;107;University Clinic of Cardiology Skopje;Mother Teresa 17;Skopje;1000;MK;27
+;109;Punjab Institut of Cardiology;Jail Rd, Shadman 1 Shadman;Lahore;Lahore;PK;134
+ok;110;Medical University of Warsaw;Banacha 1a Str.;Warsaw;02-091;PL;164
+;112;Centralny Szpital Kliniczny MSWiA w Warszawie;ul. Woloska 137;Varsovie;02-507;PL;30
+ok;119;University of Zielona Gora, Collegium Medicum;Zyty 28;Zielona Góra;65-046;PL;17
+ok;120;Institute of Maritime and Tropical Medicine, Medical University of Gdansk;Powstania Styczniowego 9b;Gdynia;81-519;PL;15
+ok;122;National Institute of Cardiology;Wołoska 137;Warsaw;02-507;PL;23
+;124;Center for Invasive Cardiology, Electrotherapy and Angiology;ul. Kilińskiego 68;Nowy Sącz;33-300;PL;21
+ok;125;Institute of Heart Diseases;Borowska 213;Wrocław;50-367;PL;59
+ok;126;Military Institute of Medicine - National Research Institute;Szaserow 128;Warsaw;04-141;PL;199
+;131;Pope John Paul II Province Hospital;John Paul II Avenue 10;Zamość;22-400;PL;22
+ok;132;Medical University of Gdansk;Smoluchowskiego 17;Gdansk;80-214;PL;80
+ok;142;Hospital CUF Tejo;Av. 24 de Julho 171A;LISBOA;1350-352;PT;21
+;148;University and Emergency Hospital of Bucharest;Splaiul Independenței 169;Bucareșt;050098;RO;29
+;150;Military Medical Academy;17 Crnotravska St.;Belgrade;11040;RS;39
+;151;Clinical Center of Serbia;Dr Subotica No 6;Serbia;11000;RS;37
+;152;University Medical Centre Maribor;Ljubljanska ulica 5;Maribor;2000;SI;130
+;154;University Medical Centre Ljubljana;Zaloska cesta 7;Ljubljana;1000;SI;52
+;158;University of Health Sciences Istanbul Mehmet Akif Ersoy Thoracic and Cardiovascular Surgery Training and Research Hospital;İstasyon, Turgut Özal Bulvari 11;İstanbul;34303 Küçükçekmece;TR;132
+;160;University of Health Sciences, Istanbul Başakşehir Çam and Sakura City Hospital;Olimpiyat Blv Rd, Başakşehir;Istanbul;34480;TR;58
+;162;"Educational and Research Medical Center ""UNIVERSITY HOSPITAL"" of Zaporizhzhia State Medical University";83 Аc. Amosova Str;Zaporizhzhia;69063;UA;16
+;163;Lviv Regional Cardiological Clinic;Pekarska St, 69;Lviv;79010;UA;18
+ok;165;OLV;Moorselbaan 164;Aalst;93000;BE;28
+ok;166;CHU ISSAD HASSANI BENI MESSOUS;Rue Ibrahim Hadjeras;Alger;16206;DZ;126
+ok;167;CHU de Tizi Ouzou;Rue Lamali Ahmed;Tizi Ouzou;15000;DZ;24
+ok;168;CHU d'Oran;Boulevard Docteur Benzerdjeb;Oran;31000;DZ;63
+;170;Heart Center Luzern;Seidenhofstrasse 9;Luzern;6003;CH;16
+;171;Memorial Bahcelievler Hospital;Adnan Kahveci Blv. No: 227 Bahçelievler;Istanbul;34180;TR;74
+;172;Gazi University Hospital;Mevlana Blv. No:29;Yenimahalle/Ankara;06560;TR;109
+;173;University of Medicine and Pharmacy of Craiova;Strada Petru Rares 2;Craiova;200349;RO;72
