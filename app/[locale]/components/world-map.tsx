@@ -43,6 +43,33 @@ interface Centre {
   patientCount: number;
 }
 
+const countryNames: Record<string, string> = {
+  'AT': 'Austria',
+  'BE': 'Belgium',
+  'CA': 'Canada',
+  'CH': 'Switzerland',
+  'CY': 'Cyprus',
+  'DE': 'Germany',
+  'DZ': 'Algeria',
+  'FR': 'France',
+  'GE': 'Georgia',
+  'GR': 'Greece',
+  'HR': 'Croatia',
+  'IR': 'Iran',
+  'IT': 'Italy',
+  'JP': 'Japan',
+  'LT': 'Lithuania',
+  'MK': 'North Macedonia',
+  'PK': 'Pakistan',
+  'PL': 'Poland',
+  'PT': 'Portugal',
+  'RO': 'Romania',
+  'RS': 'Serbia',
+  'SI': 'Slovenia',
+  'TR': 'Turkey',
+  'UA': 'Ukraine'
+};
+
 interface MapData {
   centres: Centre[];
   statsByCountry: Record<
@@ -116,7 +143,7 @@ export function WorldMap({ data }: WorldMapProps) {
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         <CountryLayer countriesWithCentres={countriesWithCentres} />
         <MapBoundsUpdater centres={centresWithCoordinates} />
@@ -132,7 +159,7 @@ export function WorldMap({ data }: WorldMapProps) {
                   {centre.name}
                 </h3>
                 <p className='text-sm text-gray-600'>
-                  {centre.city}, {centre.countryCode}
+                  {centre.city}, {countryNames[centre.countryCode] || centre.countryCode}
                 </p>
               </div>
             </Popup>
