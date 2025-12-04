@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import type { LatLngExpression } from 'leaflet';
+import type { LatLngBoundsExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const MapContainer = dynamic(
@@ -19,6 +19,11 @@ const Marker = dynamic(
 );
 const Popup = dynamic(
   () => import('react-leaflet').then((mod) => mod.Popup),
+  { ssr: false }
+);
+
+const MapBoundsUpdater = dynamic(
+  () => import('./map-bounds-updater').then((mod) => ({ default: mod.MapBoundsUpdater })),
   { ssr: false }
 );
 
@@ -80,7 +85,6 @@ export function WorldMap({ data }: WorldMapProps) {
     );
   }
 
-  const center: LatLngExpression = [48.8566, 2.3522]; // Paris as default center
   const centresWithCoordinates = data.centres.filter(
     (centre) => centre.latitude !== null && centre.longitude !== null
   );
@@ -88,8 +92,8 @@ export function WorldMap({ data }: WorldMapProps) {
   return (
     <div className='w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 shadow-lg'>
       <MapContainer
-        center={center}
-        zoom={4}
+        center={[20, 0]}
+        zoom={2}
         style={{ height: '100%', width: '100%' }}
         scrollWheelZoom={true}
       >
@@ -97,6 +101,7 @@ export function WorldMap({ data }: WorldMapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
+        <MapBoundsUpdater centres={centresWithCoordinates} />
         {centresWithCoordinates.map((centre) => (
           <Marker
             key={centre.id}
