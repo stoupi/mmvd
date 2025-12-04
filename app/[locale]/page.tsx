@@ -4,6 +4,7 @@ import { Link } from '@/app/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail } from 'lucide-react';
+import Image from 'next/image';
 
 export default async function LandingPage({
   params
@@ -18,18 +19,25 @@ export default async function LandingPage({
     <div className='min-h-screen bg-gradient-to-b from-white to-pink-50'>
       {/* Hero Section */}
       <section className='container mx-auto px-4 py-20 text-center'>
-        <h1 className='text-5xl font-bold mb-6'>
+        <div className='flex justify-center mb-8'>
+          <Image
+            src='/logo.png'
+            alt='MMVD Logo'
+            width={70}
+            height={96}
+            className='w-auto h-auto'
+          />
+        </div>
+        <h1 className='text-5xl font-bold mb-4'>
           <span
-            className='bg-clip-text text-transparent'
-            style={{
-              backgroundImage: 'linear-gradient(to right, #8D40A5, #E952A5)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}
+            className='bg-clip-text text-transparent bg-gradient-to-r from-primary to-pink-500'
           >
             {t('hero.title')}
           </span>
         </h1>
+        <p className='text-2xl text-gray-900 mb-8 font-semibold'>
+          Multiple and Mixed Valvular Diseases Study
+        </p>
         <p className='text-xl text-gray-600 mb-8 max-w-3xl mx-auto'>
           {t('hero.description')}
         </p>

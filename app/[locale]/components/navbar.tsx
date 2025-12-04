@@ -68,12 +68,7 @@ export function Navbar() {
 							height={40}
 							className='h-10 w-10'
 						/>
-						<span
-							className='font-bold text-xl bg-clip-text text-transparent'
-							style={{
-								backgroundImage: 'linear-gradient(to right, #8D40A5, #E952A5)'
-							}}
-						>
+						<span className='font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-pink-500'>
 							MMVD Study
 						</span>
 					</Link>
@@ -89,8 +84,8 @@ export function Navbar() {
 										href={app.path}
 										className={`inline-flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 											isActive
-												? 'bg-pink-50 text-pink-700'
-												: 'text-gray-700 hover:bg-gray-100'
+												? 'bg-pink-50 text-primary'
+												: 'text-gray-700 hover:bg-pink-50 hover:text-primary'
 										}`}>
 										<Icon className='h-4 w-4' />
 										<span>{app.name}</span>
