@@ -35,6 +35,7 @@ interface Proposal {
   mainArea: {
     id: string;
     label: string;
+    color: string | null;
   };
   submissionWindow: {
     id: string;
@@ -200,7 +201,16 @@ export function ProposalsTable({ proposals }: ProposalsTableProps) {
                   </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.mainTopic }}>
-                  <Badge variant='secondary'>{proposal.mainArea.label}</Badge>
+                  <Badge
+                    variant='outline'
+                    style={proposal.mainArea.color ? {
+                      backgroundColor: `${proposal.mainArea.color}15`,
+                      borderColor: proposal.mainArea.color,
+                      color: proposal.mainArea.color
+                    } : undefined}
+                  >
+                    {proposal.mainArea.label}
+                  </Badge>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.secondary }}>
                   {proposal.secondaryTopics.length > 0 ? (

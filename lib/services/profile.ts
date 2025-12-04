@@ -10,8 +10,15 @@ export async function getUserProfile(userId: string) {
       lastName: true,
       title: true,
       affiliation: true,
-      centreName: true,
-      centreCode: true,
+      centreId: true,
+      centre: {
+        select: {
+          code: true,
+          name: true,
+          city: true,
+          countryCode: true
+        }
+      },
       avatarUrl: true,
       permissions: true,
       createdAt: true
@@ -35,8 +42,15 @@ export async function updateOwnProfile(
       lastName: true,
       title: true,
       affiliation: true,
-      centreName: true,
-      centreCode: true,
+      centreId: true,
+      centre: {
+        select: {
+          code: true,
+          name: true,
+          city: true,
+          countryCode: true
+        }
+      },
       avatarUrl: true,
       permissions: true
     }

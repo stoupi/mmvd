@@ -75,20 +75,15 @@ export default async function ProfilePage() {
 
             <div className='flex items-center justify-between py-3'>
               <div className='w-48'>
-                <span className='text-sm font-medium'>Centre code</span>
+                <span className='text-sm font-medium'>Centre</span>
               </div>
               <div className='flex-1'>
-                <span className='text-sm'>{user.centreCode || '-'}</span>
-              </div>
-              <div className='w-32'></div>
-            </div>
-
-            <div className='flex items-center justify-between py-3'>
-              <div className='w-48'>
-                <span className='text-sm font-medium'>Centre name</span>
-              </div>
-              <div className='flex-1'>
-                <span className='text-sm'>{user.centreName || '-'}</span>
+                <span className='text-sm'>
+                  {user.centre
+                    ? `${user.centre.code} - ${user.centre.name} (${user.centre.city}, ${user.centre.countryCode})`
+                    : '-'
+                  }
+                </span>
               </div>
               <div className='w-32'></div>
             </div>

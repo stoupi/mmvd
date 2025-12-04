@@ -34,11 +34,7 @@ export const auth = betterAuth({
 				type: 'string',
 				required: false,
 			},
-			centreName: {
-				type: 'string',
-				required: false,
-			},
-			centreCode: {
+			centreId: {
 				type: 'string',
 				required: false,
 			},

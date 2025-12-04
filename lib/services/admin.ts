@@ -267,7 +267,8 @@ export async function getAllProposals() {
       mainArea: {
         select: {
           id: true,
-          label: true
+          label: true,
+          color: true
         }
       },
       submissionWindow: {
@@ -317,7 +318,8 @@ export async function getProposalsByWindow(windowId: string) {
       mainArea: {
         select: {
           id: true,
-          label: true
+          label: true,
+          color: true
         }
       },
       reviews: {
@@ -360,7 +362,8 @@ export async function getProposalsByStatus(status: string) {
       mainArea: {
         select: {
           id: true,
-          label: true
+          label: true,
+          color: true
         }
       },
       submissionWindow: {

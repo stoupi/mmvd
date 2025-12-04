@@ -38,7 +38,8 @@ export function CreateMainAreaDialog() {
     resolver: zodResolver(mainAreaSchema),
     defaultValues: {
       label: '',
-      description: ''
+      description: '',
+      color: '#3B82F6'
     }
   });
 
@@ -97,6 +98,23 @@ export function CreateMainAreaDialog() {
                     <Textarea
                       placeholder='Brief description of this research area'
                       {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='color'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Badge Color (Optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type='color'
+                      {...field}
+                      className='h-10 w-20'
                     />
                   </FormControl>
                   <FormMessage />

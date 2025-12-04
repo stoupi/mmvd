@@ -1,89 +1,206 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../app/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
-  id            String    @id
-  email         String    @unique
-  emailVerified Boolean   @default(false)
+  id            String          @id
+  email         String          @unique
+  emailVerified Boolean         @default(false)
   name          String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
   image         String?
-
-  // MMVD-specific fields
-  firstName     String?
-  lastName      String?
-  title         String?  // Dr, Prof, or null
   affiliation   String?
-  centreId      String?
-  permissions   AppPermission[]  @default([])
-  isActive      Boolean   @default(true)
   avatarUrl     String?
-
-  sessions      Session[]
+  firstName     String?
+  isActive      Boolean         @default(true)
+  lastName      String?
+  permissions   AppPermission[] @default([])
+  centreId      String?
+  title         String?
   accounts      Account[]
-
-  // MMVD relationships
-  centre         Centre?    @relation(fields: [centreId], references: [id])
-  proposalsAsPi  Proposal[] @relation("ProposalPi")
-  reviews        Review[]
-  reviewTopics   MainArea[] @relation("ReviewerTopics")
+  proposalsAsPi Proposal[]      @relation("ProposalPi")
+  reviews       Review[]
+  sessions      Session[]
+  centre        Centre?         @relation(fields: [centreId], references: [id])
+  reviewTopics  MainArea[]      @relation("ReviewerTopics")
 }
 
 model Session {
-  id            String   @id
-  expiresAt     DateTime
-  token         String   @unique
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  ipAddress     String?
-  userAgent     String?
-
-  userId        String
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
-  id              String  @id
-  accountId       String
-  providerId      String
-  userId          String
-  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken     String?
-  refreshToken    String?
-  idToken         String?
-  accessTokenExpiresAt    DateTime?
-  refreshTokenExpiresAt   DateTime?
-  scope           String?
-  password        String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Verification {
-  id            String   @id
-  identifier    String
-  value         String
-  expiresAt     DateTime
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
-// MMVD Enums
+model Centre {
+  id           String     @id @default(cuid())
+  code         String     @unique
+  name         String
+  address      String?
+  postalCode   String?
+  city         String?
+  countryCode  String
+  latitude     Float?
+  longitude    Float?
+  patientCount Int        @default(0)
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  proposals    Proposal[]
+  users        User[]
+
+  @@index([countryCode])
+  @@index([code])
+}
+
+model SubmissionWindow {
+  id                    String       @id @default(cuid())
+  name                  String       @unique
+  submissionOpenAt      DateTime
+  submissionCloseAt     DateTime
+  reviewStartAt         DateTime
+  reviewDeadlineDefault DateTime
+  responseDeadline      DateTime
+  nextWindowOpensAt     DateTime?
+  status                WindowStatus @default(UPCOMING)
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  proposals             Proposal[]
+
+  @@index([status])
+}
+
+model MainArea {
+  id          String     @id @default(cuid())
+  label       String     @unique
+  description String?
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  color       String?
+  proposals   Proposal[]
+  reviewers   User[]     @relation("ReviewerTopics")
+}
+
+model Proposal {
+  id                   String           @id @default(cuid())
+  title                String
+  submissionWindowId   String
+  mainAreaId           String
+  piUserId             String
+  status               ProposalStatus   @default(DRAFT)
+  createdAt            DateTime         @default(now())
+  submittedAt          DateTime?
+  updatedAt            DateTime         @updatedAt
+  isDeleted            Boolean          @default(false)
+  adjustmentCovariates String?
+  analysisDescription  String?
+  analysisTypes        String[]         @default([])
+  competingWork        Json
+  dataBaseline         Boolean          @default(false)
+  dataBiological       Boolean          @default(false)
+  dataCMR              Boolean          @default(false)
+  dataCT               Boolean          @default(false)
+  dataClinicalFollowup Boolean          @default(false)
+  dataCoreLab          Boolean          @default(false)
+  dataHospitalFollowup Boolean          @default(false)
+  dataRHC              Boolean          @default(false)
+  dataStressEcho       Boolean          @default(false)
+  dataTOE              Boolean          @default(false)
+  dataTTE              Boolean          @default(false)
+  dataTTEFollowup      Boolean          @default(false)
+  exclusionCriteria    String?
+  inclusionCriteria    String?
+  literaturePosition   String
+  mainExposure         String
+  primaryEndpoint      String
+  primaryObjective     String
+  scientificBackground String
+  secondaryEndpoints   String[]         @default([])
+  secondaryObjectives  String[]         @default([])
+  secondaryTopics      String[]         @default([])
+  studyPopulation      String
+  subgroupAnalyses     String?
+  targetJournals       String[]         @default([])
+  centreId             String
+  centre               Centre           @relation(fields: [centreId], references: [id])
+  mainArea             MainArea         @relation(fields: [mainAreaId], references: [id])
+  piUser               User             @relation("ProposalPi", fields: [piUserId], references: [id])
+  submissionWindow     SubmissionWindow @relation(fields: [submissionWindowId], references: [id])
+  reviews              Review[]
+
+  @@index([submissionWindowId])
+  @@index([piUserId])
+  @@index([centreId])
+  @@index([status])
+  @@index([isDeleted])
+}
+
+model Review {
+  id               String             @id @default(cuid())
+  proposalId       String
+  reviewerId       String
+  assignedAt       DateTime           @default(now())
+  deadline         DateTime
+  completedAt      DateTime?
+  status           ReviewStatus       @default(ASSIGNED)
+  isLate           Boolean            @default(false)
+  decision         ReviewDecision?
+  overlap          OverlapAssessment?
+  overlapDetails   String?
+  commentsForPI    String?
+  commentsForAdmin String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  isDeleted        Boolean            @default(false)
+  proposal         Proposal           @relation(fields: [proposalId], references: [id])
+  reviewer         User               @relation(fields: [reviewerId], references: [id])
+
+  @@unique([proposalId, reviewerId])
+  @@index([reviewerId])
+  @@index([status])
+  @@index([isDeleted])
+}
+
 enum AppPermission {
   SUBMISSION
   REVIEWING
@@ -122,170 +239,4 @@ enum OverlapAssessment {
   NO
   PARTIAL
   MAJOR
-}
-
-// MMVD Models
-model Centre {
-  id           String    @id @default(cuid())
-  code         String    @unique  // Centre code: 3 digits (e.g., "001", "019", "220")
-  name         String                // Centre name
-  address      String?               // Street address
-  postalCode   String?               // Postal/ZIP code
-  city         String?               // City name
-  countryCode  String                // ISO2 country code (e.g., "FR", "GB", "IT")
-  latitude     Float?                // For map display
-  longitude    Float?                // For map display
-  patientCount Int       @default(0) // Number of patients enrolled
-  isActive     Boolean   @default(true)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-
-  users       User[]
-  proposals   Proposal[]
-
-  @@index([countryCode])
-  @@index([code])
-}
-
-model SubmissionWindow {
-  id                    String        @id @default(cuid())
-  name                  String        @unique
-  submissionOpenAt      DateTime
-  submissionCloseAt     DateTime
-  reviewStartAt         DateTime
-  reviewDeadlineDefault DateTime
-  responseDeadline      DateTime
-  nextWindowOpensAt     DateTime?
-  status                WindowStatus  @default(UPCOMING)
-  createdAt             DateTime      @default(now())
-  updatedAt             DateTime      @updatedAt
-
-  proposals             Proposal[]
-
-  @@index([status])
-}
-
-model MainArea {
-  id          String    @id @default(cuid())
-  label       String    @unique
-  description String?
-  isActive    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  proposals   Proposal[]
-  reviewers   User[]     @relation("ReviewerTopics")
-}
-
-model Proposal {
-  id                  String          @id @default(cuid())
-
-  // Basic info
-  title               String          // max 25 words
-  submissionWindowId  String
-  mainAreaId          String
-  secondaryTopics     String[]        @default([]) // max 2
-  piUserId            String
-  centreId            String
-
-  // Scientific background
-  scientificBackground String         @db.Text // max 200 words
-  literaturePosition   String         @db.Text // unmet need description
-  competingWork        Json           // array of {doi, pmid, journal, nPatients}
-
-  // Objectives
-  primaryObjective     String         @db.Text // max 50 words
-  secondaryObjectives  String[]       @default([]) // max 3, 50 words each
-
-  // Study design
-  mainExposure         String         @db.Text // max 50 words
-  primaryEndpoint      String         @db.Text // max 50 words
-  secondaryEndpoints   String[]       @default([]) // max 3, 50 words each
-
-  // Population
-  studyPopulation      String         @db.Text // max 100 words
-  inclusionCriteria    String?        @db.Text
-  exclusionCriteria    String?        @db.Text
-
-  // Data requirements (checkboxes)
-  dataBaseline         Boolean        @default(false)
-  dataBiological       Boolean        @default(false)
-  dataTTE              Boolean        @default(false)
-  dataTOE              Boolean        @default(false)
-  dataStressEcho       Boolean        @default(false)
-  dataCMR              Boolean        @default(false)
-  dataCT               Boolean        @default(false)
-  dataRHC              Boolean        @default(false)
-  dataHospitalFollowup Boolean        @default(false)
-  dataClinicalFollowup Boolean        @default(false)
-  dataTTEFollowup      Boolean        @default(false)
-  dataCoreLab          Boolean        @default(false)
-
-  // Statistical analysis
-  analysisTypes        String[]       @default([]) // checkboxes: logistic, cox, propensity, ml
-  analysisDescription  String?        @db.Text // max 50 words
-  adjustmentCovariates String?        @db.Text // max 50 words
-  subgroupAnalyses     String?        @db.Text // max 50 words
-
-  // Target journals
-  targetJournals       String[]       @default([]) // max 3
-
-  status               ProposalStatus @default(DRAFT)
-
-  // Timestamps
-  createdAt            DateTime       @default(now())
-  submittedAt          DateTime?
-  updatedAt            DateTime       @updatedAt
-
-  // Soft delete
-  isDeleted            Boolean        @default(false)
-
-  // Relations
-  submissionWindow     SubmissionWindow @relation(fields: [submissionWindowId], references: [id])
-  mainArea             MainArea         @relation(fields: [mainAreaId], references: [id])
-  piUser               User             @relation("ProposalPi", fields: [piUserId], references: [id])
-  centre               Centre           @relation(fields: [centreId], references: [id])
-  reviews              Review[]
-
-  @@index([submissionWindowId])
-  @@index([piUserId])
-  @@index([centreId])
-  @@index([status])
-  @@index([isDeleted])
-}
-
-model Review {
-  id              String            @id @default(cuid())
-  proposalId      String
-  reviewerId      String
-
-  // Assignment info
-  assignedAt      DateTime          @default(now())
-  deadline        DateTime
-  completedAt     DateTime?
-  status          ReviewStatus      @default(ASSIGNED)
-  isLate          Boolean           @default(false)
-
-  // Review content
-  decision        ReviewDecision?
-  overlap         OverlapAssessment?
-  overlapDetails  String?           @db.Text
-  commentsForPI   String?           @db.Text
-  commentsForAdmin String?          @db.Text
-
-  // Timestamps
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-
-  // Soft delete
-  isDeleted       Boolean           @default(false)
-
-  // Relations
-  proposal        Proposal          @relation(fields: [proposalId], references: [id])
-  reviewer        User              @relation(fields: [reviewerId], references: [id])
-
-  @@unique([proposalId, reviewerId])
-  @@index([reviewerId])
-  @@index([status])
-  @@index([isDeleted])
 }
