@@ -77,7 +77,7 @@ export function PermissionsDialog({ user }: PermissionsDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='ghost' size='sm' className='h-auto flex flex-wrap gap-1 p-1'>
+        <Button variant='ghost' size='sm' className='h-auto flex flex-wrap gap-1 p-1 justify-start'>
           {user.permissions.length === 0 ? (
             <Badge variant='outline'>No permissions</Badge>
           ) : (
