@@ -45,6 +45,15 @@ interface Proposal {
   }[];
 }
 
+function formatDate(date: Date | null): string {
+  if (!date) return '-';
+  return new Date(date).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+}
+
 interface ProposalsTableProps {
   proposals: Proposal[];
 }
@@ -74,7 +83,7 @@ export function ProposalsTable({ proposals }: ProposalsTableProps) {
     mainTopic: 180,
     secondary: 200,
     window: 180,
-    status: 120,
+    submittedAt: 120,
     actions: 80
   });
 
@@ -160,11 +169,11 @@ export function ProposalsTable({ proposals }: ProposalsTableProps) {
                 onMouseDown={(e) => handleMouseDown('window', e)}
               />
             </TableHead>
-            <TableHead style={{ width: columnWidths.status }} className='relative'>
-              Status
+            <TableHead style={{ width: columnWidths.submittedAt }} className='relative'>
+              Submitted
               <div
                 className='absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-blue-500 transition-colors'
-                onMouseDown={(e) => handleMouseDown('status', e)}
+                onMouseDown={(e) => handleMouseDown('submittedAt', e)}
               />
             </TableHead>
             <TableHead style={{ width: columnWidths.actions }} className='text-right'>
@@ -211,11 +220,9 @@ export function ProposalsTable({ proposals }: ProposalsTableProps) {
                     <div className='text-sm'>{proposal.submissionWindow.name}</div>
                   </Link>
                 </TableCell>
-                <TableCell style={{ width: columnWidths.status }}>
+                <TableCell style={{ width: columnWidths.submittedAt }}>
                   <Link href={`/admin/proposals/${proposal.id}`} className='block'>
-                    <Badge className={statusColors[proposal.status]}>
-                      {statusLabels[proposal.status]}
-                    </Badge>
+                    <div className='text-sm'>{formatDate(proposal.submittedAt)}</div>
                   </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.actions }} className='text-right'>

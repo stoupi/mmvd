@@ -25,7 +25,7 @@ export default async function AdminDashboardPage() {
   return (
     <div className='p-8'>
       <div className='mb-6'>
-        <h1 className='text-3xl font-bold mb-2'>Proposals</h1>
+        <h1 className='text-3xl font-bold mb-2'>Submitted Proposals</h1>
         <p className='text-muted-foreground'>
           View and manage all submitted proposals
         </p>

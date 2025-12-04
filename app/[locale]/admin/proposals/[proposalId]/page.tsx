@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
 import { ArrowLeft, User, Calendar, Building2 } from 'lucide-react';
 import { ProposalForm } from '@/app/[locale]/submission/components/proposal-form';
+import { ExportProposalButton } from '../components/export-proposal-button';
 
 const statusColors = {
   DRAFT: 'bg-gray-500',
@@ -102,6 +103,47 @@ export default async function AdminProposalDetailPage({
             {statusLabels[proposal.status]}
           </Badge>
         </div>
+        <ExportProposalButton
+          proposal={{
+            title: proposal.title,
+            centreCode: proposal.centreCode,
+            piName,
+            piEmail: proposal.piUser.email,
+            affiliation: proposal.piUser.affiliation || undefined,
+            submissionWindow: proposal.submissionWindow.name,
+            mainTopic: proposal.mainArea.label,
+            secondaryTopics: proposal.secondaryTopics,
+            scientificBackground: proposal.scientificBackground,
+            literaturePosition: proposal.literaturePosition || undefined,
+            competingWork: proposal.competingWork as any[],
+            primaryObjective: proposal.primaryObjective,
+            secondaryObjectives: proposal.secondaryObjectives,
+            mainExposure: proposal.mainExposure,
+            primaryEndpoint: proposal.primaryEndpoint,
+            secondaryEndpoints: proposal.secondaryEndpoints,
+            studyPopulation: proposal.studyPopulation,
+            inclusionCriteria: proposal.inclusionCriteria || undefined,
+            exclusionCriteria: proposal.exclusionCriteria || undefined,
+            dataBaseline: proposal.dataBaseline,
+            dataBiological: proposal.dataBiological,
+            dataTTE: proposal.dataTTE,
+            dataTOE: proposal.dataTOE,
+            dataStressEcho: proposal.dataStressEcho,
+            dataCMR: proposal.dataCMR,
+            dataCT: proposal.dataCT,
+            dataRHC: proposal.dataRHC,
+            dataHospitalFollowup: proposal.dataHospitalFollowup,
+            dataClinicalFollowup: proposal.dataClinicalFollowup,
+            dataTTEFollowup: proposal.dataTTEFollowup,
+            dataCoreLab: proposal.dataCoreLab,
+            analysisTypes: proposal.analysisTypes as string[],
+            analysisDescription: proposal.analysisDescription || undefined,
+            adjustmentCovariates: proposal.adjustmentCovariates || undefined,
+            subgroupAnalyses: proposal.subgroupAnalyses || undefined,
+            targetJournals: proposal.targetJournals,
+            submittedAt: proposal.submittedAt
+          }}
+        />
       </div>
 
       <Card className='mb-6 bg-gray-50'>
