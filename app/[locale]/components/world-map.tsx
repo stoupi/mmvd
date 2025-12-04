@@ -27,6 +27,11 @@ const MapBoundsUpdater = dynamic(
   { ssr: false }
 );
 
+const CountryLayer = dynamic(
+  () => import('./country-layer').then((mod) => ({ default: mod.CountryLayer })),
+  { ssr: false }
+);
+
 interface Centre {
   id: string;
   code: string;
@@ -89,6 +94,10 @@ export function WorldMap({ data }: WorldMapProps) {
     (centre) => centre.latitude !== null && centre.longitude !== null
   );
 
+  const countriesWithCentres = Array.from(
+    new Set(data.centres.map((centre) => centre.countryCode))
+  );
+
   return (
     <div className='w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 shadow-lg'>
       <MapContainer
@@ -101,6 +110,7 @@ export function WorldMap({ data }: WorldMapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
+        <CountryLayer countriesWithCentres={countriesWithCentres} />
         <MapBoundsUpdater centres={centresWithCoordinates} />
         {centresWithCoordinates.map((centre) => (
           <Marker
