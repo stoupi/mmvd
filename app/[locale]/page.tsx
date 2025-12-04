@@ -5,6 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail } from 'lucide-react';
 import Image from 'next/image';
+import { getCentreStats } from '@/lib/services/centres';
+import { WorldMap } from './components/world-map';
+import { MapStats } from './components/map-stats';
 
 export default async function LandingPage({
   params
@@ -14,6 +17,7 @@ export default async function LandingPage({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'landing' });
   const session = await getTypedSession();
+  const mapData = await getCentreStats();
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-white to-pink-50'>
@@ -49,6 +53,26 @@ export default async function LandingPage({
             <Link href='/login'>{t('hero.investigatorLogin')}</Link>
           </Button>
         </div>
+      </section>
+
+      {/* Global Network Section */}
+      <section className='container mx-auto px-4 py-16'>
+        <div className='text-center mb-8'>
+          <h2 className='text-4xl font-bold mb-4'>
+            <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary to-pink-500'>
+              Our Global Network
+            </span>
+          </h2>
+          <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
+            MMVD Study spans multiple countries and medical centres worldwide, creating one of the largest multicohort studies on valvular diseases.
+          </p>
+        </div>
+        <MapStats
+          totalCentres={mapData.totalCentres}
+          totalPatients={mapData.totalPatients}
+          totalCountries={Object.keys(mapData.statsByCountry).length}
+        />
+        <WorldMap data={mapData} />
       </section>
 
       {/* Study Principle Section */}
