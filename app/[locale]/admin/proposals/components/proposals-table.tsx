@@ -175,39 +175,51 @@ export function ProposalsTable({ proposals }: ProposalsTableProps) {
         <TableBody>
           {proposals.map((proposal) => {
             return (
-              <TableRow key={proposal.id}>
+              <TableRow key={proposal.id} className='cursor-pointer hover:bg-gray-50'>
                 <TableCell style={{ width: columnWidths.centreCode }}>
-                  <Badge variant='outline'>{proposal.centreCode}</Badge>
+                  <Link href={`/admin/proposals/${proposal.id}`} className='block'>
+                    <Badge variant='outline'>{proposal.centreCode}</Badge>
+                  </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.title }}>
-                  <div className='font-medium'>{proposal.title}</div>
+                  <Link href={`/admin/proposals/${proposal.id}`} className='block'>
+                    <div className='font-medium'>{proposal.title}</div>
+                  </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.mainTopic }}>
-                  <Badge variant='secondary'>{proposal.mainArea.label}</Badge>
+                  <Link href={`/admin/proposals/${proposal.id}`} className='block'>
+                    <Badge variant='secondary'>{proposal.mainArea.label}</Badge>
+                  </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.secondary }}>
-                  {proposal.secondaryTopics.length > 0 ? (
-                    <div className='flex flex-col gap-1'>
-                      {proposal.secondaryTopics.map((topic, index) => (
-                        <Badge key={index} variant='outline' className='text-xs'>
-                          {topic}
-                        </Badge>
-                      ))}
-                    </div>
-                  ) : (
-                    <span className='text-sm text-muted-foreground'>-</span>
-                  )}
+                  <Link href={`/admin/proposals/${proposal.id}`} className='block'>
+                    {proposal.secondaryTopics.length > 0 ? (
+                      <div className='flex flex-col gap-1'>
+                        {proposal.secondaryTopics.map((topic, index) => (
+                          <Badge key={index} variant='outline' className='text-xs'>
+                            {topic}
+                          </Badge>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className='text-sm text-muted-foreground'>-</span>
+                    )}
+                  </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.window }}>
-                  <div className='text-sm'>{proposal.submissionWindow.name}</div>
+                  <Link href={`/admin/proposals/${proposal.id}`} className='block'>
+                    <div className='text-sm'>{proposal.submissionWindow.name}</div>
+                  </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.status }}>
-                  <Badge className={statusColors[proposal.status]}>
-                    {statusLabels[proposal.status]}
-                  </Badge>
+                  <Link href={`/admin/proposals/${proposal.id}`} className='block'>
+                    <Badge className={statusColors[proposal.status]}>
+                      {statusLabels[proposal.status]}
+                    </Badge>
+                  </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.actions }} className='text-right'>
-                  <Link href={`/submission/${proposal.id}`}>
+                  <Link href={`/admin/proposals/${proposal.id}`}>
                     <Button variant='ghost' size='sm'>
                       <ExternalLink className='h-4 w-4' />
                     </Button>

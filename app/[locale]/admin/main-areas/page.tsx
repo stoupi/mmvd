@@ -1,8 +1,6 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
 import { getAllMainAreas } from '@/lib/services/admin';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { FolderOpen, Plus } from 'lucide-react';
+import { FolderOpen } from 'lucide-react';
 import { MainAreaList } from './components/main-area-list';
 import { CreateMainAreaDialog } from './components/create-main-area-dialog';
 
@@ -23,24 +21,17 @@ export default async function MainAreasPage() {
         <CreateMainAreaDialog />
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>All Main Areas ({mainAreas.length})</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {mainAreas.length === 0 ? (
-            <div className='text-center py-8'>
-              <FolderOpen className='h-12 w-12 mx-auto text-muted-foreground mb-4' />
-              <h3 className='text-lg font-semibold mb-2'>No main areas yet</h3>
-              <p className='text-sm text-muted-foreground mb-4'>
-                Create your first main area to categorize proposals
-              </p>
-            </div>
-          ) : (
-            <MainAreaList mainAreas={mainAreas} />
-          )}
-        </CardContent>
-      </Card>
+      {mainAreas.length === 0 ? (
+        <div className='text-center py-12'>
+          <FolderOpen className='h-12 w-12 mx-auto text-muted-foreground mb-4' />
+          <h3 className='text-lg font-semibold mb-2'>No main areas yet</h3>
+          <p className='text-sm text-muted-foreground mb-4'>
+            Create your first main area to categorize proposals
+          </p>
+        </div>
+      ) : (
+        <MainAreaList mainAreas={mainAreas} />
+      )}
     </div>
   );
 }

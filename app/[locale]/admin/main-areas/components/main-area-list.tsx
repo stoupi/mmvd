@@ -26,7 +26,7 @@ export function MainAreaList({ mainAreas }: MainAreaListProps) {
       {mainAreas.map((area) => (
         <div
           key={area.id}
-          className='flex items-start justify-between p-4 border rounded-lg'
+          className='flex items-start justify-between p-4 border rounded-lg bg-white'
         >
           <div className='flex-1'>
             <div className='flex items-center gap-2 mb-1'>

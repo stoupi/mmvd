@@ -34,7 +34,16 @@ export async function getAllMainAreas() {
   return prisma.mainArea.findMany({
     include: {
       _count: {
-        select: { proposals: true }
+        select: {
+          proposals: {
+            where: {
+              status: {
+                not: 'DRAFT'
+              },
+              isDeleted: false
+            }
+          }
+        }
       }
     },
     orderBy: { label: 'asc' }
