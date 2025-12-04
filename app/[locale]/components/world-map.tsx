@@ -108,14 +108,15 @@ export function WorldMap({ data }: WorldMapProps) {
   return (
     <div className='w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 shadow-lg'>
       <MapContainer
-        center={[20, 0]}
+        center={[48, 15]}
         zoom={2}
+        minZoom={2}
         style={{ height: '100%', width: '100%' }}
         scrollWheelZoom={true}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         <CountryLayer countriesWithCentres={countriesWithCentres} />
         <MapBoundsUpdater centres={centresWithCoordinates} />
@@ -127,14 +128,11 @@ export function WorldMap({ data }: WorldMapProps) {
           >
             <Popup>
               <div className='p-2'>
-                <h3 className='font-bold text-lg mb-1'>
-                  {centre.code} - {centre.name}
+                <h3 className='font-semibold text-base mb-1'>
+                  {centre.name}
                 </h3>
                 <p className='text-sm text-gray-600'>
                   {centre.city}, {centre.countryCode}
-                </p>
-                <p className='text-sm font-semibold mt-2'>
-                  Patients: {centre.patientCount}
                 </p>
               </div>
             </Popup>
