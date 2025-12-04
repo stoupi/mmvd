@@ -89,7 +89,7 @@ export function Navbar() {
 										href={app.path}
 										className={`inline-flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
 											isActive
-												? 'bg-blue-50 text-blue-700'
+												? 'bg-pink-50 text-pink-700'
 												: 'text-gray-700 hover:bg-gray-100'
 										}`}>
 										<Icon className='h-4 w-4' />
@@ -104,7 +104,7 @@ export function Navbar() {
 				<div className='flex items-center space-x-4'>
 					{isPending ? (
 						<div className='flex items-center space-x-2'>
-							<div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600'></div>
+							<div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-pink-600'></div>
 							<span className='text-sm text-gray-500'>
 								{t('loading')}
 							</span>
@@ -114,7 +114,7 @@ export function Navbar() {
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>
 									<button className='hidden sm:flex items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer focus:outline-none'>
-										<div className='h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center overflow-hidden'>
+										<div className='h-8 w-8 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center overflow-hidden'>
 											{session.user.avatarUrl ? (
 												<Image
 													src={session.user.avatarUrl}
