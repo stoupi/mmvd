@@ -24,7 +24,7 @@ import { EditUserDialog } from './edit-user-dialog';
 import { PermissionsDialog } from './permissions-dialog';
 import { ToggleUserStatusDialog } from './toggle-user-status-dialog';
 import { ReviewTopicsDialog } from './review-topics-dialog';
-import type { AppPermission } from '@/app/generated/prisma';
+import type { AppPermission, Centre } from '@/app/generated/prisma';
 
 interface ReviewTopic {
   id: string;
@@ -38,8 +38,11 @@ interface User {
   lastName: string | null;
   title: string | null;
   affiliation: string | null;
-  centreName: string | null;
-  centreCode: string | null;
+  centreId: string | null;
+  centre?: {
+    code: string;
+    name: string;
+  } | null;
   permissions: AppPermission[];
   isActive: boolean;
   createdAt: Date;
@@ -53,12 +56,13 @@ interface User {
 interface UsersTableProps {
   users: User[];
   allMainAreas: ReviewTopic[];
+  centres: Centre[];
 }
 
 type SortField = 'name' | 'centreCode' | 'email' | 'status';
 type SortOrder = 'asc' | 'desc';
 
-export function UsersTable({ users, allMainAreas }: UsersTableProps) {
+export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [permissionFilter, setPermissionFilter] = useState<string>('all');
@@ -90,8 +94,8 @@ export function UsersTable({ users, allMainAreas }: UsersTableProps) {
       const matchesSearch =
         fullName.includes(searchLower) ||
         user.email.toLowerCase().includes(searchLower) ||
-        user.centreCode?.toLowerCase().includes(searchLower) ||
-        user.centreName?.toLowerCase().includes(searchLower);
+        user.centre?.code?.toLowerCase().includes(searchLower) ||
+        user.centre?.name?.toLowerCase().includes(searchLower);
 
       const matchesStatus =
         statusFilter === 'all' ||
@@ -115,8 +119,8 @@ export function UsersTable({ users, allMainAreas }: UsersTableProps) {
           bValue = `${b.title || ''} ${b.firstName || ''} ${b.lastName || ''}`.toLowerCase();
           break;
         case 'centreCode':
-          aValue = a.centreCode?.toLowerCase() || '';
-          bValue = b.centreCode?.toLowerCase() || '';
+          aValue = a.centre?.code?.toLowerCase() || '';
+          bValue = b.centre?.code?.toLowerCase() || '';
           break;
         case 'email':
           aValue = a.email.toLowerCase();
@@ -227,14 +231,14 @@ export function UsersTable({ users, allMainAreas }: UsersTableProps) {
                 </div>
               </TableCell>
               <TableCell>
-                {user.centreCode ? (
-                  <Badge variant='outline'>{user.centreCode}</Badge>
+                {user.centre?.code ? (
+                  <Badge variant='outline'>{user.centre.code}</Badge>
                 ) : (
                   <span className='text-sm text-muted-foreground'>-</span>
                 )}
               </TableCell>
               <TableCell>
-                {user.centreName || <span className='text-sm text-muted-foreground'>-</span>}
+                {user.centre?.name || <span className='text-sm text-muted-foreground'>-</span>}
               </TableCell>
               <TableCell>
                 <div className='text-sm'>{user.email}</div>
@@ -275,7 +279,7 @@ export function UsersTable({ users, allMainAreas }: UsersTableProps) {
               </TableCell>
               <TableCell className='text-right'>
                 <div className='flex justify-end gap-2'>
-                  <EditUserDialog user={user} />
+                  <EditUserDialog user={user} centres={centres} />
                   <ToggleUserStatusDialog
                     userId={user.id}
                     userName={`${user.title ? user.title + ' ' : ''}${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}

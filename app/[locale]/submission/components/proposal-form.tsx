@@ -32,7 +32,7 @@ interface ProposalFormProps {
   proposalId?: string;
   mainAreas: MainArea[];
   submissionWindowId: string;
-  centreCode: string;
+  centreId: string;
   isEditing?: boolean;
   proposalCounts?: Record<string, number>;
   readOnly?: boolean;
@@ -43,7 +43,7 @@ export function ProposalForm({
   proposalId,
   mainAreas,
   submissionWindowId,
-  centreCode,
+  centreId,
   isEditing = false,
   proposalCounts = {},
   readOnly = false
@@ -157,7 +157,7 @@ export function ProposalForm({
       createProposal({
         ...data,
         submissionWindowId,
-        centreCode
+        centreId
       });
     }
   };
@@ -171,7 +171,7 @@ export function ProposalForm({
       createAndSubmitProposal({
         ...formData,
         submissionWindowId,
-        centreCode
+        centreId
       });
     }
 

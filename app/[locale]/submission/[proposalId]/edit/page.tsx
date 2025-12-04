@@ -130,7 +130,7 @@ export default async function EditProposalPage({
             proposalId={proposalId}
             mainAreas={mainAreas}
             submissionWindowId={proposal.submissionWindowId}
-            centreCode={proposal.centreCode}
+            centreId={proposal.centreId}
             isEditing={true}
             proposalCounts={proposalCounts}
           />

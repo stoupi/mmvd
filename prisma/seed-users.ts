@@ -17,13 +17,15 @@ async function main() {
     });
 
     if ('user' in piResult) {
+      // Get first centre
+      const firstCentre = await prisma.centre.findFirst();
       await prisma.user.update({
         where: { id: piResult.user.id },
         data: {
           emailVerified: true,
           firstName: 'Demo',
           lastName: 'PI',
-          centreCode: 'CENTRE001',
+          centreId: firstCentre?.id,
           affiliation: 'Demo University Hospital',
           permissions: ['SUBMISSION'],
           isActive: true
@@ -36,11 +38,12 @@ async function main() {
       console.log('PI user already exists');
       const user = await prisma.user.findUnique({ where: { email: 'demo@company.com' } });
       if (user) {
+        const firstCentre = await prisma.centre.findFirst();
         await prisma.user.update({
           where: { id: user.id },
           data: {
             permissions: ['SUBMISSION'],
-            centreCode: 'CENTRE001',
+            centreId: firstCentre?.id,
             isActive: true
           }
         });

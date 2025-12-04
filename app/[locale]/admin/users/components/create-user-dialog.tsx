@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'next-safe-action/hooks';
 import { createUserAction } from '@/lib/actions/admin-actions';
 import { createUserSchema } from '@/lib/schemas/admin';
-import { AppPermission } from '@/app/generated/prisma';
+import { AppPermission, Centre } from '@/app/generated/prisma';
 import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
@@ -44,7 +44,11 @@ const permissionOptions: Array<{ value: AppPermission; label: string }> = [
   { value: AppPermission.ADMIN, label: 'Admin' }
 ];
 
-export function CreateUserDialog() {
+interface CreateUserDialogProps {
+  centres: Centre[];
+}
+
+export function CreateUserDialog({ centres }: CreateUserDialogProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm({
@@ -55,8 +59,7 @@ export function CreateUserDialog() {
       lastName: '',
       title: '',
       affiliation: '',
-      centreCode: '',
-      centreName: '',
+      centreId: '',
       permissions: [] as AppPermission[]
     }
   });
@@ -170,35 +173,33 @@ export function CreateUserDialog() {
               )}
             />
 
-            <div className='grid grid-cols-[120px_1fr] gap-4'>
-              <FormField
-                control={form.control}
-                name='centreCode'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Centre Code *</FormLabel>
+            <FormField
+              control={form.control}
+              name='centreId'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Centre *</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
                     <FormControl>
-                      <Input {...field} placeholder='001' maxLength={3} />
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select a centre' />
+                      </SelectTrigger>
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name='centreName'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Centre Name *</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder='Paris Centre' />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                    <SelectContent>
+                      {centres.map((centre) => (
+                        <SelectItem key={centre.id} value={centre.id}>
+                          {centre.code} - {centre.name} ({centre.city}, {centre.countryCode})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}

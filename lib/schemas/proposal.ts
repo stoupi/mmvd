@@ -171,3 +171,9 @@ export const proposalFormSchemaValidated = proposalFormSchemaBase.refine(
 );
 
 export type ProposalFormData = z.infer<typeof proposalFormSchema>;
+
+// Schema for server actions that includes server-side data
+export const proposalCreateSchema = proposalFormSchema.extend({
+  submissionWindowId: z.string(),
+  centreId: z.string()
+});

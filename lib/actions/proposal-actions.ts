@@ -5,16 +5,28 @@ import { proposalFormSchema } from '../schemas/proposal';
 import * as submissionService from '../services/submission';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { prisma } from '../prisma';
 
 export const createProposalAction = submissionAction
   .schema(proposalFormSchema.extend({
     submissionWindowId: z.string(),
-    centreCode: z.string()
+    centreId: z.string()
   }))
   .action(async ({ parsedInput, ctx }) => {
+    // Get user's centreId from database to ensure it comes from server
+    const user = await prisma.user.findUnique({
+      where: { id: ctx.userId },
+      select: { centreId: true }
+    });
+
+    if (!user?.centreId) {
+      throw new Error('User does not have a centre assigned');
+    }
+
     const proposal = await submissionService.createProposal({
       ...parsedInput,
-      piUserId: ctx.userId
+      piUserId: ctx.userId,
+      centreId: user.centreId
     });
 
     revalidatePath('/submission');
@@ -60,12 +72,23 @@ export const submitProposalAction = submissionAction
 export const createAndSubmitProposalAction = submissionAction
   .schema(proposalFormSchema.extend({
     submissionWindowId: z.string(),
-    centreCode: z.string()
+    centreId: z.string()
   }))
   .action(async ({ parsedInput, ctx }) => {
+    // Get user's centreId from database to ensure it comes from server
+    const user = await prisma.user.findUnique({
+      where: { id: ctx.userId },
+      select: { centreId: true }
+    });
+
+    if (!user?.centreId) {
+      throw new Error('User does not have a centre assigned');
+    }
+
     const proposal = await submissionService.createProposal({
       ...parsedInput,
-      piUserId: ctx.userId
+      piUserId: ctx.userId,
+      centreId: user.centreId
     });
 
     await submissionService.submitProposal(proposal.id);

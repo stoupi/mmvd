@@ -145,7 +145,7 @@ export default async function ProposalDetailPage({
             proposalId={proposalId}
             mainAreas={mainAreas}
             submissionWindowId={proposal.submissionWindowId}
-            centreCode={proposal.centreCode}
+            centreId={proposal.centreId}
             isEditing={false}
             readOnly={true}
           />

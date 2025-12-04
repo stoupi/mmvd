@@ -22,8 +22,7 @@ export const createUserSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   title: z.string().optional().transform(val => val === '' ? undefined : val),
   affiliation: z.string().optional().transform(val => val === '' ? undefined : val),
-  centreCode: z.string().regex(/^\d{3}$/, 'Centre code must be 3 digits'),
-  centreName: z.string().min(1, 'Centre name is required'),
+  centreId: z.string().min(1, 'Centre is required'),
   permissions: z.array(z.nativeEnum(AppPermission)).default([])
 });
 
@@ -43,8 +42,7 @@ export const updateUserProfileSchema = z.object({
   lastName: z.string().min(1, 'Last name is required').optional(),
   title: z.string().optional(),
   affiliation: z.string().optional(),
-  centreName: z.string().optional(),
-  centreCode: z.string().optional()
+  centreId: z.string().optional()
 });
 
 export const updateUserReviewTopicsSchema = z.object({

@@ -106,7 +106,7 @@ export default async function AdminProposalDetailPage({
         <ExportProposalButton
           proposal={{
             title: proposal.title,
-            centreCode: proposal.centreCode,
+            centreCode: proposal.centre?.code || 'N/A',
             piName,
             piEmail: proposal.piUser.email,
             affiliation: proposal.piUser.affiliation || undefined,
@@ -161,7 +161,10 @@ export default async function AdminProposalDetailPage({
               <Building2 className='h-4 w-4 text-muted-foreground' />
               <div>
                 <p className='text-sm text-muted-foreground'>Centre</p>
-                <p className='font-medium'>{proposal.centreCode}</p>
+                <p className='font-medium'>{proposal.centre?.code || 'N/A'}</p>
+                {proposal.centre?.name && (
+                  <p className='text-sm text-muted-foreground'>{proposal.centre.name}</p>
+                )}
                 {proposal.piUser.affiliation && (
                   <p className='text-sm text-muted-foreground'>{proposal.piUser.affiliation}</p>
                 )}
@@ -199,7 +202,7 @@ export default async function AdminProposalDetailPage({
             proposalId={proposalId}
             mainAreas={mainAreas}
             submissionWindowId={proposal.submissionWindowId}
-            centreCode={proposal.centreCode}
+            centreId={proposal.centreId}
             isEditing={false}
             readOnly={true}
           />

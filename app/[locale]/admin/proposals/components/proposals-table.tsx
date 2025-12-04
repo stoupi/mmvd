@@ -18,7 +18,6 @@ import type { ProposalStatus } from '@prisma/client';
 interface Proposal {
   id: string;
   title: string;
-  centreCode: string;
   status: ProposalStatus;
   submittedAt: Date | null;
   secondaryTopics: string[];
@@ -27,8 +26,12 @@ interface Proposal {
     email: string;
     firstName: string | null;
     lastName: string | null;
-    centreCode: string | null;
+    centreId: string | null;
   };
+  centre: {
+    code: string;
+    name: string;
+  } | null;
   mainArea: {
     id: string;
     label: string;
@@ -186,7 +189,7 @@ export function ProposalsTable({ proposals }: ProposalsTableProps) {
             return (
               <TableRow key={proposal.id}>
                 <TableCell style={{ width: columnWidths.centreCode }}>
-                  <Badge variant='outline'>{proposal.centreCode}</Badge>
+                  <Badge variant='outline'>{proposal.centre?.code || 'N/A'}</Badge>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.title }}>
                   <Link

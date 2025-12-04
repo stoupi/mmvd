@@ -36,15 +36,15 @@ export default async function NewProposalPage() {
     proposalCounts[area.id] = count;
   }
 
-  if (!session.user.centreCode) {
+  if (!session.user.centreId) {
     return (
       <div className='container mx-auto py-8 max-w-4xl'>
         <Card className='border-destructive'>
           <CardHeader>
-            <CardTitle className='text-destructive'>Centre Code Required</CardTitle>
+            <CardTitle className='text-destructive'>Centre Required</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Your account does not have a centre code assigned. Please contact an administrator to set up your centre code before submitting proposals.</p>
+            <p>Your account does not have a centre assigned. Please contact an administrator to set up your centre before submitting proposals.</p>
           </CardContent>
         </Card>
       </div>
@@ -71,7 +71,7 @@ export default async function NewProposalPage() {
           <ProposalForm
             mainAreas={mainAreas}
             submissionWindowId={currentWindow.id}
-            centreCode={session.user.centreCode}
+            centreId={session.user.centreId}
             proposalCounts={proposalCounts}
           />
         </CardContent>

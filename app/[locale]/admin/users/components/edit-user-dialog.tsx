@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'next-safe-action/hooks';
 import { updateUserProfileAction } from '@/lib/actions/admin-actions';
 import { updateUserProfileSchema } from '@/lib/schemas/admin';
+import { Centre } from '@/app/generated/prisma';
 import type { z } from 'zod';
 import {
   Dialog,
@@ -23,6 +24,13 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Edit } from 'lucide-react';
@@ -37,12 +45,12 @@ interface EditUserDialogProps {
     firstName: string | null;
     lastName: string | null;
     affiliation: string | null;
-    centreCode: string | null;
-    centreName: string | null;
+    centreId: string | null;
   };
+  centres: Centre[];
 }
 
-export function EditUserDialog({ user }: EditUserDialogProps) {
+export function EditUserDialog({ user, centres }: EditUserDialogProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<FormData>({
@@ -51,8 +59,7 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
       firstName: user.firstName || '',
       lastName: user.lastName || '',
       affiliation: user.affiliation || '',
-      centreCode: user.centreCode || '',
-      centreName: user.centreName || ''
+      centreId: user.centreId || ''
     }
   });
 
@@ -127,26 +134,27 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
             />
             <FormField
               control={form.control}
-              name='centreCode'
+              name='centreId'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Centre Code</FormLabel>
-                  <FormControl>
-                    <Input placeholder='001' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='centreName'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Centre Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Paris Centre' {...field} />
-                  </FormControl>
+                  <FormLabel>Centre</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value || ''}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select a centre' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {centres.map((centre) => (
+                        <SelectItem key={centre.id} value={centre.id}>
+                          {centre.code} - {centre.name} ({centre.city}, {centre.countryCode})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

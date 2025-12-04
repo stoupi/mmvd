@@ -60,8 +60,13 @@ export async function getAllUsers() {
       lastName: true,
       title: true,
       affiliation: true,
-      centreName: true,
-      centreCode: true,
+      centreId: true,
+      centre: {
+        select: {
+          code: true,
+          name: true
+        }
+      },
       permissions: true,
       isActive: true,
       createdAt: true,
@@ -102,7 +107,7 @@ export async function updateUserProfile(
     firstName?: string;
     lastName?: string;
     affiliation?: string;
-    centreCode?: string;
+    centreId?: string;
   }
 ) {
   return prisma.user.update({
@@ -117,8 +122,7 @@ export async function createUser(data: {
   lastName: string;
   title?: string;
   affiliation?: string;
-  centreName: string;
-  centreCode: string;
+  centreId: string;
   permissions: AppPermission[];
 }) {
   const existingUser = await prisma.user.findUnique({
@@ -138,8 +142,7 @@ export async function createUser(data: {
       name: `${data.firstName} ${data.lastName}`,
       title: data.title || null,
       affiliation: data.affiliation || null,
-      centreName: data.centreName,
-      centreCode: data.centreCode,
+      centreId: data.centreId,
       permissions: data.permissions,
       isActive: true,
       emailVerified: false
@@ -252,7 +255,13 @@ export async function getAllProposals() {
           email: true,
           firstName: true,
           lastName: true,
-          centreCode: true
+          centreId: true
+        }
+      },
+      centre: {
+        select: {
+          code: true,
+          name: true
         }
       },
       mainArea: {
@@ -296,7 +305,13 @@ export async function getProposalsByWindow(windowId: string) {
           email: true,
           firstName: true,
           lastName: true,
-          centreCode: true
+          centreId: true
+        }
+      },
+      centre: {
+        select: {
+          code: true,
+          name: true
         }
       },
       mainArea: {
@@ -333,7 +348,13 @@ export async function getProposalsByStatus(status: string) {
           email: true,
           firstName: true,
           lastName: true,
-          centreCode: true
+          centreId: true
+        }
+      },
+      centre: {
+        select: {
+          code: true,
+          name: true
         }
       },
       mainArea: {
@@ -378,7 +399,15 @@ export async function getAdminProposalDetails(proposalId: string) {
           firstName: true,
           lastName: true,
           affiliation: true,
-          centreCode: true
+          centreId: true
+        }
+      },
+      centre: {
+        select: {
+          code: true,
+          name: true,
+          city: true,
+          countryCode: true
         }
       },
       mainArea: true,

@@ -1,5 +1,6 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
 import { getAllUsers, getAllMainAreas } from '@/lib/services/admin';
+import { getAllCentres } from '@/lib/services/centres';
 import { Users } from 'lucide-react';
 import { UsersTable } from './components/users-table';
 import { CreateUserDialog } from './components/create-user-dialog';
@@ -7,9 +8,10 @@ import { CreateUserDialog } from './components/create-user-dialog';
 export default async function UsersPage() {
   await requirePermissionGuard('ADMIN');
 
-  const [users, mainAreasData] = await Promise.all([
+  const [users, mainAreasData, centres] = await Promise.all([
     getAllUsers(),
-    getAllMainAreas()
+    getAllMainAreas(),
+    getAllCentres()
   ]);
 
   const allMainAreas = mainAreasData.map(area => ({
@@ -26,7 +28,7 @@ export default async function UsersPage() {
             Manage user accounts, permissions, and centre assignments
           </p>
         </div>
-        <CreateUserDialog />
+        <CreateUserDialog centres={centres} />
       </div>
 
       {users.length === 0 ? (
@@ -38,7 +40,7 @@ export default async function UsersPage() {
           </p>
         </div>
       ) : (
-        <UsersTable users={users} allMainAreas={allMainAreas} />
+        <UsersTable users={users} allMainAreas={allMainAreas} centres={centres} />
       )}
     </div>
   );

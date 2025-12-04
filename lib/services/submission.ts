@@ -39,7 +39,21 @@ export async function getProposal(id: string) {
           firstName: true,
           lastName: true,
           email: true,
-          centreCode: true
+          centreId: true,
+          centre: {
+            select: {
+              code: true,
+              name: true
+            }
+          }
+        }
+      },
+      centre: {
+        select: {
+          code: true,
+          name: true,
+          city: true,
+          countryCode: true
         }
       },
       reviews: {
@@ -79,7 +93,7 @@ interface CreateProposalInput {
   mainAreaId: string;
   secondaryTopics?: string[];
   piUserId: string;
-  centreCode: string;
+  centreId: string;
 
   // Scientific background
   scientificBackground: string;
@@ -129,7 +143,7 @@ export async function createProposal(data: CreateProposalInput) {
   const existingSubmitted = await prisma.proposal.findFirst({
     where: {
       submissionWindowId: data.submissionWindowId,
-      centreCode: data.centreCode,
+      centreId: data.centreId,
       isDeleted: false,
       status: 'SUBMITTED'
     }

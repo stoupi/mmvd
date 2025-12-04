@@ -8,7 +8,6 @@ import type { ProposalStatus } from '@prisma/client';
 interface Proposal {
   id: string;
   title: string;
-  centreCode: string;
   status: ProposalStatus;
   submittedAt: Date | null;
   secondaryTopics: string[];
@@ -17,8 +16,12 @@ interface Proposal {
     email: string;
     firstName: string | null;
     lastName: string | null;
-    centreCode: string | null;
+    centreId: string | null;
   };
+  centre: {
+    code: string;
+    name: string;
+  } | null;
   mainArea: {
     id: string;
     label: string;
@@ -55,8 +58,8 @@ export function ProposalsView({ proposals, mainAreas, windows }: ProposalsViewPr
   const centres = useMemo(() => {
     const uniqueCentres = new Set<string>();
     proposals.forEach((proposal) => {
-      if (proposal.centreCode) {
-        uniqueCentres.add(proposal.centreCode);
+      if (proposal.centre?.code) {
+        uniqueCentres.add(proposal.centre.code);
       }
     });
     return Array.from(uniqueCentres).sort();
@@ -70,7 +73,7 @@ export function ProposalsView({ proposals, mainAreas, windows }: ProposalsViewPr
       if (filters.windowId && proposal.submissionWindow.id !== filters.windowId) {
         return false;
       }
-      if (filters.centreCode && proposal.centreCode !== filters.centreCode) {
+      if (filters.centreCode && proposal.centre?.code !== filters.centreCode) {
         return false;
       }
       return true;
