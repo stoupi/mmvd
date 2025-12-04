@@ -61,11 +61,20 @@ export function Navbar() {
 			<div className='container mx-auto flex h-16 items-center justify-between px-4'>
 				<div className='flex items-center space-x-8'>
 					<Link href='/' className='flex items-center space-x-2'>
-						<div className='h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center'>
-							<span className='text-white font-bold text-sm'>M</span>
-						</div>
-						<span className='font-bold text-xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent'>
-							MMVD
+						<Image
+							src='/logo.png'
+							alt='MMVD Logo'
+							width={40}
+							height={40}
+							className='h-10 w-10'
+						/>
+						<span
+							className='font-bold text-xl bg-clip-text text-transparent'
+							style={{
+								backgroundImage: 'linear-gradient(to right, #8D40A5, #E952A5)'
+							}}
+						>
+							MMVD Study
 						</span>
 					</Link>
 
