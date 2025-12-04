@@ -30,7 +30,14 @@ export function CountryLayer({ countriesWithCentres }: CountryLayerProps) {
       };
     }
 
-    const countryCode = feature.properties['ISO3166-1-Alpha-2'];
+    let countryCode = feature.properties['ISO3166-1-Alpha-2'];
+    const countryName = feature.properties['name'];
+
+    // Handle special cases where GeoJSON has incorrect ISO codes
+    if (countryName === 'France' || countryCode === '-99') {
+      countryCode = 'FR';
+    }
+
     const hasCenter = countriesWithCentres.includes(countryCode);
 
     return {

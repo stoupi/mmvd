@@ -69,14 +69,21 @@ export function WorldMap({ data }: WorldMapProps) {
     setIsClient(true);
 
     import('leaflet').then((L) => {
+      const pinkMarkerSvg = `
+        <svg width="30" height="45" viewBox="0 0 30 45" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 2C8.373 2 3 7.373 3 14c0 10.5 12 27 12 27s12-16.5 12-27c0-6.627-5.373-12-12-12z"
+                fill="#ec4899" stroke="#be185d" stroke-width="2"/>
+          <circle cx="15" cy="14" r="4" fill="white"/>
+        </svg>
+      `;
+
+      const pinkMarkerUrl = 'data:image/svg+xml;base64,' + btoa(pinkMarkerSvg);
+
       const icon = L.icon({
-        iconUrl: '/marker-icon.png',
-        iconRetinaUrl: '/marker-icon-2x.png',
-        shadowUrl: '/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
+        iconUrl: pinkMarkerUrl,
+        iconSize: [30, 45],
+        iconAnchor: [15, 45],
+        popupAnchor: [0, -45]
       });
       setCustomIcon(icon);
     });
