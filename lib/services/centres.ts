@@ -34,7 +34,20 @@ export async function getCentreStats() {
       countryCode: true,
       latitude: true,
       longitude: true,
-      patientCount: true
+      patientCount: true,
+      investigators: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          role: true,
+          displayOrder: true,
+          photoUrl: true
+        },
+        orderBy: {
+          displayOrder: 'asc'
+        }
+      }
     }
   });
 

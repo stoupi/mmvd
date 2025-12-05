@@ -64,8 +64,12 @@
   "landing": {
     "hero": {
       "title": "MMVD Study",
-      "description": "A multicenter international registry for moderate and severe mitral regurgitation: advancing cardiac imaging research and patient outcomes",
+      "description": "The first international prospective registry dedicated to multiple and mixed valvular disease",
+      "descriptionPrefix": "The ",
+      "descriptionBold": "first international prospective registry",
+      "descriptionSuffix": " dedicated to multiple and mixed valvular disease",
       "learnMore": "Learn More",
+      "clinicalTrialsButton": "Visit the public study registration:\nClinicalTrials.gov – NCT06235385",
       "investigatorLogin": "Login for investigators"
     },
     "principle": {

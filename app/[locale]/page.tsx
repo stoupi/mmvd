@@ -42,12 +42,21 @@ export default async function LandingPage({
         <p className='text-2xl text-gray-900 mb-8 font-semibold'>
           Multiple and Mixed Valvular Diseases Study
         </p>
-        <p className='text-xl text-gray-600 mb-8 max-w-3xl mx-auto'>
-          {t('hero.description')}
+        <p className='text-xl text-gray-600 mb-8 max-w-3xl mx-auto whitespace-nowrap'>
+          {t('hero.descriptionPrefix')}
+          <strong>{t('hero.descriptionBold')}</strong>
+          {t('hero.descriptionSuffix')}
         </p>
         <div className='flex justify-center gap-4'>
           <Button size='lg' variant='outline' asChild>
-            <a href='#study-principle'>{t('hero.learnMore')}</a>
+            <a
+              href='https://clinicaltrials.gov/study/NCT06235385'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='whitespace-pre-line text-center bg-white text-pink-600 border-2 border-pink-600 hover:bg-pink-50 px-8 py-6 min-w-[300px]'
+            >
+              {t('hero.clinicalTrialsButton')}
+            </a>
           </Button>
           <Button size='sm' variant='ghost' asChild>
             <Link href='/login'>{t('hero.investigatorLogin')}</Link>

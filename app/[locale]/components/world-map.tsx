@@ -32,6 +32,15 @@ const CountryLayer = dynamic(
   { ssr: false }
 );
 
+interface Investigator {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: 'PI' | 'CO_INVESTIGATOR';
+  displayOrder: number;
+  photoUrl: string | null;
+}
+
 interface Centre {
   id: string;
   code: string;
@@ -41,6 +50,7 @@ interface Centre {
   latitude: number | null;
   longitude: number | null;
   patientCount: number;
+  investigators: Investigator[];
 }
 
 const countryNames: Record<string, string> = {
@@ -69,6 +79,42 @@ const countryNames: Record<string, string> = {
   'TR': 'Turkey',
   'UA': 'Ukraine'
 };
+
+function InvestigatorAvatar({ investigator }: { investigator: Investigator }) {
+  const getInitials = (firstName: string, lastName: string) => {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  };
+
+  const getAvatarColor = (role: string) => {
+    return role === 'PI'
+      ? 'bg-gradient-to-br from-purple-600 to-pink-500'
+      : 'bg-gradient-to-br from-blue-500 to-indigo-500';
+  };
+
+  return (
+    <div className='flex items-center gap-1.5'>
+      <div className={`h-6 w-6 rounded-full flex items-center justify-center ${getAvatarColor(investigator.role)} text-white text-[10px] font-semibold flex-shrink-0`}>
+        {investigator.photoUrl ? (
+          <img
+            src={investigator.photoUrl}
+            alt={`${investigator.firstName} ${investigator.lastName}`}
+            className='h-full w-full rounded-full object-cover'
+          />
+        ) : (
+          getInitials(investigator.firstName, investigator.lastName)
+        )}
+      </div>
+      <div className='text-xs'>
+        <span className='font-medium text-gray-900'>
+          {investigator.firstName} {investigator.lastName}
+        </span>
+        {investigator.role === 'PI' && (
+          <span className='ml-1 text-[10px] text-purple-600 font-semibold'>(PI)</span>
+        )}
+      </div>
+    </div>
+  );
+}
 
 interface MapData {
   centres: Centre[];
@@ -154,13 +200,21 @@ export function WorldMap({ data }: WorldMapProps) {
             icon={customIcon}
           >
             <Popup>
-              <div className='p-2'>
-                <h3 className='font-semibold text-base mb-1'>
-                  {centre.name}
-                </h3>
-                <p className='text-sm text-gray-600'>
-                  {centre.city}, {countryNames[centre.countryCode] || centre.countryCode}
-                </p>
+              <div className='p-2 min-w-[240px]'>
+                <div className='mb-2'>
+                  <div className='font-semibold text-sm leading-none'>{centre.name}</div>
+                  <div className='text-xs text-gray-500 leading-none mt-0.5'>
+                    {centre.city}, {countryNames[centre.countryCode] || centre.countryCode}
+                  </div>
+                </div>
+
+                {centre.investigators.length > 0 && (
+                  <div className='space-y-1.5 mt-2'>
+                    {centre.investigators.map((investigator) => (
+                      <InvestigatorAvatar key={investigator.id} investigator={investigator} />
+                    ))}
+                  </div>
+                )}
               </div>
             </Popup>
           </Marker>

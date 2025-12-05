@@ -72,24 +72,41 @@ model Verification {
 }
 
 model Centre {
-  id           String     @id @default(cuid())
-  code         String     @unique
-  name         String
-  address      String?
-  postalCode   String?
-  city         String?
-  countryCode  String
-  latitude     Float?
-  longitude    Float?
-  patientCount Int        @default(0)
-  isActive     Boolean    @default(true)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  proposals    Proposal[]
-  users        User[]
+  id            String          @id @default(cuid())
+  code          String          @unique
+  name          String
+  address       String?
+  postalCode    String?
+  city          String?
+  countryCode   String
+  latitude      Float?
+  longitude     Float?
+  patientCount  Int             @default(0)
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  proposals     Proposal[]
+  users         User[]
+  investigators Investigator[]
 
   @@index([countryCode])
   @@index([code])
+}
+
+model Investigator {
+  id           String           @id @default(cuid())
+  firstName    String
+  lastName     String
+  role         InvestigatorRole
+  displayOrder Int
+  photoUrl     String?
+  centreId     String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  centre       Centre           @relation(fields: [centreId], references: [id], onDelete: Cascade)
+
+  @@index([centreId])
+  @@index([role])
 }
 
 model SubmissionWindow {
@@ -239,4 +256,9 @@ enum OverlapAssessment {
   NO
   PARTIAL
   MAJOR
+}
+
+enum InvestigatorRole {
+  PI
+  CO_INVESTIGATOR
 }
