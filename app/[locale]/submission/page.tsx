@@ -126,7 +126,7 @@ export default async function SubmissionPage({
               )}
 
               <div className='pt-4'>
-                <h3 className='text-lg font-semibold mb-4'>Proposals for this window</h3>
+                <h3 className='font-semibold mb-4 leading-none'>Proposals for this window</h3>
                 <CurrentWindowProposals
                   proposals={currentWindowProposals}
                   windowStatus={currentWindow.status}
