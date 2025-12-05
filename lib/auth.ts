@@ -55,7 +55,11 @@ export const auth = betterAuth({
 		},
 	},
 	secret: process.env.BETTER_AUTH_SECRET!,
-	baseURL: process.env.NEXT_PUBLIC_APP_URL!,
-	trustedOrigins: ['http://localhost:3000', 'http://localhost:3001'],
+	baseURL: (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000').replace(/\/$/, ''),
+	trustedOrigins: [
+		'http://localhost:3000',
+		'http://localhost:3001',
+		process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') || ''
+	].filter(Boolean),
 	plugins: [nextCookies()],
 });
