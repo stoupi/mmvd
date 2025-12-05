@@ -18,15 +18,21 @@ export default async function NewProposalPage() {
     redirect('/submission');
   }
 
-  // Check if user already has a submission in this window
-  const { getProposalsByPi } = await import('@/lib/services/submission');
-  const proposals = await getProposalsByPi(session.user.id);
-  const existingInWindow = proposals.find(
-    (p) => p.submissionWindowId === currentWindow.id && p.status !== 'DRAFT'
-  );
+  // Check if centre already has a submission in this window
+  if (session.user.centreId) {
+    const { prisma } = await import('@/lib/prisma');
+    const existingSubmitted = await prisma.proposal.findFirst({
+      where: {
+        submissionWindowId: currentWindow.id,
+        centreId: session.user.centreId,
+        isDeleted: false,
+        status: 'SUBMITTED'
+      }
+    });
 
-  if (existingInWindow) {
-    redirect('/submission');
+    if (existingSubmitted) {
+      redirect('/submission');
+    }
   }
 
   // Get proposal counts for each main area

@@ -106,7 +106,9 @@ export function ProposalForm({
         router.push(`/submission/${data?.proposalId}`);
       },
       onError: ({ error }) => {
-        toast.error(error.serverError || 'Failed to save draft');
+        console.error('Save draft error:', error);
+        const errorMessage = error.serverError || error.validationErrors || 'Failed to save draft';
+        toast.error(typeof errorMessage === 'string' ? errorMessage : 'Failed to save draft');
       }
     }
   );
@@ -180,6 +182,51 @@ export function ProposalForm({
     setIsSubmitDialogOpen(false);
   };
 
+  const scrollToFirstError = (errors: any) => {
+    const firstErrorField = Object.keys(errors)[0];
+    if (firstErrorField) {
+      // Use setTimeout to ensure this scroll happens after any other scroll behavior
+      setTimeout(() => {
+        // Try multiple selectors to find the field
+        let element = document.querySelector(`[name="${firstErrorField}"]`) as HTMLElement;
+
+        // For nested fields like targetJournals.0
+        if (!element && firstErrorField.includes('.')) {
+          const parts = firstErrorField.split('.');
+          element = document.querySelector(`[name="${parts.join('.')}"]`) as HTMLElement;
+        }
+
+        // Try with id
+        if (!element) {
+          element = document.getElementById(firstErrorField);
+        }
+
+        // Find by label (for checkboxes and other fields)
+        if (!element) {
+          const labels = document.querySelectorAll('label');
+          for (const label of labels) {
+            if (label.textContent?.includes(firstErrorField)) {
+              element = label as HTMLElement;
+              break;
+            }
+          }
+        }
+
+        if (element) {
+          // Scroll to the element
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          // Focus the element if it's an input, but prevent scroll on focus
+          if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+            setTimeout(() => {
+              element.focus({ preventScroll: true });
+            }, 600);
+          }
+        }
+      }, 100);
+    }
+  };
+
   const handleSubmitClick = () => {
     // Use handleSubmit to trigger validation and show errors
     form.handleSubmit(
@@ -190,13 +237,7 @@ export function ProposalForm({
       (errors) => {
         // If invalid, show error toast and scroll to first error
         toast.error('Please fill in all required fields before submitting');
-        const firstErrorField = Object.keys(errors)[0];
-        if (firstErrorField) {
-          const element = document.querySelector(`[name="${firstErrorField}"]`);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }
+        scrollToFirstError(errors);
       }
     )();
   };
@@ -219,13 +260,7 @@ export function ProposalForm({
       (errors) => {
         // If invalid, show error toast and scroll to first error
         toast.error('Please fill in all required fields');
-        const firstErrorField = Object.keys(errors)[0];
-        if (firstErrorField) {
-          const element = document.querySelector(`[name="${firstErrorField}"]`);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }
+        scrollToFirstError(errors);
       }
     )();
   };
@@ -261,7 +296,7 @@ export function ProposalForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Main Topic *</FormLabel>
-                <p className='text-xs italic text-pink-600 font-light mb-2'>
+                <p className='text-sm font-semibold text-pink-600 mb-2'>
                   Numbers in parentheses show<br />proposals <strong>already submitted</strong> for this window
                 </p>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
