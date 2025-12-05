@@ -4,6 +4,7 @@
 
 ### Prohibited Practices
 
+-  **No prisma migrate reset**: Never use prisma migrate reset, it is a destructive action and will delete all data in the database.
 -  **No useEffect**: Use fetch in server components via services, or handle side effects via event handlers
 -  **No TypeScript any or as any**: Always use strong typing (not any or as any) ; if you need custom types, reuse them via @/types/ ; never use ts ignore comments.
 -  **No OOP patterns**: Avoid classes or object-oriented approaches
