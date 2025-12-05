@@ -236,7 +236,7 @@ export function CurrentWindowProposals({ proposals, windowStatus }: CurrentWindo
               <TableCell className='text-right w-[200px]'>
                 <div className='flex gap-2 justify-end'>
                   <TooltipProvider>
-                    {windowStatus === 'OPEN' && proposal.status === 'DRAFT' && (
+                    {windowStatus === 'OPEN' && proposal.status === 'DRAFT' && !hasSubmittedProposal && (
                       <>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -250,20 +250,24 @@ export function CurrentWindowProposals({ proposals, windowStatus }: CurrentWindo
                             <p>Edit draft</p>
                           </TooltipContent>
                         </Tooltip>
-                        {!hasSubmittedProposal ? (
-                          <SubmitProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
-                        ) : (
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button size='sm' variant='secondary' disabled>
-                                Already Submitted
+                        <SubmitProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                        <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
+                      </>
+                    )}
+                    {windowStatus === 'OPEN' && proposal.status === 'DRAFT' && hasSubmittedProposal && (
+                      <>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Link href={`/submission/${proposal.id}`}>
+                              <Button size='sm' variant='outline'>
+                                <Eye className='h-4 w-4' />
                               </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>You have already submitted a proposal for this window</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        )}
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>View draft</p>
+                          </TooltipContent>
+                        </Tooltip>
                         <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
                       </>
                     )}

@@ -21,9 +21,10 @@ import { toast } from 'sonner';
 
 interface ProposalActionsProps {
   proposalId: string;
+  showSubmit?: boolean;
 }
 
-export function ProposalActions({ proposalId }: ProposalActionsProps) {
+export function ProposalActions({ proposalId, showSubmit = true }: ProposalActionsProps) {
   const router = useRouter();
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -71,13 +72,14 @@ export function ProposalActions({ proposalId }: ProposalActionsProps) {
   return (
     <div className='flex gap-2'>
       {/* Submit Dialog */}
-      <AlertDialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
-        <AlertDialogTrigger asChild>
-          <Button disabled={isExecuting}>
-            <Send className='h-4 w-4 mr-2' />
-            Submit Proposal
-          </Button>
-        </AlertDialogTrigger>
+      {showSubmit && (
+        <AlertDialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
+          <AlertDialogTrigger asChild>
+            <Button disabled={isExecuting}>
+              <Send className='h-4 w-4 mr-2' />
+              Submit Proposal
+            </Button>
+          </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className='text-2xl text-gray-900'>Confirmation of proposal submission</AlertDialogTitle>
@@ -104,7 +106,8 @@ export function ProposalActions({ proposalId }: ProposalActionsProps) {
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+        </AlertDialog>
+      )}
 
       {/* Delete Dialog */}
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>

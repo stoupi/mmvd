@@ -1,11 +1,11 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
-import { getProposal, getMainAreas } from '@/lib/services/submission';
+import { getProposal, getMainAreas, getProposalsByPi } from '@/lib/services/submission';
 import { notFound, redirect } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
-import { Edit, ArrowLeft, Calendar, Clock } from 'lucide-react';
+import { Edit, ArrowLeft, Calendar, Clock, Trash2 } from 'lucide-react';
 import { ProposalActions } from '../components/proposal-actions';
 import { ProposalForm } from '../components/proposal-form';
 
@@ -49,6 +49,12 @@ export default async function ProposalDetailPage({
   const mainAreas = await getMainAreas();
   const isDraft = proposal.status === 'DRAFT';
   const isWindowOpen = proposal.submissionWindow.status === 'OPEN';
+
+  // Check if user has already submitted a proposal in this window
+  const allProposals = await getProposalsByPi(session.user.id);
+  const hasSubmittedInWindow = allProposals.some(
+    (p) => p.submissionWindowId === proposal.submissionWindowId && p.status === 'SUBMITTED'
+  );
 
   // Calculate days remaining
   const daysRemaining = Math.ceil(
@@ -105,7 +111,7 @@ export default async function ProposalDetailPage({
 
         <div className='flex items-center justify-between mb-4'>
           <h1 className='text-3xl font-bold'>Proposal of Ancillary Study</h1>
-          {isDraft && isWindowOpen && (
+          {isDraft && isWindowOpen && !hasSubmittedInWindow && (
             <Link href={`/submission/${proposalId}/edit`}>
               <Button variant='outline'>
                 <Edit className='h-4 w-4 mr-2' />
@@ -147,7 +153,7 @@ export default async function ProposalDetailPage({
         </div>
       </div>
 
-      {isDraft && isWindowOpen && (
+      {isDraft && isWindowOpen && !hasSubmittedInWindow && (
         <Card className='mb-6 border-blue-200 bg-blue-50'>
           <CardContent className='pt-6'>
             <div className='flex items-start justify-between'>
@@ -158,6 +164,22 @@ export default async function ProposalDetailPage({
                 </p>
               </div>
               <ProposalActions proposalId={proposalId} />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {isDraft && isWindowOpen && hasSubmittedInWindow && (
+        <Card className='mb-6 border-yellow-200 bg-yellow-50'>
+          <CardContent className='pt-6'>
+            <div className='flex items-start justify-between'>
+              <div>
+                <h3 className='font-semibold text-yellow-900 mb-1'>Draft cannot be submitted</h3>
+                <p className='text-sm text-yellow-700'>
+                  You have already submitted a proposal for this submission window. You can only delete this draft.
+                </p>
+              </div>
+              <ProposalActions proposalId={proposalId} showSubmit={false} />
             </div>
           </CardContent>
         </Card>
