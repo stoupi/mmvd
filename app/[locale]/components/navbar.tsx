@@ -3,8 +3,8 @@
 import { Link } from '@/app/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from '@/app/i18n/navigation';
-import { useTranslations, useLocale } from 'next-intl';
-import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { getAvailableApps } from '@/lib/app-config';
 import { FileText, ClipboardCheck, Settings, User, LogOut } from 'lucide-react';
@@ -12,23 +12,21 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuTrigger
+	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
 
 const iconMap = {
 	FileText,
 	ClipboardCheck,
-	Settings
+	Settings,
 };
 
 export function Navbar() {
 	const t = useTranslations('navigation');
 	const router = useRouter();
-	const locale = useLocale();
 	const pathname = usePathname();
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
-	const [isMounted, setIsMounted] = useState(false);
 
 	const { data: session, isPending } = authClient.useSession();
 	console.log('Session data:', session);
@@ -39,10 +37,6 @@ export function Navbar() {
 		: [];
 
 	console.log('Available apps:', availableApps);
-
-	useEffect(() => {
-		setIsMounted(true);
-	}, []);
 
 	const handleLogout = async () => {
 		setIsLoggingOut(true);
@@ -73,7 +67,7 @@ export function Navbar() {
 						</span>
 					</Link>
 
-					{isMounted && availableApps.length > 0 && (
+					{availableApps && availableApps.length > 0 && (
 						<div className='hidden md:flex items-center space-x-1'>
 							{availableApps.map((app) => {
 								const Icon = iconMap[app.icon as keyof typeof iconMap];
@@ -113,15 +107,22 @@ export function Navbar() {
 											{session.user.avatarUrl ? (
 												<Image
 													src={session.user.avatarUrl}
-													alt={session.user.name || session.user.email}
+													alt={
+														session.user.name ||
+														session.user.email
+													}
 													width={32}
 													height={32}
 													className='h-full w-full object-cover'
 												/>
 											) : (
 												<span className='text-white text-sm font-medium'>
-													{session.user.name?.charAt(0).toUpperCase() ||
-														session.user.email.charAt(0).toUpperCase()}
+													{session.user.name
+														?.charAt(0)
+														.toUpperCase() ||
+														session.user.email
+															.charAt(0)
+															.toUpperCase()}
 												</span>
 											)}
 										</div>
@@ -132,7 +133,9 @@ export function Navbar() {
 								</DropdownMenuTrigger>
 								<DropdownMenuContent align='end' className='w-48'>
 									<DropdownMenuItem asChild>
-										<Link href='/profile' className='flex items-center cursor-pointer'>
+										<Link
+											href='/profile'
+											className='flex items-center cursor-pointer'>
 											<User className='h-4 w-4 mr-2' />
 											{t('myProfile')}
 										</Link>
