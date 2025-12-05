@@ -940,24 +940,26 @@ export function ProposalForm({
       <AlertDialog open={isSubmitDialogOpen} onOpenChange={setIsSubmitDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className='text-2xl'>Confirm Submission</AlertDialogTitle>
-            <div className='text-foreground space-y-3 pt-2'>
+            <AlertDialogTitle className='text-2xl text-gray-900'>Confirmation of proposal submission</AlertDialogTitle>
+            <div className='text-gray-900 space-y-4 pt-2'>
               <div className='font-semibold text-base'>
                 Are you sure you want to submit this proposal?
               </div>
-              <div className='text-sm'>
-                Once submitted:
+              <div>
+                <div className='text-sm mb-2'>
+                  Once submitted:
+                </div>
+                <ul className='text-sm space-y-1 list-disc list-inside pl-2'>
+                  <li>You <strong>cannot modify</strong> this proposal</li>
+                  <li>You <strong>cannot submit another proposal</strong> for this submission window</li>
+                  <li>This action is <strong className='text-pink-600'>final and irreversible</strong></li>
+                </ul>
               </div>
-              <ul className='text-sm space-y-1 list-disc list-inside pl-2'>
-                <li>You <strong>cannot modify</strong> this proposal</li>
-                <li>You <strong>cannot submit another proposal</strong> for this submission window</li>
-                <li>This action is <strong className='text-pink-600'>final and irreversible</strong></li>
-              </ul>
             </div>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSubmitConfirmed} className='bg-pink-600 hover:bg-pink-700'>
+            <AlertDialogAction onClick={handleSubmitConfirmed}>
               Confirm Submission
             </AlertDialogAction>
           </AlertDialogFooter>

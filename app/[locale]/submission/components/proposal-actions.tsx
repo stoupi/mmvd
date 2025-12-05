@@ -80,26 +80,27 @@ export function ProposalActions({ proposalId }: ProposalActionsProps) {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Submit Proposal?</AlertDialogTitle>
-            <AlertDialogDescription className='space-y-2'>
-              <p>
-                Are you sure you want to submit this proposal? Once submitted:
-              </p>
-              <ul className='list-disc list-inside space-y-1 text-sm'>
-                <li>You will <strong>not be able to edit</strong> the proposal</li>
-                <li>You will <strong>not be able to delete</strong> the proposal</li>
-                <li>The proposal will be sent for review</li>
-                <li>You cannot submit another proposal for this submission window</li>
-              </ul>
-              <p className='font-medium mt-4'>
-                This action cannot be undone.
-              </p>
-            </AlertDialogDescription>
+            <AlertDialogTitle className='text-2xl text-gray-900'>Confirmation of proposal submission</AlertDialogTitle>
+            <div className='text-gray-900 space-y-4 pt-2'>
+              <div className='font-semibold text-base'>
+                Are you sure you want to submit this proposal?
+              </div>
+              <div>
+                <div className='text-sm mb-2'>
+                  Once submitted:
+                </div>
+                <ul className='text-sm space-y-1 list-disc list-inside pl-2'>
+                  <li>You <strong>cannot modify</strong> this proposal</li>
+                  <li>You <strong>cannot submit another proposal</strong> for this submission window</li>
+                  <li>This action is <strong className='text-pink-600'>final and irreversible</strong></li>
+                </ul>
+              </div>
+            </div>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleSubmit} disabled={isExecuting}>
-              {isExecuting ? 'Submitting...' : 'Yes, Submit Proposal'}
+              {isExecuting ? 'Submitting...' : 'Confirm Submission'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

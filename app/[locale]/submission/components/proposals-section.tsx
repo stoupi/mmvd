@@ -101,15 +101,27 @@ function SubmitProposalButton({ proposalId, proposalTitle }: { proposalId: strin
         </TooltipTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Submit Proposal?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to submit "{proposalTitle}"? Once submitted, you cannot modify it or submit another proposal for this submission window. This action is final.
-            </AlertDialogDescription>
+            <AlertDialogTitle className='text-2xl text-gray-900'>Confirmation of proposal submission</AlertDialogTitle>
+            <div className='text-gray-900 space-y-4 pt-2'>
+              <div className='font-semibold text-base'>
+                Are you sure you want to submit this proposal?
+              </div>
+              <div>
+                <div className='text-sm mb-2'>
+                  Once submitted:
+                </div>
+                <ul className='text-sm space-y-1 list-disc list-inside pl-2'>
+                  <li>You <strong>cannot modify</strong> this proposal</li>
+                  <li>You <strong>cannot submit another proposal</strong> for this submission window</li>
+                  <li>This action is <strong className='text-pink-600'>final and irreversible</strong></li>
+                </ul>
+              </div>
+            </div>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleSubmit}>
-              {status === 'executing' ? 'Submitting...' : 'Submit Proposal'}
+              {status === 'executing' ? 'Submitting...' : 'Confirm Submission'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
