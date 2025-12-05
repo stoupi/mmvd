@@ -47,11 +47,12 @@ export function LoginForm() {
 			}
 		},
 		onSuccess: async ({ data }) => {
-			if (data?.success) {
+			if (data?.success && data.redirectTo) {
 				// Refetch session to update client-side state
-				refetchSession?.();
-				router.refresh();
-				router.push(`/${locale}/dashboard`);
+				await refetchSession?.();
+
+				// Use window.location to ensure a full page reload with fresh session
+				window.location.href = `/${locale}${data.redirectTo}`;
 			}
 		},
 	});
