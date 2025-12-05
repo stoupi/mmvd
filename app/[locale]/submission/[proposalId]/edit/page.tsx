@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { ProposalActions } from '../../components/proposal-actions';
 
 export default async function EditProposalPage({
@@ -35,6 +35,11 @@ export default async function EditProposalPage({
 
   const mainAreas = await getMainAreas();
   const isWindowOpen = proposal.submissionWindow.status === 'OPEN';
+
+  // Calculate days remaining
+  const daysRemaining = Math.ceil(
+    (new Date(proposal.submissionWindow.submissionCloseAt).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+  );
 
   // Check if user has already submitted a proposal in this window
   const allProposals = await getProposalsByPi(session.user.id);
@@ -91,19 +96,39 @@ export default async function EditProposalPage({
     <div className='container mx-auto py-8 max-w-4xl'>
       <div className='mb-6'>
         <Link href='/submission'>
-          <Button variant='ghost' size='sm' className='mb-4'>
+          <Button variant='outline' size='sm' className='mb-4 border-pink-600 text-pink-600 hover:bg-pink-50 hover:text-pink-700'>
             <ArrowLeft className='h-4 w-4 mr-2' />
             Back to proposals
           </Button>
         </Link>
-        <h1 className='text-3xl font-bold mb-2'>Edit Proposal Draft</h1>
-        <div className='flex items-center gap-3'>
-          <p className='text-muted-foreground'>
-            {proposal.submissionWindow.name}
-          </p>
-          <Badge className={isWindowOpen ? 'bg-green-500' : 'bg-red-500'}>
-            {isWindowOpen ? 'Open' : 'Closed'}
-          </Badge>
+        <h1 className='text-3xl font-bold mb-4'>Edit Proposal of Ancillary Study</h1>
+
+        <div className='flex flex-wrap items-center gap-3 mb-2'>
+          <span className='text-lg font-semibold'>{proposal.submissionWindow.name}</span>
+          <div className='flex items-center gap-2 text-muted-foreground'>
+            <Calendar className='h-4 w-4' />
+            <span>
+              {new Date(proposal.submissionWindow.submissionOpenAt).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+              })}
+              {' - '}
+              {new Date(proposal.submissionWindow.submissionCloseAt).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+              })}
+            </span>
+          </div>
+          {isWindowOpen && (
+            <div className='flex items-center gap-2'>
+              <Clock className='h-4 w-4 text-pink-600' />
+              <span className='font-semibold text-pink-600'>
+                {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'} remaining
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
