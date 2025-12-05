@@ -116,19 +116,24 @@ export function ProposalActions({ proposalId }: ProposalActionsProps) {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Draft?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete this draft? This action cannot be undone.
-            </AlertDialogDescription>
+            <AlertDialogTitle className='text-2xl text-gray-900'>Draft deletion</AlertDialogTitle>
+            <div className='text-gray-900 space-y-4 pt-2'>
+              <div className='font-semibold text-base'>
+                Are you sure you want to delete this draft?
+              </div>
+              <div className='text-sm'>
+                This action is <strong className='text-red-600'>permanent and cannot be undone</strong>.
+              </div>
+            </div>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className='hover:bg-red-50 hover:text-red-600'>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isExecuting}
-              className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
+              className='bg-red-600 text-white hover:bg-red-700'
             >
-              {isExecuting ? 'Deleting...' : 'Yes, Delete Draft'}
+              {isExecuting ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

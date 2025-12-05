@@ -162,14 +162,19 @@ function DeleteProposalButton({ proposalId, proposalTitle }: { proposalId: strin
         </TooltipTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Draft?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete "{proposalTitle}"? This action cannot be undone.
-            </AlertDialogDescription>
+            <AlertDialogTitle className='text-2xl text-gray-900'>Draft deletion</AlertDialogTitle>
+            <div className='text-gray-900 space-y-4 pt-2'>
+              <div className='font-semibold text-base'>
+                Are you sure you want to delete "{proposalTitle}"?
+              </div>
+              <div className='text-sm'>
+                This action is <strong className='text-red-600'>permanent and cannot be undone</strong>.
+              </div>
+            </div>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className='bg-destructive text-destructive-foreground hover:bg-destructive/90'>
+            <AlertDialogCancel className='hover:bg-red-50 hover:text-red-600'>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className='bg-red-600 text-white hover:bg-red-700'>
               {status === 'executing' ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>
           </AlertDialogFooter>
