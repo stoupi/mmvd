@@ -61,6 +61,8 @@ export function ProposalForm({
 
   const form = useForm<ProposalFormData>({
     resolver: zodResolver(proposalFormSchemaValidated),
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
     defaultValues: initialData || {
       title: '',
       mainAreaId: '',
@@ -185,6 +187,19 @@ export function ProposalForm({
     }
   };
 
+  const handleSaveDraft = () => {
+    const formData = form.getValues();
+    if (isEditing && proposalId) {
+      updateProposal({ ...formData, id: proposalId });
+    } else {
+      createProposal({
+        ...formData,
+        submissionWindowId,
+        centreId
+      });
+    }
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
@@ -216,6 +231,9 @@ export function ProposalForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Main Topic *</FormLabel>
+                <p className='text-xs italic text-pink-600 font-light mb-2'>
+                  Numbers in parentheses show<br />proposals <strong>already submitted</strong> for this window
+                </p>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
@@ -832,10 +850,11 @@ export function ProposalForm({
               {createSubmitStatus === 'executing' || updateSubmitStatus === 'executing' ? 'Submitting...' : 'Submit Proposal'}
             </Button>
             <Button
-              type='submit'
+              type='button'
               size='lg'
               variant='secondary'
               disabled={isExecuting}
+              onClick={handleSaveDraft}
               className='flex-1'
             >
               <Save className='h-5 w-5 mr-2' />
