@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { proposalFormSchemaValidated, type ProposalFormData } from '@/lib/schemas/proposal';
 import { useAction } from 'next-safe-action/hooks';
-import { createProposalAction, updateProposalAction, createAndSubmitProposalAction, updateAndSubmitProposalAction } from '@/lib/actions/proposal-actions';
+import { createProposalAction, updateProposalAction, createAndSubmitProposalAction, updateAndSubmitProposalAction, saveDraftAction, updateDraftAction } from '@/lib/actions/proposal-actions';
 import { useRouter } from '@/app/i18n/navigation';
 import { toast } from 'sonner';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from '@/components/ui/form';
@@ -61,8 +61,8 @@ export function ProposalForm({
 
   const form = useForm<ProposalFormData>({
     resolver: zodResolver(proposalFormSchemaValidated),
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    mode: 'onTouched',
+    reValidateMode: 'onChange',
     defaultValues: initialData || {
       title: '',
       mainAreaId: '',
@@ -98,8 +98,8 @@ export function ProposalForm({
     }
   });
 
-  const { execute: createProposal, status: createStatus } = useAction(
-    createProposalAction,
+  const { execute: saveDraft, status: createStatus } = useAction(
+    saveDraftAction,
     {
       onSuccess: ({ data }) => {
         toast.success('Draft saved successfully');
@@ -111,12 +111,12 @@ export function ProposalForm({
     }
   );
 
-  const { execute: updateProposal, status: updateStatus } = useAction(
-    updateProposalAction,
+  const { execute: updateDraft, status: updateStatus } = useAction(
+    updateDraftAction,
     {
-      onSuccess: () => {
+      onSuccess: ({ data }) => {
         toast.success('Draft updated successfully');
-        router.push(`/submission/${proposalId}`);
+        router.push(`/submission/${data?.proposalId || proposalId}`);
       },
       onError: ({ error }) => {
         toast.error(error.serverError || 'Failed to update draft');
@@ -180,24 +180,54 @@ export function ProposalForm({
     setIsSubmitDialogOpen(false);
   };
 
-  const handleSubmitClick = async () => {
-    const isValid = await form.trigger();
-    if (isValid) {
-      setIsSubmitDialogOpen(true);
-    }
+  const handleSubmitClick = () => {
+    // Use handleSubmit to trigger validation and show errors
+    form.handleSubmit(
+      () => {
+        // If valid, open confirmation dialog
+        setIsSubmitDialogOpen(true);
+      },
+      (errors) => {
+        // If invalid, show error toast and scroll to first error
+        toast.error('Please fill in all required fields before submitting');
+        const firstErrorField = Object.keys(errors)[0];
+        if (firstErrorField) {
+          const element = document.querySelector(`[name="${firstErrorField}"]`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }
+    )();
   };
 
   const handleSaveDraft = () => {
-    const formData = form.getValues();
-    if (isEditing && proposalId) {
-      updateProposal({ ...formData, id: proposalId });
-    } else {
-      createProposal({
-        ...formData,
-        submissionWindowId,
-        centreId
-      });
-    }
+    // Validate the form first and show errors
+    form.handleSubmit(
+      (validData) => {
+        // If valid, save as draft
+        if (isEditing && proposalId) {
+          updateDraft({ ...validData, id: proposalId, submissionWindowId, centreId });
+        } else {
+          saveDraft({
+            ...validData,
+            submissionWindowId,
+            centreId
+          });
+        }
+      },
+      (errors) => {
+        // If invalid, show error toast and scroll to first error
+        toast.error('Please fill in all required fields');
+        const firstErrorField = Object.keys(errors)[0];
+        if (firstErrorField) {
+          const element = document.querySelector(`[name="${firstErrorField}"]`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }
+    )();
   };
 
   return (

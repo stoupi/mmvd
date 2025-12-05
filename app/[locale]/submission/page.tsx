@@ -66,47 +66,47 @@ export default async function SubmissionPage({
               <CardTitle>Current Window</CardTitle>
             </CardHeader>
             <CardContent className='space-y-4'>
-              <div className='flex flex-wrap items-center gap-3'>
-                <Badge className={currentWindow.status === 'OPEN' ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'}>
-                  {currentWindow.status === 'OPEN' ? 'Submission Window Open' : 'Submission Window Closed'}
-                </Badge>
-                <span className='text-lg font-semibold'>{currentWindow.name}</span>
-                <div className='flex items-center gap-2 text-muted-foreground'>
-                  <Calendar className='h-4 w-4' />
-                  <span>
-                    {new Date(currentWindow.submissionOpenAt).toLocaleDateString('en-US', {
-                      month: 'long',
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
-                    {' - '}
-                    {new Date(currentWindow.submissionCloseAt).toLocaleDateString('en-US', {
-                      month: 'long',
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
-                  </span>
-                </div>
-                {currentWindow.status === 'OPEN' && (
-                  <div className='flex items-center gap-2'>
-                    <Clock className='h-4 w-4 text-pink-600' />
-                    <span className='font-semibold text-pink-600'>
-                      {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'} remaining
+              <div className='flex flex-wrap items-center justify-between gap-3'>
+                <div className='flex flex-wrap items-center gap-3'>
+                  <Badge className={currentWindow.status === 'OPEN' ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'}>
+                    {currentWindow.status === 'OPEN' ? 'Submission Window Open' : 'Submission Window Closed'}
+                  </Badge>
+                  <span className='text-lg font-semibold'>{currentWindow.name}</span>
+                  <div className='flex items-center gap-2 text-muted-foreground'>
+                    <Calendar className='h-4 w-4' />
+                    <span>
+                      {new Date(currentWindow.submissionOpenAt).toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                      })}
+                      {' - '}
+                      {new Date(currentWindow.submissionCloseAt).toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                      })}
                     </span>
                   </div>
-                )}
-              </div>
+                  {currentWindow.status === 'OPEN' && (
+                    <div className='flex items-center gap-2'>
+                      <Clock className='h-4 w-4 text-pink-600' />
+                      <span className='font-semibold text-pink-600'>
+                        {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'} remaining
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-              {canCreateNew && (
-                <div className='pt-2'>
+                {canCreateNew && (
                   <Link href='/submission/new'>
                     <Button size='lg' className='transition-all hover:scale-105'>
                       <Plus className='h-5 w-5 mr-2' />
                       Create New Proposal
                     </Button>
                   </Link>
-                </div>
-              )}
+                )}
+              </div>
 
               {hasSubmittedInCurrentWindow && (
                 <div className='bg-green-50 border border-green-200 rounded-lg p-4'>

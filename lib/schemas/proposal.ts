@@ -134,13 +134,6 @@ const proposalFormSchemaBase = z.object({
 
   // Target journals
   targetJournals: z.array(z.string())
-    .refine(
-      (arr) => {
-        // Only check that first journal (index 0) is filled
-        return arr.length > 0 && arr[0] && arr[0].trim().length > 0;
-      },
-      { message: 'Journal 1 is required' }
-    )
     .transform((arr) => {
       // Filter out empty strings from journals 2 and 3, but keep journal 1
       if (arr.length === 0) return [];
@@ -156,19 +149,31 @@ const proposalFormSchemaBase = z.object({
 export const proposalFormSchema = proposalFormSchemaBase;
 
 // Export a validated schema with refinements for form validation
-export const proposalFormSchemaValidated = proposalFormSchemaBase.refine(
-  (data) => {
-    // At least one data requirement must be selected
-    return data.dataBaseline || data.dataBiological || data.dataTTE ||
-           data.dataTOE || data.dataStressEcho || data.dataCMR ||
-           data.dataCT || data.dataRHC || data.dataHospitalFollowup ||
-           data.dataClinicalFollowup || data.dataTTEFollowup || data.dataCoreLab;
-  },
-  {
-    message: 'At least one data requirement must be selected',
-    path: ['dataBaseline']
-  }
-);
+export const proposalFormSchemaValidated = proposalFormSchemaBase
+  .refine(
+    (data) => {
+      // At least one data requirement must be selected
+      return data.dataBaseline || data.dataBiological || data.dataTTE ||
+             data.dataTOE || data.dataStressEcho || data.dataCMR ||
+             data.dataCT || data.dataRHC || data.dataHospitalFollowup ||
+             data.dataClinicalFollowup || data.dataTTEFollowup || data.dataCoreLab;
+    },
+    {
+      message: 'At least one data requirement must be selected',
+      path: ['dataBaseline']
+    }
+  )
+  .refine(
+    (data) => {
+      // First journal must be filled
+      return data.targetJournals && data.targetJournals.length > 0 &&
+             data.targetJournals[0] && data.targetJournals[0].trim().length > 0;
+    },
+    {
+      message: 'Journal 1 is required',
+      path: ['targetJournals', 0]
+    }
+  );
 
 export type ProposalFormData = z.infer<typeof proposalFormSchema>;
 
