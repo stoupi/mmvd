@@ -1,91 +1,89 @@
-Ôªøcode;name;newName;address;city;postalCode;countryCode;patientCount;Firstname_PI;Lastname_PI;Firstname_Co1;Lastname_Co1;Firstname_Co2;Lastname_Co2;Firstname_Co2;Lastname_Co2
-001;Frantz Fanon Hospital;;Route  d'Attatba Zabana  BP 151;Blida;09010;DZ;17;Mohamed Abed;Bouraghda;Yasmina;Bououdina;;;;
-002;Medizinischen Universit√§t (Tirol Kliniken);;Anichstra√üe 35;Innsbruck;A-6020;AT;188;Sebastian J;Reinstadler;Alex;Kaser;Ivan;Lechner;;
-004;Ziekenhuis Oost Limburg;;ZOL Genk, campus Sint-Jan, Synaps Park 1;Genk;3600;BE;36;Philippe;Bertrand;David;Verhaert;Sebastiaan;Dhont;;
-006;CHU Saint Pierre - Porte de Hal;CHU Saint Pierre;Rue Haute, 322;Bruxelles;1000;BE;54;Michael;Rietz;Mihaela;Amzulescu;Philippe;Unger;;
-007;ULB - H√¥pital Erasme;"HUB - H√¥pital Erasme
-";808, route de Lennik;Bruxelles;1070;BE;18;Mihai;Strachinaru;Alexandre;Unger*;Elza;Abdessater;;
-008;Cliniques Universitaires Saint-Luc;;Avenue Hippocrate;Bruxelles;B-1200;BE;25;Bernhard;Gerber;Agnes;Pasquet;David;Vancraeynest;;
-009;Universitair Ziekenhuis Brussel;;Laarbeeklaan 101;Bruxelles;1090 Jette;BE;123;Bernard;Cosyns;Andreea;Motoc;Xavier;Galloo;;
-013;Institut Universitaire de Cardiologie et de Pneumologie de Qu√©bec - Universit√© Laval;;2725, chemin Sainte-Foy;Quebec;G1V 4G5;CA;163;Marie-Annick;Clavel;Kathia;Abdoun;Philippe;Pibarot;;
-014;University Hospital Centre Zagreb;;12 Ki≈°patiƒáeva St;Zagreb;10 000;HR;118;Jadranka;Separovic Hanzevacki;Dejan;Dosen;Vlatka;Reskovic Luksic;;
-016;Nicosia Heart Center;;Ifigenias 35A, Apt 103-104, 1st Floor;Nicosie;2007;CY;19;Thrasos;Constantinides;Christos;Eftychiou;Marios;Ioannides;;
-018;APHP - Lariboisi√®re;CHU Lariboisi√®re (AP-HP);2, rue Ambroise Par√©;Paris;75010;FR;45;;;;;;;;
-019;CHU d'Amiens Sud;;Avenue Ren√© La√´nnec;Amiens;80000;FR;222;Yohann;Bohbot;Emilion;Hucleux;Christophe;Tribouilloy;;
-021;CHU de Besan√ßon - Jean Minjoz;;1, boulevard Fleming;Besan√ßon;25000;FR;19;Basile;Mouhat;Camille;Barthod;Ouma√Øma;Zbitou;;
-022;CHU de Bordeaux - Haut L√©v√™que;;1, avenue Magellan;Pessac;33600;FR;14;;;;;;;;
-023;CHU de Brest - La Cavale Blanche;;Boulevard Tanguy Prigent;Brest;29200;FR;37;;;;;;;;
-025;CHD Felix Guyon;;All√©e des Topazes;Saint-Denis-de-la-R√©union;97400;FR;111;;;;;;;;
-026;CHRU de Lille - Cardiologique (Coeur-Poumon);CHRU de Lille - Institut C≈ìur Poumon;Boulevard du Pr. J. Leclerc;Lille;59000;FR;90;;;;;;;;
-027;GHICL - Saint Philibert;;Rue du Grand But;Lomme;59462;FR;35;;;;;;;;
-028;IH Jacques Cartier;Institut Cardiovasculaire Paris Sud (ICPS);6, avenue Noyer Lambert;Massy;91300;FR;80;;;;;;;;
-029;Clinique du Mill√©naire;;220, boulevard P√©n√©lope;Montpellier;34960;FR;41;;;;;;;;
-030;CHU de Montpellier - Arnaud de Villeneuve;;371, avenue du Doyen Gaston Giraud;Montpellier;34295;FR;22;;;;;;;;
-031;CHU de Nantes - H√¥tel Dieu;;Place Alexis Ricordeau;Nantes;44000;FR;122;;;;;;;;
-033;Institut Mutualiste Montsouris;;42, boulevard Jourdan;Paris;75014;FR;56;;;;;;;;
-036;CHU de Rennes - Pontchaillou;;2, rue Henri Le Guilloux;Rennes;35000;FR;52;;;;;;;;
-037;CHU de Rouen - Charles Nicolle;;1, rue de Germont;Rouen;76000;FR;107;;;;;;;;
-039;CHRU de Strasbourg - Civil;;1, Place de l'H√¥pital  ;Strasbourg;67091;FR;23;;;;;;;;
-041;CHRU de Tours - Trousseau;;Avenue de la R√©publique;Chambray-l√®s-Tours;37170;FR;72;;;;;;;;
-043;CHRU de Dijon - Bocage;;14 rue Paul Gaffarel;Dijon;21079;FR;33;;;;;;;;
-044;CHT Gaston-Bourret;;110, boulevard Joseph-Wamytan;Noum√©a;98849;FR;12;;;;;;;;
-045;Aversi Clinic;;27b Vazha Pshavela Ave;Tbilissi;0160;GE;15;;;;;;;;
-046;Charit√© Universit√§tsmedizin - Virchow;;Augustenburger Platz 1;Berlin;13353;DE;31;;;;;;;;
-050;Charit√© Universit√§tsmedizin - Franklin;;Hindenburgdamm 30;Berlin;12203;DE;43;;;;;;;;
-054;Charit√© Universit√§tsmedizin - Mitte;;Charit√©platz 1;Berlin;10117;DE;78;;;;;;;;
-057;Thoracic Diseases General Hospital Sotiria;;Mesogion, 152;Athene;11527;GR;15;;;;;;;;
-058;AHEPA Hospital;;Kiriakidi 1;Thessaloniki;546 36;GR;175;;;;;;;;
-059;Papageorgiou General Hospital;;Agiou Pavlou;Thessaloniki;76 564 29 ŒïœÖŒ∫Œ±œÅœÄŒØŒ±;GR;42;;;;;;;;
-066;University General Hospital of Heraklion;;Leof. Panepistimiou;Iraklio;715 00;GR;33;;;;;;;;
-068;University General Hospital Attikon;;Rimini street, 1;Athene;12462;GR;50;;;;;;;;
-069;Shaheed Rajaie Cardiovascular, Medical & Research Center;;Valiasr Ave Niayesh Intersection;Tehran;1995614331;IR;409;;;;;;;;
-071;Policlinico Universitario Campus Bio-Medico;;Via Alvaro del Portillo, 200;ROMA;00128;IT;21;;;;;;;;
-072;Azienda Ospedaliera Universitaria Integrata;;Piazzale Aristide Stefani, 1;Verona;37126;IT;125;;;;;;;;
-073;Ospedale Santa Maria del Carmine di Rovereto;;Corso Verona, 4;Rovereto;38068;IT;81;;;;;;;;
-074;Centro Cardiologico Monzino IRCCS;;Via Privata Carlo Parea, 4;Milano;20138;IT;304;;;;;;;;
-076;Auxologico San Luca;;Piazzale Brescia, 20;Milan;20149;IT;24;;;;;;;;
-080;Sapienza Universit√† di Roma Azienda Ospedaliero-Universitaria Policlinico Umberto;;viale del Policlinico, 155;Roma;00161;IT;43;;;;;;;;
-081;Azienda Ospedaliera Universitaria Senese;;Viale Bracci, 16;Siena;53100;IT;349;;;;;;;;
-084;University of Tsukuba Hospital;;Amakubo 2-1-1;Tsukuba;Ibaraki 305-8576;JP;74;;;;;;;;
-085;Ogaki Municipal Hospital;;4-86 Minaminokawa-cho;Ogaki;503-8502;JP;177;;;;;;;;
-088;Kindai University;;3 Chome-4-1 Kowakae, Higashiosaka;Osaka;577-8502;JP;163;;;;;;;;
-090;Gifu University Hospital;;1-1 Yanagido;Gifu;501-1112;JP;27;;;;;;;;
-093;Hyogo Medical University;;1-1 Mukogawacho;Nishinomiya;Hyogo 663-8131;JP;34;;;;;;;;
-094;Toho University Ohashi Medical Center;;2-17-6 Ohashi, Meguro-ku;Tokyo;153-8515;JP;104;;;;;;;;
-095;Nagoya University Hospital;;65 Tsurumai-cho, Showa-ku;Nagoya;466-8560;JP;17;;;;;;;;
-097;Kobe City Hospital Organization General Hospital;;4-6, Minatojima-Nakamachi;Hyogo;650-0046;JP;263;;;;;;;;
-098;Kitano Hospital;;2-4-20 Ogimachi, Kita-ku;Osaka;530-8480;JP;17;;;;;;;;
-100;Tottori University Hospital;;36-1 Nishicho;Yonago;683-8504;JP;24;;;;;;;;
-101;Juntendo University;;2-1-1 Hongo, Bunkyo-ku;Tokyo;113-8421;JP;355;;;;;;;;
-104;Vilnius University Hospital Santaros Klinikos;;Santariskiu st. 2;Vilnius;08406;LT;42;;;;;;;;
-107;University Clinic of Cardiology Skopje;;Mother Teresa 17;Skopje;1000;MK;27;;;;;;;;
-109;Punjab Institut of Cardiology;;Jail Rd, Shadman 1 Shadman;Lahore;Lahore;PK;134;;;;;;;;
-110;Medical University of Warsaw;;Banacha 1a Str.;Warsaw;02-091;PL;164;;;;;;;;
-112;Centralny Szpital Kliniczny MSWiA w Warszawie;;ul. Woloska 137;Varsovie;02-507;PL;30;;;;;;;;
-119;University of Zielona Gora, Collegium Medicum;;Zyty 28;Zielona G√≥ra;65-046;PL;17;;;;;;;;
-120;Institute of Maritime and Tropical Medicine, Medical University of Gdansk;;Powstania Styczniowego 9b;Gdynia;81-519;PL;15;;;;;;;;
-122;National Institute of Cardiology;;Wo≈Çoska 137;Warsaw;02-507;PL;23;;;;;;;;
-124;Center for Invasive Cardiology, Electrotherapy and Angiology;;ul. Kili≈Ñskiego 68;Nowy SƒÖcz;33-300;PL;21;;;;;;;;
-125;Institute of Heart Diseases;;Borowska 213;Wroc≈Çaw;50-367;PL;59;;;;;;;;
-126;Military Institute of Medicine - National Research Institute;;Szaserow 128;Warsaw;04-141;PL;199;;;;;;;;
-131;Pope John Paul II Province Hospital;;John Paul II Avenue 10;Zamo≈õƒá;22-400;PL;22;;;;;;;;
-132;Medical University of Gdansk;;Smoluchowskiego 17;Gdansk;80-214;PL;80;;;;;;;;
-142;Hospital CUF Tejo;;Av. 24 de Julho 171A;Lisboa;1350-352;PT;21;;;;;;;;
-148;University and Emergency Hospital of Bucharest;;Splaiul Independen»õei 169;Bucare»ôt;050098;RO;29;;;;;;;;
-150;Military Medical Academy;;17 Crnotravska St.;Belgrade;11040;RS;39;;;;;;;;
-151;Clinical Center of Serbia;;Dr Subotica No 6;Serbia;11000;RS;37;;;;;;;;
-152;University Medical Centre Maribor;;Ljubljanska ulica 5;Maribor;2000;SI;130;;;;;;;;
-154;University Medical Centre Ljubljana;;Zaloska cesta 7;Ljubljana;1000;SI;52;;;;;;;;
-158;University of Health Sciences Istanbul Mehmet Akif Ersoy Thoracic and Cardiovascular Surgery Training and Research Hospital;;ƒ∞stasyon, Turgut √ñzal Bulvari 11;ƒ∞stanbul;34303 K√º√ß√ºk√ßekmece;TR;132;;;;;;;;
-160;University of Health Sciences, Istanbul Ba≈üak≈üehir √áam and Sakura City Hospital;;Olimpiyat Blv Rd, Ba≈üak≈üehir;Istanbul;34480;TR;58;;;;;;;;
-162;"Educational and Research Medical Center ""UNIVERSITY HOSPITAL"" of Zaporizhzhia State Medical University";;83 –êc. Amosova Str;Zaporizhzhia;69063;UA;16;;;;;;;;
-163;Lviv Regional Cardiological Clinic;;Pekarska St, 69;Lviv;79010;UA;18;;;;;;;;
-165;OLV;"Hartcentrum Azorg
-";Moorselbaan 164;Aalst;93000;BE;28;Guy;Van Camp;Arthur;Iturriagagoitia;Jerrold;Spapen;;
-166;CHU ISSAD HASSANI BENI MESSOUS;CHU Issad Hassani Beni Messous;Rue Ibrahim Hadjeras;Alger;16206;DZ;126;Mohamed;Chettibi;;;;;;
-167;CHU de Tizi Ouzou;;Rue Lamali Ahmed;Tizi Ouzou;15000;DZ;24;Brahim;Kichou;Sarah;Brahimi;Lydia;Touat;;
-168;CHU d'Oran;;Boulevard Docteur Benzerdjeb;Oran;31000;DZ;63;Nadia;Laredj;Lilia;Zouli;;;;
-170;Heart Center Luzern;;Seidenhofstrasse 9;Luzern;6003;CH;16;;;;;;;;
-171;Memorial Bahcelievler Hospital;;Adnan Kahveci Blv. No: 227 Bah√ßelievler;Istanbul;34180;TR;74;;;;;;;;
-172;Gazi University Hospital;;Mevlana Blv. No:29;Yenimahalle/Ankara;06560;TR;109;;;;;;;;
-173;University of Medicine and Pharmacy of Craiova;;Strada Petru Rares 2;Craiova;200349;RO;72;;;;;;;;
+code	name	newName	address	city	postalCode	countryCode	patientCount	Firstname_PI	Lastname_PI	Firstname_Co1	Lastname_Co1	Firstname_Co2	Lastname_Co2	Firstname_Co2	Lastname_Co2	
+001	Frantz Fanon Hospital		Route  d'Attatba Zabana  BP 151	Blida	09010	DZ	17	Mohamed Abed	Bouraghda	Yasmina	Bououdina					
+002	Medizinischen Universität (Tirol Kliniken)		Anichstraße 35	Innsbruck	A-6020	AT	188	Sebastian J	Reinstadler	Alex	Kaser	Ivan	Lechner			
+004	Ziekenhuis Oost Limburg		ZOL Genk, campus Sint-Jan, Synaps Park 1	Genk	3600	BE	36	Philippe	Bertrand	David	Verhaert	Sebastiaan	Dhont			
+006	CHU Saint Pierre - Porte de Hal	CHU Saint Pierre	Rue Haute, 322	Bruxelles	1000	BE	54	Michael	Rietz	Mihaela	Amzulescu	Philippe	Unger			
+007	ULB - Hôpital Erasme	HUB - Hôpital Erasme	808, route de Lennik	Bruxelles	1070	BE	18	Mihai	Strachinaru	Alexandre	Unger	Elza	Abdessater			
+008	Cliniques Universitaires Saint-Luc		Avenue Hippocrate	Bruxelles	B-1200	BE	25	Bernhard	Gerber	Agnes	Pasquet	David	Vancraeynest			
+009	Universitair Ziekenhuis Brussel		Laarbeeklaan 101	Bruxelles	1090 Jette	BE	123	Bernard	Cosyns	Andreea	Motoc	Xavier	Galloo			
+013	Institut Universitaire de Cardiologie et de Pneumologie de Québec - Université Laval		2725, chemin Sainte-Foy	Quebec	G1V 4G5	CA	163	Marie-Annick	Clavel	Kathia	Abdoun	Philippe	Pibarot			
+014	University Hospital Centre Zagreb		12 Ki_pati_eva St	Zagreb	10 000	HR	118	Jadranka	Separovic Hanzevacki	Dejan	Dosen	Vlatka	Reskovic Luksic			
+016	Nicosia Heart Center		Ifigenias 35A, Apt 103-104, 1st Floor	Nicosie	2007	CY	19	Thrasos	Constantinides	Christos	Eftychiou	Marios	Ioannides			
+018	APHP - Lariboisière	CHU Lariboisière (AP-HP)	2, rue Ambroise Paré	Paris	75010	FR	45	Théo	Pezel	Trecy	Gonçalves	Paul-Jun	Martial	Jeremy	Florence*	
+019	CHU d'Amiens Sud		Avenue René Laënnec	Amiens	80000	FR	222	Yohann	Bohbot	Emilion	Hucleux	Christophe	Tribouilloy			
+021	CHU de Besançon - Jean Minjoz		1, boulevard Fleming	Besançon	25000	FR	19	Basile	Mouhat	Camille	Barthod	Oumaïma	Zbitou			
+022	CHU de Bordeaux - Haut Lévêque		1, avenue Magellan	Pessac	33600	FR	14	Julien	Ternacle	Melchior	Jonveaux	Guillaume	Bonnet			
+023	CHU de Brest - La Cavale Blanche		Boulevard Tanguy Prigent	Brest	29200	FR	37	Florent	Le Ven	Christopher	Jousse	Marie-Claire	Pouliquen			
+025	CHD Felix Guyon		Allée des Topazes	Saint-Denis-de-la-Réunion	97400	FR	111	Thiziri	Si Moussi	Louis-Marie	Desroche	Shamir	Vally			
+026	CHRU de Lille - Cardiologique (Coeur-Poumon)	CHRU de Lille - Institut Cœur Poumon	Boulevard du Pr. J. Leclerc	Lille	59000	FR	90	Augustin	Coisne	Marjorie	Richardson	Rubens	Groulez			
+027	GHICL - Saint Philibert		Rue du Grand But	Lomme	59462	FR	35	Alexandre	Altes	Achwaq	Lebouazda	Sylvestre	Maréchaux			
+028	IH Jacques Cartier	Institut Cardiovasculaire Paris Sud (ICPS)	6, avenue Noyer Lambert	Massy	91300	FR	80	Jérôme	Garot	Mariama	Akodad	Emmanuel	Gall			
+029	Clinique du Millénaire		220, boulevard Pénélope	Montpellier	34960	FR	41	Catherine	Sportouch	Stéphane	Cade	Frédéric	Cransac			
+030	CHU de Montpellier - Arnaud de Villeneuve		371, avenue du Doyen Gaston Giraud	Montpellier	34295	FR	22	Quentin	Delbaere	François	Roubille	Valentin	Femenia			
+031	CHU de Nantes - Hôtel Dieu		Place Alexis Ricordeau	Nantes	44000	FR	122	Thierry	Le Tourneau	Quentin	Bernard	David	Stévant			
+033	Institut Mutualiste Montsouris		42, boulevard Jourdan	Paris	75014	FR	56	Sophie	Ribeyrolles	Christelle	Diakov	Christophe	Caussin			
+036	CHU de Rennes - Pontchaillou		2, rue Henri Le Guilloux	Rennes	35000	FR	52	Erwan	Donal	Louis	Gegout	Precyllia	Lust			
+037	CHU de Rouen - Charles Nicolle		1, rue de Germont	Rouen	76000	FR	107	Charles	Fauvel	Alix	Algrin	Jean-Nicolas	Dacher			
+039	CHRU de Strasbourg - Civil		1, Place de l'Hôpital  	Strasbourg	67091	FR	23	Antonin	Trimaille	Patrick	Ohlmann					
+041	CHRU de Tours - Trousseau		Avenue de la République	Chambray-lès-Tours	37170	FR	72	Anne	Bernard	Antonin	Fuzeau	Marie	Luciani			
+043	CHRU de Dijon - Bocage		14 rue Paul Gaffarel	Dijon	21079	FR	33	Romain	Didier	Benjamin	Ferrand	Priyanka	Rajinthan			
+044	CHT Gaston-Bourret		110, boulevard Joseph-Wamytan	Nouméa	98849	FR	12	Samy	Aghezzaf	Marie	Robin	Olivier	Fichaux			
+045	Aversi Clinic		27b Vazha Pshavela Ave	Tbilissi	0160	GE	15	David	Maisuradze							
+046	Charité Universitätsmedizin - Virchow		Augustenburger Platz 1	Berlin	13353	DE	31	Sebastian	Kelle	Irene	Carrión	Stefanie	Doeblin			
+050	Charité Universitätsmedizin - Franklin		Hindenburgdamm 30	Berlin	12203	DE	43	Anna	Sannino	Ursula	Wilkenshoff	Vasileios	Exarchos			
+054	Charité Universitätsmedizin - Mitte		Charitéplatz 1	Berlin	10117	DE	78	Elena	Romero Dorta*	Isabel	Mattig	Nanike	Bühring			
+057	Thoracic Diseases General Hospital Sotiria		Mesogion, 152	Athene	11527	GR	15	Elsi	Tryfou	Evangelos	Oikonomou	Ourania	Katsarou			
+058	AHEPA Hospital		Kiriakidi 1	Thessaloniki	546 36	GR	175	Vasileios	Kamperidis	Evdoxia	Stavropoulou	Vasileios	Anastasiou	Eirini	Velegraki*	
+059	Papageorgiou General Hospital		Agiou Pavlou	Thessaloniki	76 564 29 _____π__	GR	42	Vasileios	Sachpekidis	Stella-Lida	Papadopoulou	Anastasios	Papanastasiou			
+066	University General Hospital of Heraklion		Leof. Panepistimiou	Iraklio	715 00	GR	33	Maria	Marketou	Anthi	Plevritaki	Konstantinos	Fragkiadakis			
+068	University General Hospital Attikon		Rimini street, 1	Athene	12462	GR	50	Ignatios	Ikonomidis	John	Thymis	Konstantinos	Katogiannis			
+069	Shaheed Rajaie Cardiovascular, Medical & Research Center		Valiasr Ave Niayesh Intersection	Tehran	1995614331	IR	409	Golnaz	Houshmand	Majid	Maleki	Raheleh	Kaviani			
+071	Policlinico Universitario Campus Bio-Medico		Via Alvaro del Portillo, 200	Roma	00128	IT	21	Myriam	Carpenito	Francesco	Grigioni	Simona	Mega			
+072	Azienda Ospedaliera Universitaria Integrata		Piazzale Aristide Stefani, 1	Verona	37126	IT	125	Giovanni	Benfari	Ilaria	Armani	Valentina	Rossi			
+073	Ospedale Santa Maria del Carmine di Rovereto		Corso Verona, 4	Rovereto	38068	IT	81	Giulia	Vinco	Cristiana	Giovanelli	Cristina	Demattè			
+074	Centro Cardiologico Monzino IRCCS		Via Privata Carlo Parea, 4	Milano	20138	IT	304	Gianluca	Pontone	Laura	Fusini	Andrea	Baggiano			
+076	Auxologico San Luca		Piazzale Brescia, 20	Milan	20149	IT	24	Denisa	Muraru	Michele	Tomaselli	Noela	Radu			
+080	Sapienza Università di Roma Azienda Ospedaliero-Universitaria Policlinico Umberto		viale del Policlinico, 155	Roma	00161	IT	43	Viviana	Maestrini	Elena Sofia	Canuti	Sara	Cimino			
+081	Azienda Ospedaliera Universitaria Senese		Viale Bracci, 16	Siena	53100	IT	349	Giulia Elena	Mandoli	Laura	Spaccaterra	Matteo	Cameli			
+084	University of Tsukuba Hospital		Amakubo 2-1-1	Tsukuba	Ibaraki 305-8576	JP	74	Kimi	Sato	Yu	Yamada	Tomoko	Machino-Ohtsuka			
+085	Ogaki Municipal Hospital		4-86 Minaminokawa-cho	Ogaki	503-8502	JP	177	Yoshihito	Arao	Itsuro	Morishima	Sachiko	Sawa			
+088	Kindai University		3 Chome-4-1 Kowakae, Higashiosaka	Osaka	577-8502	JP	163	Tatsuya	Miyoshi	Ayano	Yoshida	Hiroki	Matsuzoe			
+090	Gifu University Hospital		1-1 Yanagido	Gifu	501-1112	JP	27	Takamoto	Watanabe	Ayumi	Nakabo	Hajime	Ichiryu			
+093	Hyogo Medical University		1-1 Mukogawacho	Nishinomiya	Hyogo 663-8131	JP	34	Masataka	Sugahara	Makiko	Oboshi	Masaharu	Ishihara			
+094	Toho University Ohashi Medical Center		2-17-6 Ohashi, Meguro-ku	Tokyo	153-8515	JP	104	Go	Hashimoto	Hidehiko	Hara					
+095	Nagoya University Hospital		65 Tsurumai-cho, Showa-ku	Nagoya	466-8560	JP	17	Yoshihiro	Seo	Yu	Kawada					
+097	Kobe City Hospital Organization General Hospital		4-6, Minatojima-Nakamachi	Hyogo	650-0046	JP	263	Madoka	Sano	Hideyuki	Hayashi	Taiji	Okada			
+098	Kitano Hospital		2-4-20 Ogimachi, Kita-ku	Osaka	530-8480	JP	17	Eisaku	Nakane	Mariko	Kitano	Toka	Hamaguchi			
+100	Tottori University Hospital		36-1 Nishicho	Yonago	683-8504	JP	24	Koichi	Matsubara	Kensuke	Nakamura	Natsuko	Mukai-Yatagai			
+101	Juntendo University		2-1-1 Hongo, Bunkyo-ku	Tokyo	113-8421	JP	355	Nobuyuki	Kagiyama*	Tomohiro	Kaneko	Wataru	Fujita			
+104	Vilnius University Hospital Santaros Klinikos		Santariskiu st. 2	Vilnius	08406	LT	42	Sigita	Glaveckaitè	Agne	Drasutiene	Dovile	Peciuraite			
+107	University Clinic of Cardiology Skopje		Mother Teresa 17	Skopje	1000	MK	27	Irina	Kotlar Velkova	Elizabeta	Srbinovska-Kostovska					
+109	Punjab Institut of Cardiology		Jail Rd, Shadman 1 Shadman	Lahore	Lahore	PK	134	Sadia	Nasim	Aamir	Hussain	Shirjeel	Murtaza			
+110	Medical University of Warsaw		Banacha 1a Str.	Warsaw	02-091	PL	164	Sonia	Borodzicz-Ja_d_yk*	Anna	Budaj-Fidecka	Piotr	Scis_o			
+112	Centralny Szpital Kliniczny MSWiA w Warszawie		ul. Woloska 137	Warsaw	02-507	PL	30	Agnieszka	Pawlak	Marzena	Pietraszek	Tomasz	Andrzejewski			
+119	University of Zielona Gora, Collegium Medicum		Zyty 28	Zielona Góra	65-046	PL	17	B_a_ej	Makowski	Jaros_aw	Hiczkiewicz	Konrad	Pieszko			
+120	Institute of Maritime and Tropical Medicine, Medical University of Gdansk		Powstania Styczniowego 9b	Gdynia	81-519	PL	15	Beata	Jacu_	Marek	Kozi_ski					
+122	National Institute of Cardiology		Wo_oska 137	Warsaw	02-507	PL	23	Bohdan	Firek	Ewa	Majos-Karwacka	Weronika	Kunikowska			
+124	Center for Invasive Cardiology, Electrotherapy and Angiology		ul. Kili_skiego 68	Nowy S_cz	33-300	PL	21	Tomasz	Tokarek	Aleksander	Zelia_	Dominika	Dykla			
+125	Institute of Heart Diseases		Borowska 213	Wroc_aw	50-367	PL	59	Marta	Obremska	Monika	Przewlocka-Kosmala	Wojciech	Kosmala			
+126	Military Institute of Medicine - National Research Institute		Szaserow 128	Warsaw	04-141	PL	199	Beata	Uzi_b_o-_yczkowska	Katarzyna	_elazowska-Chmieli_ska	Pawe_	Krzesi_ski			
+131	Pope John Paul II Province Hospital		John Paul II Avenue 10	Zamo__	22-400	PL	22	Dorota	Nowosielecka	Gra_yna	Prokop-Lewicka					
+132	Medical University of Gdansk		Smoluchowskiego 17	Gdansk	80-214	PL	80	Izabela Karolina	Pisowodzka	Ludmi_a	Dani_owicz-Szymanowicz	Micha_	Janiel			
+142	Hospital CUF Tejo		Av. 24 de Julho 171A	Lisboa	1350-352	PT	21	João Bicho	Augusto	João	Agostinho	Rita	Pereira			
+148	University and Emergency Hospital of Bucharest		Splaiul Independen_ei 169	Bucare_t	050098	RO	29	Diana	Mihalcea	Hayat	Memis	Sorina	Mihaila			
+150	Military Medical Academy		17 Crnotravska St.	Belgrade	11040	RS	39	Zorica	Mladenovic	Milic	Gordana	Jovic	Zoran			
+151	Clinical Center of Serbia		Dr Subotica No 6	Serbia	11000	RS	37	Danijela	Trifunovic Zamaklar	Jelena	Vratonjic	Olga	Petrovic			
+152	University Medical Centre Maribor		Ljubljanska ulica 5	Maribor	2000	SI	130	Tomaz	Podlesnikar	David	Suran	Suzana	Danojevic			
+154	University Medical Centre Ljubljana		Zaloska cesta 7	Ljubljana	1000	SI	52	Marta	Cvijic	Mojca	Bervar	Jana	Ambrozic			
+158	University of Health Sciences Istanbul Mehmet Akif Ersoy Thoracic and Cardiovascular Surgery Training and Research Hospital	Mehmet Akif Ersoy Hospital	_stasyon, Turgut Özal Bulvari 11	_stanbul	34303 Küçükçekmece	TR	132	Begum	Uygur	Irem	Turkmen	Kadir	Sadikoglu			
+160	University of Health Sciences, Istanbul Ba_ak_ehir Çam and Sakura City Hospital	Ba_ak_ehir Çam and Sakura City Hospital	Olimpiyat Blv Rd, Ba_ak_ehir	Istanbul	34480	TR	58	Duygu	Inan	Duygu Genc	Albayrak	Ihsan	Demirtas			
+162	"Educational and Research Medical Center ""UNIVERSITY HOSPITAL"" of Zaporizhzhia State Medical University"	Educational and Research Medical Centre	83 _c. Amosova Str	Zaporizhzhia	69063	UA	16	Nelya	Oryshchyn	Anastasiya	Oryshchyn	Tetyana	Kutsyk			
+163	Lviv Regional Cardiological Clinic		Pekarska St, 69	Lviv	79010	UA	18	Mykhaylo	Kolesnyk	Ihor	Kachan	Maryna	Sokolova			
+165	OLV	Hartcentrum Azorg	Moorselbaan 164	Aalst	93000	BE	28	Guy	Van Camp	Arthur	Iturriagagoitia	Jerrold	Spapen			
+166	CHU ISSAD HASSANI BENI MESSOUS	CHU Issad Hassani Beni Messous	Rue Ibrahim Hadjeras	Alger	16206	DZ	126	Mohamed	Chettibi							
+167	CHU de Tizi Ouzou		Rue Lamali Ahmed	Tizi Ouzou	15000	DZ	24	Brahim	Kichou	Sarah	Brahimi	Lydia	Touat			
+168	CHU d'Oran		Boulevard Docteur Benzerdjeb	Oran	31000	DZ	63	Nadia	Laredj	Lilia	Zouli					
+170	Heart Center Luzern		Seidenhofstrasse 9	Luzern	6003	CH	16	Jana	Ljubas Macek	Simon	Stämpfli					
+171	Memorial Bahcelievler Hospital		Adnan Kahveci Blv. No: 227 Bahçelievler	Istanbul	34180	TR	74	Ozge	Ozden							
+172	Gazi University Hospital		Mevlana Blv. No:29	Yenimahalle/Ankara	06560	TR	109	Serkan	Ünlü	Özden	Seçkin					
+173	University of Medicine and Pharmacy of Craiova		Strada Petru Rares 2	Craiova	200349	RO	72	Despina Manuela	Toader	Mihai	Chitu	Sebastian	Militaru	Andreea	Afana	
