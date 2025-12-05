@@ -40,12 +40,8 @@ export default async function LandingPage({
           </span>
         </h1>
         <p className='text-2xl text-gray-900 mb-8 font-semibold'>
-          Multiple and Mixed Valvular Diseases Study
-        </p>
-        <p className='text-xl text-gray-600 mb-8 max-w-3xl mx-auto whitespace-nowrap'>
-          {t('hero.descriptionPrefix')}
-          <strong>{t('hero.descriptionBold')}</strong>
-          {t('hero.descriptionSuffix')}
+          The first international prospective study<br />
+          dedicated to <span className='bg-pink-100 px-2 py-1 rounded'>Multiple and Mixed Valvular Diseases</span>
         </p>
         <div className='flex justify-center gap-4'>
           <Button size='lg' variant='outline' asChild>
@@ -57,9 +53,6 @@ export default async function LandingPage({
             >
               {t('hero.clinicalTrialsButton')}
             </a>
-          </Button>
-          <Button size='sm' variant='ghost' asChild>
-            <Link href='/login'>{t('hero.investigatorLogin')}</Link>
           </Button>
         </div>
       </section>
