@@ -6,7 +6,7 @@ import { useRouter } from '@/app/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { getAvailableApps } from '@/lib/app-config';
+import { getAvailableApps, parsePermissions } from '@/lib/app-config';
 import { FileText, ClipboardCheck, Settings, User, LogOut } from 'lucide-react';
 import {
 	DropdownMenu,
@@ -33,7 +33,7 @@ export function Navbar() {
 	console.log('User permissions:', session?.user?.permissions);
 
 	const availableApps = session?.user?.permissions
-		? getAvailableApps(session.user.permissions)
+		? getAvailableApps(parsePermissions(session.user.permissions))
 		: [];
 
 	console.log('Available apps:', availableApps);
