@@ -118,7 +118,7 @@ export function WorldMap({ data }: WorldMapProps) {
 
   if (!isClient || !customIcon) {
     return (
-      <div className='w-full h-[600px] bg-gray-100 rounded-lg flex items-center justify-center'>
+      <div className='max-w-4xl mx-auto h-[400px] bg-gray-100 rounded-lg flex items-center justify-center'>
         <p className='text-gray-500'>Loading map...</p>
       </div>
     );
@@ -133,7 +133,7 @@ export function WorldMap({ data }: WorldMapProps) {
   );
 
   return (
-    <div className='w-full h-[600px] rounded-lg overflow-hidden border border-gray-200 shadow-lg'>
+    <div className='max-w-4xl mx-auto h-[400px] rounded-lg overflow-hidden border border-gray-200 shadow-lg'>
       <MapContainer
         center={[48, 15]}
         zoom={2}
