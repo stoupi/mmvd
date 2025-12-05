@@ -160,7 +160,7 @@ export function ProposalsTable({ proposals }: ProposalsTableProps) {
               />
             </TableHead>
             <TableHead style={{ width: columnWidths.secondary }} className='relative'>
-              Secondary
+              Secondary Topic
               <div
                 className='absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-blue-500 transition-colors'
                 onMouseDown={(e) => handleMouseDown('secondary', e)}

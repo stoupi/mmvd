@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -324,27 +325,39 @@ export function ProposalForm({
             render={({ field }) => {
               const selectedMainArea = form.watch('mainAreaId');
               const availableAreas = mainAreas.filter(area => area.id !== selectedMainArea);
+              const selectedTopicId = field.value?.[0];
+              const selectedTopic = mainAreas.find(area => area.id === selectedTopicId);
 
               return (
                 <FormItem>
                   <FormLabel>Secondary Topic *</FormLabel>
-                  <Select
-                    onValueChange={(value) => field.onChange(value ? [value] : [])}
-                    value={field.value?.[0] || ''}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Select secondary topic' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent align='start'>
-                      {availableAreas.map((area) => (
-                        <SelectItem key={area.id} value={area.id}>
-                          {area.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  {readOnly ? (
+                    <div className='min-h-10 flex items-center'>
+                      {selectedTopic ? (
+                        <Badge variant='secondary'>{selectedTopic.label}</Badge>
+                      ) : (
+                        <span className='text-muted-foreground text-sm'>No secondary topic selected</span>
+                      )}
+                    </div>
+                  ) : (
+                    <Select
+                      onValueChange={(value) => field.onChange(value ? [value] : [])}
+                      value={selectedTopicId || ''}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder='Select secondary topic' />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent align='start'>
+                        {availableAreas.map((area) => (
+                          <SelectItem key={area.id} value={area.id}>
+                            {area.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                   <FormMessage />
                 </FormItem>
               );
