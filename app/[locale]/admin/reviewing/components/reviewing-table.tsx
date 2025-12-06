@@ -12,7 +12,7 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { AssignReviewersDialog } from './assign-reviewers-dialog';
-import { UserPlus, Users } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
 
 interface Proposal {
   id: string;
@@ -43,6 +43,13 @@ interface Proposal {
     id: string;
     decision: string | null;
     status: string;
+    isDraft: boolean;
+    reviewer: {
+      id: string;
+      firstName: string | null;
+      lastName: string | null;
+      email: string;
+    };
   }>;
 }
 
@@ -88,14 +95,16 @@ export function ReviewingTable({ proposals, reviewers }: ReviewingTableProps) {
               <TableHead className='w-[150px]'>Main Topic</TableHead>
               <TableHead className='w-[200px]'>Principal Investigator</TableHead>
               <TableHead className='w-[120px]'>Submitted</TableHead>
-              <TableHead className='w-[120px] text-center'>Reviewers</TableHead>
+              <TableHead className='w-[150px]'>Reviewer 1</TableHead>
+              <TableHead className='w-[150px]'>Reviewer 2</TableHead>
+              <TableHead className='w-[150px]'>Reviewer 3</TableHead>
               <TableHead className='w-[100px] text-right'>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {proposals.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className='text-center py-8 text-muted-foreground'>
+                <TableCell colSpan={9} className='text-center py-8 text-muted-foreground'>
                   No proposals found for the selected filter
                 </TableCell>
               </TableRow>
@@ -106,7 +115,20 @@ export function ReviewingTable({ proposals, reviewers }: ReviewingTableProps) {
                     ? `${proposal.piUser.firstName} ${proposal.piUser.lastName}`
                     : proposal.piUser.email;
 
-                const reviewCount = proposal.reviews.length;
+                const getReviewerName = (reviewer: {
+                  firstName: string | null;
+                  lastName: string | null;
+                  email: string;
+                }) => {
+                  if (reviewer.firstName && reviewer.lastName) {
+                    return `${reviewer.firstName} ${reviewer.lastName}`;
+                  }
+                  return reviewer.email;
+                };
+
+                const reviewer1 = proposal.reviews[0];
+                const reviewer2 = proposal.reviews[1];
+                const reviewer3 = proposal.reviews[2];
 
                 return (
                   <TableRow key={proposal.id}>
@@ -131,11 +153,32 @@ export function ReviewingTable({ proposals, reviewers }: ReviewingTableProps) {
                       </div>
                     </TableCell>
                     <TableCell>{formatDate(proposal.submittedAt)}</TableCell>
-                    <TableCell className='text-center'>
-                      <div className='flex items-center justify-center gap-1'>
-                        <Users className='h-4 w-4 text-muted-foreground' />
-                        <span className='text-sm font-medium'>{reviewCount}/3</span>
-                      </div>
+                    <TableCell>
+                      {reviewer1 ? (
+                        <div className='max-w-[150px] truncate text-sm' title={getReviewerName(reviewer1.reviewer)}>
+                          {getReviewerName(reviewer1.reviewer)}
+                        </div>
+                      ) : (
+                        <span className='text-sm text-muted-foreground'>-</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {reviewer2 ? (
+                        <div className='max-w-[150px] truncate text-sm' title={getReviewerName(reviewer2.reviewer)}>
+                          {getReviewerName(reviewer2.reviewer)}
+                        </div>
+                      ) : (
+                        <span className='text-sm text-muted-foreground'>-</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {reviewer3 ? (
+                        <div className='max-w-[150px] truncate text-sm' title={getReviewerName(reviewer3.reviewer)}>
+                          {getReviewerName(reviewer3.reviewer)}
+                        </div>
+                      ) : (
+                        <span className='text-sm text-muted-foreground'>-</span>
+                      )}
                     </TableCell>
                     <TableCell className='text-right'>
                       <Button

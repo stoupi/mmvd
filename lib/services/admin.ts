@@ -321,7 +321,19 @@ export async function getAllProposals() {
         select: {
           id: true,
           decision: true,
-          status: true
+          status: true,
+          isDraft: true,
+          reviewer: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              email: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'asc'
         }
       }
     },
@@ -365,7 +377,19 @@ export async function getProposalsByWindow(windowId: string) {
         select: {
           id: true,
           decision: true,
-          status: true
+          status: true,
+          isDraft: true,
+          reviewer: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              email: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'asc'
         }
       }
     },
@@ -416,7 +440,19 @@ export async function getProposalsByStatus(status: string) {
         select: {
           id: true,
           decision: true,
-          status: true
+          status: true,
+          isDraft: true,
+          reviewer: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              email: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'asc'
         }
       }
     },

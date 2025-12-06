@@ -2,13 +2,18 @@
 
 import { Link, usePathname } from '@/app/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { FileText, Calendar, FolderOpen, Users, LayoutDashboard } from 'lucide-react';
+import { FileText, Calendar, FolderOpen, Users, LayoutDashboard, ClipboardCheck } from 'lucide-react';
 
 const menuItems = [
   {
     label: 'Proposals',
     href: '/admin',
     icon: FileText
+  },
+  {
+    label: 'Reviewer Assignment',
+    href: '/admin/reviewing',
+    icon: ClipboardCheck
   },
   {
     label: 'Submission Windows',
