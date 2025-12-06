@@ -70,8 +70,6 @@ export async function GET(
     doc.setFont(undefined, 'normal');
 
     const addSection = (title: string, content: string | string[] | null | undefined) => {
-      if (!content || (Array.isArray(content) && content.length === 0)) return;
-
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
@@ -82,7 +80,10 @@ export async function GET(
       yPosition += 6;
       doc.setFont(undefined, 'normal');
 
-      if (Array.isArray(content)) {
+      if (!content || (Array.isArray(content) && content.length === 0)) {
+        doc.text('N/A', 20, yPosition);
+        yPosition += 5;
+      } else if (Array.isArray(content)) {
         content.forEach(item => {
           const lines = doc.splitTextToSize(`• ${item}`, pageWidth - 40);
           lines.forEach((line: string) => {
@@ -111,36 +112,40 @@ export async function GET(
     addSection('Main Topic', proposal.mainArea.label);
     addSection('Secondary Topics', proposal.secondaryTopics);
     addSection('Scientific Background', proposal.scientificBackground);
-    addSection('Literature Position', proposal.literaturePosition);
     addSection('Primary Objective', proposal.primaryObjective);
     addSection('Secondary Objectives', proposal.secondaryObjectives);
-    addSection('Study Population', proposal.studyPopulation);
-    addSection('Inclusion Criteria', proposal.inclusionCriteria);
-    addSection('Exclusion Criteria', proposal.exclusionCriteria);
     addSection('Main Exposure', proposal.mainExposure);
     addSection('Primary Endpoint', proposal.primaryEndpoint);
     addSection('Secondary Endpoints', proposal.secondaryEndpoints);
-    addSection('Analysis Types', proposal.analysisTypes);
-    addSection('Analysis Description', proposal.analysisDescription);
-    addSection('Adjustment Covariates', proposal.adjustmentCovariates);
-    addSection('Subgroup Analyses', proposal.subgroupAnalyses);
-    addSection('Target Journals', proposal.targetJournals);
+    addSection('Study Population', proposal.studyPopulation);
 
     const dataTypes: string[] = [];
-    if (proposal.dataBaseline) dataTypes.push('Baseline Data');
-    if (proposal.dataBiological) dataTypes.push('Biological Data');
-    if (proposal.dataCMR) dataTypes.push('CMR');
-    if (proposal.dataCT) dataTypes.push('CT');
-    if (proposal.dataClinicalFollowup) dataTypes.push('Clinical Follow-up');
-    if (proposal.dataCoreLab) dataTypes.push('Core Lab');
-    if (proposal.dataHospitalFollowup) dataTypes.push('Hospital Follow-up');
-    if (proposal.dataRHC) dataTypes.push('RHC');
-    if (proposal.dataStressEcho) dataTypes.push('Stress Echo');
-    if (proposal.dataTOE) dataTypes.push('TOE');
-    if (proposal.dataTTE) dataTypes.push('TTE');
-    if (proposal.dataTTEFollowup) dataTypes.push('TTE Follow-up');
+    if (proposal.dataBaseline) dataTypes.push('Baseline clinical data');
+    if (proposal.dataBiological) dataTypes.push('Biological data');
+    if (proposal.dataTTE) dataTypes.push('TTE imaging data');
+    if (proposal.dataTOE) dataTypes.push('TOE imaging data');
+    if (proposal.dataStressEcho) dataTypes.push('Stress echocardiography imaging data');
+    if (proposal.dataCMR) dataTypes.push('CMR imaging data');
+    if (proposal.dataCT) dataTypes.push('CT imaging data');
+    if (proposal.dataRHC) dataTypes.push('Right heart catheterization data');
+    if (proposal.dataHospitalFollowup) dataTypes.push('In-hospital follow-up data (all-cause death and CV death)');
+    if (proposal.dataClinicalFollowup) dataTypes.push('Clinical follow-up data at 1 year');
+    if (proposal.dataTTEFollowup) dataTypes.push('TTE follow-up data at 1 year (only if your institution is part of this option)');
+    if (proposal.dataCoreLab) dataTypes.push('Core Lab–derived data (only if your institution is part of this option)');
 
-    addSection('Required Data Types', dataTypes);
+    addSection('Data Requirements for This Ancillary Study', dataTypes);
+
+    const analysisTypes: string[] = [];
+    if (proposal.analysisTypes.includes('logistic')) analysisTypes.push('Logistic regression');
+    if (proposal.analysisTypes.includes('cox')) analysisTypes.push('Cox regression');
+    if (proposal.analysisTypes.includes('propensity')) analysisTypes.push('Propensity score matching');
+    if (proposal.analysisTypes.includes('ml')) analysisTypes.push('Machine Learning');
+
+    addSection('Statistical Analysis Types', analysisTypes);
+    addSection('Detailed Statistical Analysis Plan', proposal.analysisDescription);
+    addSection('Adjustment Covariates', proposal.adjustmentCovariates);
+    addSection('Subgroup Analyses', proposal.subgroupAnalyses);
+    addSection('Potential Target Journals', proposal.targetJournals);
 
     const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
 
