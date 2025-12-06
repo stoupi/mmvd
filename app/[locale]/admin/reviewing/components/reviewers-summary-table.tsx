@@ -21,11 +21,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
-import { Mail } from 'lucide-react';
+import { Mail, ChevronDown, ChevronRight } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import { sendEmailToReviewerAction } from '@/lib/actions/reviewing-actions';
 import { toast } from 'sonner';
 import { useRouter } from '@/app/i18n/navigation';
+import { cn } from '@/lib/utils';
 
 interface ReviewerSummary {
   reviewer: {
@@ -44,6 +45,22 @@ interface ReviewerSummary {
     isDraft: boolean;
     emailSentAt: Date | null;
     deadline: Date;
+    proposal: {
+      id: string;
+      title: string;
+      piUser: {
+        firstName: string | null;
+        lastName: string | null;
+        email: string;
+      };
+      mainArea: {
+        label: string;
+        color: string | null;
+      };
+      centre: {
+        code: string;
+      } | null;
+    };
   }>;
 }
 
@@ -91,6 +108,7 @@ export function ReviewersSummaryTable({
   const router = useRouter();
   const [selectedReviewer, setSelectedReviewer] = useState<ReviewerSummary | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [expandedReviewers, setExpandedReviewers] = useState<Set<string>>(new Set());
 
   const { execute: sendEmail, status } = useAction(sendEmailToReviewerAction, {
     onSuccess: ({ data }) => {
@@ -118,13 +136,31 @@ export function ReviewersSummaryTable({
     }
   };
 
+  const toggleExpand = (reviewerId: string) => {
+    const newExpanded = new Set(expandedReviewers);
+    if (newExpanded.has(reviewerId)) {
+      newExpanded.delete(reviewerId);
+    } else {
+      newExpanded.add(reviewerId);
+    }
+    setExpandedReviewers(newExpanded);
+  };
+
+  const getPiName = (piUser: { firstName: string | null; lastName: string | null; email: string }) => {
+    if (piUser.firstName && piUser.lastName) {
+      return `${piUser.firstName} ${piUser.lastName}`;
+    }
+    return piUser.email;
+  };
+
   return (
     <>
       <div className='rounded-md border bg-white overflow-x-auto'>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className='w-[250px]'>Reviewer</TableHead>
+              <TableHead className='w-[50px]'></TableHead>
+              <TableHead className='w-[200px]'>Reviewer</TableHead>
               <TableHead className='w-[150px]'>Email</TableHead>
               <TableHead className='w-[120px] text-center'>Proposals</TableHead>
               <TableHead className='w-[150px] text-center'>Status</TableHead>
@@ -135,60 +171,126 @@ export function ReviewersSummaryTable({
           <TableBody>
             {reviewersSummary.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className='text-center py-8 text-muted-foreground'>
+                <TableCell colSpan={7} className='text-center py-8 text-muted-foreground'>
                   No reviewers assigned yet
                 </TableCell>
               </TableRow>
             ) : (
-              reviewersSummary.map((summary) => (
-                <TableRow key={summary.reviewer.id}>
-                  <TableCell className='font-medium'>
-                    {getReviewerName(summary.reviewer)}
-                  </TableCell>
-                  <TableCell>
-                    <div className='max-w-[150px] truncate text-sm text-muted-foreground'>
-                      {summary.reviewer.email}
-                    </div>
-                  </TableCell>
-                  <TableCell className='text-center font-semibold'>
-                    {summary.proposalCount}
-                  </TableCell>
-                  <TableCell className='text-center'>
-                    <div className='flex justify-center gap-2'>
-                      {summary.draftCount > 0 && (
-                        <Badge
-                          variant='outline'
-                          className='bg-yellow-50 text-yellow-700 border-yellow-200'
+              reviewersSummary.map((summary) => {
+                const isExpanded = expandedReviewers.has(summary.reviewer.id);
+                return (
+                  <>
+                    <TableRow key={summary.reviewer.id}>
+                      <TableCell>
+                        <Button
+                          variant='ghost'
+                          size='sm'
+                          onClick={() => toggleExpand(summary.reviewer.id)}
+                          className='p-0 h-8 w-8'
                         >
-                          {summary.draftCount}D
-                        </Badge>
-                      )}
-                      {summary.validatedCount > 0 && (
-                        <Badge
+                          {isExpanded ? (
+                            <ChevronDown className='h-4 w-4' />
+                          ) : (
+                            <ChevronRight className='h-4 w-4' />
+                          )}
+                        </Button>
+                      </TableCell>
+                      <TableCell className='font-medium'>
+                        {getReviewerName(summary.reviewer)}
+                      </TableCell>
+                      <TableCell>
+                        <div className='max-w-[150px] truncate text-sm text-muted-foreground'>
+                          {summary.reviewer.email}
+                        </div>
+                      </TableCell>
+                      <TableCell className='text-center font-semibold'>
+                        {summary.proposalCount}
+                      </TableCell>
+                      <TableCell className='text-center'>
+                        <div className='flex justify-center gap-2'>
+                          {summary.draftCount > 0 && (
+                            <Badge
+                              variant='outline'
+                              className='bg-yellow-50 text-yellow-700 border-yellow-200'
+                            >
+                              {summary.draftCount}D
+                            </Badge>
+                          )}
+                          {summary.validatedCount > 0 && (
+                            <Badge
+                              variant='outline'
+                              className='bg-green-50 text-green-700 border-green-200'
+                            >
+                              {summary.validatedCount}V
+                            </Badge>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className='text-sm text-muted-foreground'>
+                        {formatDateTime(summary.lastEmailSentAt)}
+                      </TableCell>
+                      <TableCell className='text-right'>
+                        <Button
+                          size='sm'
                           variant='outline'
-                          className='bg-green-50 text-green-700 border-green-200'
+                          onClick={() => handleSendEmail(summary)}
+                          disabled={status === 'executing'}
                         >
-                          {summary.validatedCount}V
-                        </Badge>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell className='text-sm text-muted-foreground'>
-                    {formatDateTime(summary.lastEmailSentAt)}
-                  </TableCell>
-                  <TableCell className='text-right'>
-                    <Button
-                      size='sm'
-                      variant='outline'
-                      onClick={() => handleSendEmail(summary)}
-                      disabled={status === 'executing'}
-                    >
-                      <Mail className='h-4 w-4 mr-1' />
-                      {summary.lastEmailSentAt ? 'Resend' : 'Send'}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))
+                          <Mail className='h-4 w-4 mr-1' />
+                          {summary.lastEmailSentAt ? 'Resend' : 'Send'}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                    {isExpanded && (
+                      <TableRow>
+                        <TableCell colSpan={7} className='bg-muted/50 p-0'>
+                          <div className='p-4'>
+                            <h4 className='font-semibold mb-3 text-sm'>Assigned Proposals</h4>
+                            <div className='space-y-2'>
+                              {summary.reviews.map((review) => (
+                                <div
+                                  key={review.id}
+                                  className='flex items-center justify-between p-3 bg-white rounded-md border'
+                                >
+                                  <div className='flex-1'>
+                                    <div className='flex items-center gap-2 mb-1'>
+                                      {review.proposal.centre && (
+                                        <span className='text-xs font-medium text-muted-foreground'>
+                                          {review.proposal.centre.code}
+                                        </span>
+                                      )}
+                                      <Badge
+                                        style={{
+                                          backgroundColor: review.proposal.mainArea.color || '#6b7280'
+                                        }}
+                                        className='text-xs'
+                                      >
+                                        {review.proposal.mainArea.label}
+                                      </Badge>
+                                      {review.isDraft && (
+                                        <Badge
+                                          variant='outline'
+                                          className='text-xs bg-yellow-50 border-yellow-200'
+                                        >
+                                          Draft
+                                        </Badge>
+                                      )}
+                                    </div>
+                                    <p className='font-medium text-sm'>{review.proposal.title}</p>
+                                    <p className='text-xs text-muted-foreground mt-1'>
+                                      PI: {getPiName(review.proposal.piUser)}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </>
+                );
+              })
             )}
           </TableBody>
         </Table>

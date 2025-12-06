@@ -70,6 +70,22 @@ interface ReviewerSummary {
     isDraft: boolean;
     emailSentAt: Date | null;
     deadline: Date;
+    proposal: {
+      id: string;
+      title: string;
+      piUser: {
+        firstName: string | null;
+        lastName: string | null;
+        email: string;
+      };
+      mainArea: {
+        label: string;
+        color: string | null;
+      };
+      centre: {
+        code: string;
+      } | null;
+    };
   }>;
 }
 

@@ -450,6 +450,22 @@ interface ReviewerSummary {
     isDraft: boolean;
     emailSentAt: Date | null;
     deadline: Date;
+    proposal: {
+      id: string;
+      title: string;
+      piUser: {
+        firstName: string | null;
+        lastName: string | null;
+        email: string;
+      };
+      mainArea: {
+        label: string;
+        color: string | null;
+      };
+      centre: {
+        code: string;
+      } | null;
+    };
   }>;
 }
 
@@ -472,6 +488,30 @@ export async function getReviewersSummaryForWindow(
           firstName: true,
           lastName: true,
           email: true
+        }
+      },
+      proposal: {
+        select: {
+          id: true,
+          title: true,
+          piUser: {
+            select: {
+              firstName: true,
+              lastName: true,
+              email: true
+            }
+          },
+          mainArea: {
+            select: {
+              label: true,
+              color: true
+            }
+          },
+          centre: {
+            select: {
+              code: true
+            }
+          }
         }
       }
     },
@@ -516,7 +556,8 @@ export async function getReviewersSummaryForWindow(
       proposalId: review.proposalId,
       isDraft: review.isDraft,
       emailSentAt: review.emailSentAt,
-      deadline: review.deadline
+      deadline: review.deadline,
+      proposal: review.proposal
     });
   }
 
