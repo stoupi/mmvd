@@ -69,6 +69,7 @@ export function AssignReviewersDialog({
 }: AssignReviewersDialogProps) {
   const router = useRouter();
   const [selectedReviewers, setSelectedReviewers] = useState<string[]>([]);
+  const [removedReviewIds, setRemovedReviewIds] = useState<string[]>([]);
   const [deadline, setDeadline] = useState<Date>(
     new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) // Default: 14 days from now
   );
@@ -93,8 +94,8 @@ export function AssignReviewersDialog({
     }
   });
 
-  // Get existing reviews
-  const existingReviews = proposal.reviews;
+  // Get existing reviews (filter out removed ones)
+  const existingReviews = proposal.reviews.filter((review) => !removedReviewIds.includes(review.id));
   const totalReviewers = existingReviews.length + selectedReviewers.length;
 
   const getReviewerName = (reviewer: {
@@ -147,11 +148,13 @@ export function AssignReviewersDialog({
   };
 
   const handleRemoveExistingReviewer = (reviewId: string) => {
+    setRemovedReviewIds([...removedReviewIds, reviewId]);
     removeReviewer({ reviewId });
   };
 
   const handleClose = () => {
     setSelectedReviewers([]);
+    setRemovedReviewIds([]);
     setDeadline(new Date(Date.now() + 14 * 24 * 60 * 60 * 1000));
     onOpenChange(false);
   };
