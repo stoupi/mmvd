@@ -15,9 +15,9 @@ export default async function ReviewingDashboardPage() {
   const reviews = await getReviewerAssignedProposals(session.user.id);
 
   return (
-    <div className='p-8'>
+    <div className='container mx-auto py-8 max-w-7xl px-4'>
       <div className='mb-6'>
-        <h1 className='text-3xl font-bold mb-2'>My Assigned Proposals</h1>
+        <h1 className='text-3xl font-bold mb-2'>Proposals to Review</h1>
         <p className='text-muted-foreground'>
           Review and evaluate proposals assigned to you
         </p>
