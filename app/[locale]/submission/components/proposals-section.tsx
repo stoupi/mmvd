@@ -37,7 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Trash2, Pencil, Send, Eye } from 'lucide-react';
+import { Trash2, Pencil, Send, Eye, FileDown } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import { deleteProposalAction, submitProposalAction } from '@/lib/actions/proposal-actions';
 import { toast } from 'sonner';
@@ -338,18 +338,32 @@ export function ProposalsSection({ proposals }: ProposalsSectionProps) {
                               </>
                             )}
                             {windowStatus === 'OPEN' && proposal.status === 'SUBMITTED' && (
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Link href={`/submission/${proposal.id}`}>
-                                    <Button size='sm' variant='outline'>
-                                      <Eye className='h-4 w-4' />
-                                    </Button>
-                                  </Link>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>View proposal</p>
-                                </TooltipContent>
-                              </Tooltip>
+                              <>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Link href={`/submission/${proposal.id}`}>
+                                      <Button size='sm' variant='outline'>
+                                        <Eye className='h-4 w-4' />
+                                      </Button>
+                                    </Link>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>View proposal</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <a href={`/api/proposals/${proposal.id}/export-pdf`} download>
+                                      <Button size='sm' variant='outline'>
+                                        <FileDown className='h-4 w-4' />
+                                      </Button>
+                                    </a>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>Export to PDF</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </>
                             )}
                             {windowStatus !== 'OPEN' && (
                               <>
@@ -365,6 +379,20 @@ export function ProposalsSection({ proposals }: ProposalsSectionProps) {
                                     <p>View proposal</p>
                                   </TooltipContent>
                                 </Tooltip>
+                                {proposal.status === 'SUBMITTED' && (
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <a href={`/api/proposals/${proposal.id}/export-pdf`} download>
+                                        <Button size='sm' variant='outline'>
+                                          <FileDown className='h-4 w-4' />
+                                        </Button>
+                                      </a>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p>Export to PDF</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                )}
                                 {proposal.status === 'DRAFT' && (
                                   <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
                                 )}
