@@ -385,7 +385,7 @@ export async function getWindowReviewingData(windowId: string) {
     include: {
       proposals: {
         where: {
-          status: 'SUBMITTED',
+          status: { in: ['SUBMITTED', 'UNDER_REVIEW'] },
           isDeleted: false
         },
         include: {
@@ -439,6 +439,14 @@ interface ReviewerSummary {
     firstName: string | null;
     lastName: string | null;
     email: string;
+    centre: {
+      code: string;
+    } | null;
+    reviewTopics: Array<{
+      id: string;
+      label: string;
+      color: string | null;
+    }>;
   };
   proposalCount: number;
   draftCount: number;
@@ -477,7 +485,7 @@ export async function getReviewersSummaryForWindow(
       isDeleted: false,
       proposal: {
         submissionWindowId: windowId,
-        status: 'SUBMITTED',
+        status: { in: ['SUBMITTED', 'UNDER_REVIEW'] },
         isDeleted: false
       }
     },
@@ -487,7 +495,19 @@ export async function getReviewersSummaryForWindow(
           id: true,
           firstName: true,
           lastName: true,
-          email: true
+          email: true,
+          centre: {
+            select: {
+              code: true
+            }
+          },
+          reviewTopics: {
+            select: {
+              id: true,
+              label: true,
+              color: true
+            }
+          }
         }
       },
       proposal: {
@@ -574,7 +594,7 @@ export async function sendEmailToReviewer(
       isDeleted: false,
       proposal: {
         submissionWindowId: windowId,
-        status: 'SUBMITTED',
+        status: { in: ['SUBMITTED', 'UNDER_REVIEW'] },
         isDeleted: false
       }
     },
@@ -616,7 +636,20 @@ export async function sendEmailToReviewer(
       }
     },
     data: {
+      isDraft: false,
       emailSentAt: new Date()
+    }
+  });
+
+  // Update proposal statuses to UNDER_REVIEW if they have reviews
+  const proposalIds = [...new Set(reviews.map((review) => review.proposalId))];
+  await prisma.proposal.updateMany({
+    where: {
+      id: { in: proposalIds },
+      status: 'SUBMITTED'
+    },
+    data: {
+      status: 'UNDER_REVIEW'
     }
   });
 

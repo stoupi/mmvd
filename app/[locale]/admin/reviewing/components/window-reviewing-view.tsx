@@ -59,6 +59,14 @@ interface ReviewerSummary {
     firstName: string | null;
     lastName: string | null;
     email: string;
+    centre: {
+      code: string;
+    } | null;
+    reviewTopics: Array<{
+      id: string;
+      label: string;
+      color: string | null;
+    }>;
   };
   proposalCount: number;
   draftCount: number;

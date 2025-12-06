@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -34,6 +34,14 @@ interface ReviewerSummary {
     firstName: string | null;
     lastName: string | null;
     email: string;
+    centre: {
+      code: string;
+    } | null;
+    reviewTopics: Array<{
+      id: string;
+      label: string;
+      color: string | null;
+    }>;
   };
   proposalCount: number;
   draftCount: number;
@@ -161,6 +169,8 @@ export function ReviewersSummaryTable({
             <TableRow>
               <TableHead className='w-[50px]'></TableHead>
               <TableHead className='w-[200px]'>Reviewer</TableHead>
+              <TableHead className='w-[100px]'>Centre</TableHead>
+              <TableHead className='w-[150px]'>Main Topics</TableHead>
               <TableHead className='w-[150px]'>Email</TableHead>
               <TableHead className='w-[120px] text-center'>Proposals</TableHead>
               <TableHead className='w-[150px] text-center'>Status</TableHead>
@@ -171,7 +181,7 @@ export function ReviewersSummaryTable({
           <TableBody>
             {reviewersSummary.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className='text-center py-8 text-muted-foreground'>
+                <TableCell colSpan={9} className='text-center py-8 text-muted-foreground'>
                   No reviewers assigned yet
                 </TableCell>
               </TableRow>
@@ -179,8 +189,8 @@ export function ReviewersSummaryTable({
               reviewersSummary.map((summary) => {
                 const isExpanded = expandedReviewers.has(summary.reviewer.id);
                 return (
-                  <>
-                    <TableRow key={summary.reviewer.id}>
+                  <React.Fragment key={summary.reviewer.id}>
+                    <TableRow>
                       <TableCell>
                         <Button
                           variant='ghost'
@@ -197,6 +207,30 @@ export function ReviewersSummaryTable({
                       </TableCell>
                       <TableCell className='font-medium'>
                         {getReviewerName(summary.reviewer)}
+                      </TableCell>
+                      <TableCell>
+                        <span className='text-sm text-muted-foreground'>
+                          {summary.reviewer.centre?.code || '-'}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <div className='flex flex-wrap gap-1'>
+                          {summary.reviewer.reviewTopics.length > 0 ? (
+                            summary.reviewer.reviewTopics.map((topic) => (
+                              <Badge
+                                key={topic.id}
+                                style={{
+                                  backgroundColor: topic.color || '#6b7280'
+                                }}
+                                className='text-xs'
+                              >
+                                {topic.label}
+                              </Badge>
+                            ))
+                          ) : (
+                            <span className='text-sm text-muted-foreground'>-</span>
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell>
                         <div className='max-w-[150px] truncate text-sm text-muted-foreground'>
@@ -243,44 +277,39 @@ export function ReviewersSummaryTable({
                     </TableRow>
                     {isExpanded && (
                       <TableRow>
-                        <TableCell colSpan={7} className='bg-muted/50 p-0'>
-                          <div className='p-4'>
-                            <h4 className='font-semibold mb-3 text-sm'>Assigned Proposals</h4>
-                            <div className='space-y-2'>
+                        <TableCell colSpan={9} className='bg-muted/50 p-0'>
+                          <div className='py-2 px-4'>
+                            <div className='space-y-1'>
                               {summary.reviews.map((review) => (
                                 <div
                                   key={review.id}
-                                  className='flex items-center justify-between p-3 bg-white rounded-md border'
+                                  className='flex items-center gap-2 text-sm py-1'
                                 >
-                                  <div className='flex-1'>
-                                    <div className='flex items-center gap-2 mb-1'>
-                                      {review.proposal.centre && (
-                                        <span className='text-xs font-medium text-muted-foreground'>
-                                          {review.proposal.centre.code}
-                                        </span>
-                                      )}
-                                      <Badge
-                                        style={{
-                                          backgroundColor: review.proposal.mainArea.color || '#6b7280'
-                                        }}
-                                        className='text-xs'
-                                      >
-                                        {review.proposal.mainArea.label}
-                                      </Badge>
-                                      {review.isDraft && (
-                                        <Badge
-                                          variant='outline'
-                                          className='text-xs bg-yellow-50 border-yellow-200'
-                                        >
-                                          Draft
-                                        </Badge>
-                                      )}
-                                    </div>
-                                    <p className='font-medium text-sm'>{review.proposal.title}</p>
-                                    <p className='text-xs text-muted-foreground mt-1'>
-                                      PI: {getPiName(review.proposal.piUser)}
-                                    </p>
-                                  </div>
+                                  {review.isDraft && (
+                                    <Badge
+                                      variant='outline'
+                                      className='text-xs bg-yellow-50 border-yellow-200'
+                                    >
+                                      Draft
+                                    </Badge>
+                                  )}
+                                  <span className='text-muted-foreground'>
+                                    {review.proposal.centre?.code || 'N/A'}
+                                  </span>
+                                  <span>•</span>
+                                  <span className='text-muted-foreground'>
+                                    {getPiName(review.proposal.piUser)}
+                                  </span>
+                                  <span>•</span>
+                                  <span className='flex-1'>{review.proposal.title}</span>
+                                  <Badge
+                                    style={{
+                                      backgroundColor: review.proposal.mainArea.color || '#6b7280'
+                                    }}
+                                    className='text-xs'
+                                  >
+                                    {review.proposal.mainArea.label}
+                                  </Badge>
                                 </div>
                               ))}
                             </div>
@@ -288,7 +317,7 @@ export function ReviewersSummaryTable({
                         </TableCell>
                       </TableRow>
                     )}
-                  </>
+                  </React.Fragment>
                 );
               })
             )}
