@@ -53,6 +53,29 @@ export const resendReviewerEmailAction = adminAction
     return { success: true };
   });
 
+export const sendEmailToReviewerAction = adminAction
+  .schema(schemas.sendEmailToReviewerSchema)
+  .action(async ({ parsedInput }) => {
+    const result = await reviewingService.sendEmailToReviewer(
+      parsedInput.reviewerId,
+      parsedInput.windowId
+    );
+    revalidatePath('/admin/reviewing');
+    revalidatePath(`/admin/reviewing/${parsedInput.windowId}`);
+    revalidatePath('/reviewing');
+    return { success: true, ...result };
+  });
+
+export const validateAndSendAllEmailsAction = adminAction
+  .schema(schemas.validateAndSendAllEmailsSchema)
+  .action(async ({ parsedInput }) => {
+    const result = await reviewingService.validateAndSendAllEmailsForWindow(parsedInput.windowId);
+    revalidatePath('/admin/reviewing');
+    revalidatePath(`/admin/reviewing/${parsedInput.windowId}`);
+    revalidatePath('/reviewing');
+    return { success: true, ...result };
+  });
+
 // Reviewer Actions - Review Submission
 export const submitReviewAction = reviewingAction
   .schema(schemas.submitReviewSchema)

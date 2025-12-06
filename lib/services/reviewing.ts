@@ -377,3 +377,214 @@ export async function submitReview(
     }
   });
 }
+
+// Window-Centric Functions
+export async function getWindowReviewingData(windowId: string) {
+  const window = await prisma.submissionWindow.findUnique({
+    where: { id: windowId },
+    include: {
+      proposals: {
+        where: {
+          status: 'SUBMITTED',
+          isDeleted: false
+        },
+        include: {
+          piUser: {
+            select: {
+              id: true,
+              email: true,
+              firstName: true,
+              lastName: true
+            }
+          },
+          centre: {
+            select: {
+              code: true,
+              name: true
+            }
+          },
+          mainArea: {
+            select: {
+              id: true,
+              label: true,
+              color: true
+            }
+          },
+          reviews: {
+            where: { isDeleted: false },
+            include: {
+              reviewer: {
+                select: {
+                  id: true,
+                  firstName: true,
+                  lastName: true,
+                  email: true
+                }
+              }
+            },
+            orderBy: { createdAt: 'asc' }
+          }
+        },
+        orderBy: { submittedAt: 'desc' }
+      }
+    }
+  });
+
+  return window;
+}
+
+interface ReviewerSummary {
+  reviewer: {
+    id: string;
+    firstName: string | null;
+    lastName: string | null;
+    email: string;
+  };
+  proposalCount: number;
+  draftCount: number;
+  validatedCount: number;
+  lastEmailSentAt: Date | null;
+  reviews: Array<{
+    id: string;
+    proposalId: string;
+    isDraft: boolean;
+    emailSentAt: Date | null;
+    deadline: Date;
+  }>;
+}
+
+export async function getReviewersSummaryForWindow(
+  windowId: string
+): Promise<ReviewerSummary[]> {
+  const reviews = await prisma.review.findMany({
+    where: {
+      isDeleted: false,
+      proposal: {
+        submissionWindowId: windowId,
+        status: 'SUBMITTED',
+        isDeleted: false
+      }
+    },
+    include: {
+      reviewer: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true
+        }
+      }
+    },
+    orderBy: {
+      reviewerId: 'asc'
+    }
+  });
+
+  const reviewerMap = new Map<string, ReviewerSummary>();
+
+  for (const review of reviews) {
+    const reviewerId = review.reviewerId;
+
+    if (!reviewerMap.has(reviewerId)) {
+      reviewerMap.set(reviewerId, {
+        reviewer: review.reviewer,
+        proposalCount: 0,
+        draftCount: 0,
+        validatedCount: 0,
+        lastEmailSentAt: null,
+        reviews: []
+      });
+    }
+
+    const summary = reviewerMap.get(reviewerId)!;
+    summary.proposalCount++;
+
+    if (review.isDraft) {
+      summary.draftCount++;
+    } else {
+      summary.validatedCount++;
+    }
+
+    if (review.emailSentAt) {
+      if (!summary.lastEmailSentAt || review.emailSentAt > summary.lastEmailSentAt) {
+        summary.lastEmailSentAt = review.emailSentAt;
+      }
+    }
+
+    summary.reviews.push({
+      id: review.id,
+      proposalId: review.proposalId,
+      isDraft: review.isDraft,
+      emailSentAt: review.emailSentAt,
+      deadline: review.deadline
+    });
+  }
+
+  return Array.from(reviewerMap.values());
+}
+
+export async function sendEmailToReviewer(
+  reviewerId: string,
+  windowId: string
+): Promise<{ reviewCount: number; proposalCount: number }> {
+  const reviews = await prisma.review.findMany({
+    where: {
+      reviewerId,
+      isDeleted: false,
+      proposal: {
+        submissionWindowId: windowId,
+        status: 'SUBMITTED',
+        isDeleted: false
+      }
+    },
+    include: {
+      reviewer: true,
+      proposal: {
+        include: {
+          piUser: true,
+          mainArea: true
+        }
+      }
+    }
+  });
+
+  if (reviews.length === 0) {
+    throw new Error('No reviews found for this reviewer in this window');
+  }
+
+  const reviewer = reviews[0].reviewer;
+
+  const sendReviewAssignmentEmail = (await import('./email')).sendReviewAssignmentEmail;
+  await sendReviewAssignmentEmail({
+    to: reviewer.email,
+    reviewerName: `${reviewer.firstName || ''} ${reviewer.lastName || ''}`.trim() || reviewer.email,
+    proposals: reviews.map((review) => ({
+      title: review.proposal.title,
+      piName:
+        `${review.proposal.piUser.firstName || ''} ${review.proposal.piUser.lastName || ''}`.trim() ||
+        review.proposal.piUser.email,
+      mainArea: review.proposal.mainArea.label,
+      deadline: review.deadline
+    }))
+  });
+
+  await prisma.review.updateMany({
+    where: {
+      id: {
+        in: reviews.map((review) => review.id)
+      }
+    },
+    data: {
+      emailSentAt: new Date()
+    }
+  });
+
+  return {
+    reviewCount: reviews.length,
+    proposalCount: reviews.length
+  };
+}
+
+export async function validateAndSendAllEmailsForWindow(windowId: string) {
+  return validateAssignments(windowId);
+}

@@ -275,6 +275,54 @@ export async function getAllSubmissionWindows() {
   });
 }
 
+export async function getWindowsWithReviewingStats() {
+  const windows = await prisma.submissionWindow.findMany({
+    include: {
+      proposals: {
+        where: {
+          status: 'SUBMITTED',
+          isDeleted: false
+        },
+        include: {
+          reviews: {
+            where: {
+              isDeleted: false
+            },
+            select: {
+              id: true,
+              isDraft: true,
+              reviewerId: true
+            }
+          }
+        }
+      }
+    },
+    orderBy: { submissionOpenAt: 'desc' }
+  });
+
+  return windows.map((window) => {
+    const proposals = window.proposals;
+    const allReviews = proposals.flatMap((p) => p.reviews);
+    const draftReviews = allReviews.filter((r) => r.isDraft);
+    const validatedReviews = allReviews.filter((r) => !r.isDraft);
+    const uniqueReviewers = new Set(allReviews.map((r) => r.reviewerId));
+
+    return {
+      id: window.id,
+      name: window.name,
+      status: window.status,
+      submissionOpenAt: window.submissionOpenAt,
+      submissionCloseAt: window.submissionCloseAt,
+      reviewStartAt: window.reviewStartAt,
+      reviewDeadlineDefault: window.reviewDeadlineDefault,
+      proposalCount: proposals.length,
+      draftCount: draftReviews.length,
+      validatedCount: validatedReviews.length,
+      reviewerCount: uniqueReviewers.size
+    };
+  });
+}
+
 // Proposals Management (Admin View)
 export async function getAllProposals() {
   return prisma.proposal.findMany({

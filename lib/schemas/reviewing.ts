@@ -26,6 +26,15 @@ export const resendReviewerEmailSchema = z.object({
   reviewId: z.string().min(1, 'Review ID is required')
 });
 
+export const sendEmailToReviewerSchema = z.object({
+  reviewerId: z.string().min(1, 'Reviewer ID is required'),
+  windowId: z.string().min(1, 'Window ID is required')
+});
+
+export const validateAndSendAllEmailsSchema = z.object({
+  windowId: z.string().min(1, 'Window ID is required')
+});
+
 // Review Submission Schema
 export const submitReviewSchema = z.object({
   reviewId: z.string().min(1, 'Review ID is required'),
