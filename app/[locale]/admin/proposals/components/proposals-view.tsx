@@ -88,7 +88,7 @@ export function ProposalsView({ proposals, mainAreas, windows }: ProposalsViewPr
         centres={centres}
         onFilterChange={setFilters}
       />
-      <ProposalsTable proposals={filteredProposals} />
+      <ProposalsTable proposals={filteredProposals} mainAreas={mainAreas} />
     </>
   );
 }

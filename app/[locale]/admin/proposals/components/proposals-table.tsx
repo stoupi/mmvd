@@ -60,6 +60,7 @@ function formatDate(date: Date | null): string {
 
 interface ProposalsTableProps {
   proposals: Proposal[];
+  mainAreas: { id: string; label: string }[];
 }
 
 const statusColors = {
@@ -80,7 +81,7 @@ const statusLabels = {
   PRIORITIZED: 'Prioritized'
 };
 
-export function ProposalsTable({ proposals }: ProposalsTableProps) {
+export function ProposalsTable({ proposals, mainAreas }: ProposalsTableProps) {
   const [columnWidths, setColumnWidths] = useState({
     centreCode: 100,
     title: 350,
@@ -215,11 +216,14 @@ export function ProposalsTable({ proposals }: ProposalsTableProps) {
                 <TableCell style={{ width: columnWidths.secondary }}>
                   {proposal.secondaryTopics.length > 0 ? (
                     <div className='flex flex-col gap-1'>
-                      {proposal.secondaryTopics.map((topic, index) => (
-                        <Badge key={index} variant='outline' className='text-xs'>
-                          {topic}
-                        </Badge>
-                      ))}
+                      {proposal.secondaryTopics.map((topicId, index) => {
+                        const mainAreaTopic = mainAreas.find(area => area.id === topicId);
+                        return (
+                          <Badge key={index} variant='outline' className='text-xs'>
+                            {mainAreaTopic?.label || topicId}
+                          </Badge>
+                        );
+                      })}
                     </div>
                   ) : (
                     <span className='text-sm text-muted-foreground'>-</span>
