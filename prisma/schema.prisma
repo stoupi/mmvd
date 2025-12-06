@@ -205,6 +205,8 @@ model Review {
   overlapDetails   String?
   commentsForPI    String?
   commentsForAdmin String?
+  isDraft          Boolean            @default(false)
+  emailSentAt      DateTime?
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
   isDeleted        Boolean            @default(false)
@@ -215,6 +217,7 @@ model Review {
   @@index([reviewerId])
   @@index([status])
   @@index([isDeleted])
+  @@index([isDraft])
 }
 
 enum AppPermission {
