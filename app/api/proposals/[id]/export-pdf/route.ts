@@ -31,7 +31,13 @@ export async function GET(
     const pageWidth = doc.internal.pageSize.getWidth();
     let yPosition = 20;
 
+    doc.setFontSize(18);
+    doc.setFont(undefined, 'bold');
+    doc.text('MMVD Study - Ancillary Study Proposal', 20, yPosition);
+    yPosition += 12;
+
     doc.setFontSize(10);
+    doc.setFont(undefined, 'normal');
     doc.text(`Window: ${proposal.submissionWindow.name}`, 20, yPosition);
     yPosition += 7;
 
@@ -149,10 +155,16 @@ export async function GET(
 
     const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
 
+    const centreCode = proposal.centre?.code || 'UNKNOWN';
+    const windowName = proposal.submissionWindow.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+    const currentDate = new Date();
+    const dateStr = currentDate.toISOString().slice(2, 10).replace(/-/g, '');
+    const filename = `${centreCode}_MMVD_proposal_${windowName}_${dateStr}.pdf`;
+
     return new NextResponse(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="proposal-${proposal.id}.pdf"`
+        'Content-Disposition': `attachment; filename="${filename}"`
       }
     });
   } catch (error) {

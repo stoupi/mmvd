@@ -37,8 +37,8 @@ export function getAvailableApps(permissions: AppPermission[]): AppConfig[] {
 }
 
 export function getDefaultApp(permissions: AppPermission[]): string | null {
+  if (permissions.includes('ADMIN')) return '/admin';
   if (permissions.includes('SUBMISSION')) return '/submission';
   if (permissions.includes('REVIEWING')) return '/reviewing';
-  if (permissions.includes('ADMIN')) return '/admin';
   return null;
 }
