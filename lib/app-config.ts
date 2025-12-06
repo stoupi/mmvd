@@ -32,29 +32,6 @@ export const APPS: AppConfig[] = [
   }
 ];
 
-const VALID_PERMISSIONS: readonly string[] = [
-  'SUBMISSION',
-  'REVIEWING',
-  'ADMIN',
-];
-
-function isAppPermission(value: string | AppPermission): value is AppPermission {
-  return typeof value === 'string' && VALID_PERMISSIONS.includes(value);
-}
-
-export function parsePermissions(
-  permissions: string[] | AppPermission[] | undefined
-): AppPermission[] {
-  if (!permissions) return [];
-  const result: AppPermission[] = [];
-  for (const permission of permissions) {
-    if (isAppPermission(permission)) {
-      result.push(permission);
-    }
-  }
-  return result;
-}
-
 export function getAvailableApps(permissions: AppPermission[]): AppConfig[] {
   return APPS.filter((app) => permissions.includes(app.permission));
 }

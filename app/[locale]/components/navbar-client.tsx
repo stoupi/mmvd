@@ -6,7 +6,7 @@ import { useRouter } from '@/app/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { getAvailableApps, parsePermissions } from '@/lib/app-config';
+import { getAvailableApps } from '@/lib/app-config';
 import { FileText, ClipboardCheck, Settings, User, LogOut } from 'lucide-react';
 import {
 	DropdownMenu,
@@ -15,6 +15,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
+import type { AppPermission } from '@/app/generated/prisma';
 
 const iconMap = {
 	FileText,
@@ -27,7 +28,7 @@ type NavbarUser = {
 	email: string;
 	name?: string | null;
 	avatarUrl?: string | null;
-	permissions?: string | null;
+	permissions?: AppPermission[];
 };
 
 export function NavbarClient({ user }: { user?: NavbarUser | null }) {
@@ -37,7 +38,7 @@ export function NavbarClient({ user }: { user?: NavbarUser | null }) {
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
 
 	const availableApps = user?.permissions
-		? getAvailableApps(parsePermissions(user.permissions))
+		? getAvailableApps(user.permissions)
 		: [];
 
 	const handleLogout = async () => {
