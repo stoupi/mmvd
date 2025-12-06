@@ -13,7 +13,7 @@ export async function getEligibleReviewers(proposalMainAreaId?: string) {
       _count: {
         select: {
           reviews: {
-            where: { isDraft: false, isDeleted: false }
+            where: { isDeleted: false }
           }
         }
       }

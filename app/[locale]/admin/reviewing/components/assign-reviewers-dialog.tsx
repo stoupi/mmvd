@@ -18,15 +18,13 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, X, CheckCircle2 } from 'lucide-react';
-import { format } from 'date-fns';
+import { X, CheckCircle2 } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
-import { createDraftAssignmentAction } from '@/lib/actions/reviewing-actions';
+import { createDraftAssignmentAction, removeDraftAssignmentAction } from '@/lib/actions/reviewing-actions';
 import { toast } from 'sonner';
 import { useRouter } from '@/app/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 interface Proposal {
   id: string;
@@ -35,6 +33,17 @@ interface Proposal {
     id: string;
     label: string;
   };
+  reviews: Array<{
+    id: string;
+    isDraft: boolean;
+    deadline: Date;
+    reviewer: {
+      id: string;
+      firstName: string | null;
+      lastName: string | null;
+      email: string;
+    };
+  }>;
 }
 
 interface Reviewer {
@@ -74,6 +83,31 @@ export function AssignReviewersDialog({
     }
   });
 
+  const { execute: removeReviewer } = useAction(removeDraftAssignmentAction, {
+    onSuccess: () => {
+      toast.success('Reviewer removed successfully');
+      router.refresh();
+    },
+    onError: ({ error }) => {
+      toast.error(error.serverError || 'Failed to remove reviewer');
+    }
+  });
+
+  // Get existing reviews
+  const existingReviews = proposal.reviews;
+  const totalReviewers = existingReviews.length + selectedReviewers.length;
+
+  const getReviewerName = (reviewer: {
+    firstName: string | null;
+    lastName: string | null;
+    email: string;
+  }) => {
+    if (reviewer.firstName && reviewer.lastName) {
+      return `${reviewer.firstName} ${reviewer.lastName}`;
+    }
+    return reviewer.email;
+  };
+
   // Sort reviewers by topic match and then alphabetically
   const sortedReviewers = [...reviewers].sort((a, b) => {
     const aMatches = a.hasTopicMatch;
@@ -85,11 +119,15 @@ export function AssignReviewersDialog({
   });
 
   const handleAddReviewer = (reviewerId: string) => {
-    if (selectedReviewers.length >= 3) {
+    if (totalReviewers >= 3) {
       toast.error('Maximum of 3 reviewers per proposal');
       return;
     }
     if (selectedReviewers.includes(reviewerId)) {
+      toast.error('Reviewer already assigned');
+      return;
+    }
+    if (existingReviews.some((r) => r.reviewer.id === reviewerId)) {
       toast.error('Reviewer already assigned');
       return;
     }
@@ -104,8 +142,12 @@ export function AssignReviewersDialog({
     setSelectedReviewers([...selectedReviewers, reviewerId]);
   };
 
-  const handleRemoveReviewer = (reviewerId: string) => {
+  const handleRemoveNewReviewer = (reviewerId: string) => {
     setSelectedReviewers(selectedReviewers.filter((id) => id !== reviewerId));
+  };
+
+  const handleRemoveExistingReviewer = (reviewId: string) => {
+    removeReviewer({ reviewId });
   };
 
   const handleClose = () => {
@@ -136,32 +178,58 @@ export function AssignReviewersDialog({
             </div>
           </div>
 
-          <div className='space-y-2'>
-            <Label className='text-sm font-medium'>Review Deadline</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant='outline'
-                  className={cn(
-                    'w-full justify-start text-left font-normal',
-                    !deadline && 'text-muted-foreground'
-                  )}
-                >
-                  <CalendarIcon className='mr-2 h-4 w-4' />
-                  {deadline ? format(deadline, 'PPP') : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className='w-auto p-0'>
-                <Calendar mode='single' selected={deadline} onSelect={(date) => date && setDeadline(date)} initialFocus />
-              </PopoverContent>
-            </Popover>
-          </div>
+          {/* Existing Reviewers */}
+          {existingReviews.length > 0 && (
+            <div className='space-y-2'>
+              <Label className='text-sm font-medium'>Existing Reviewers</Label>
+              <div className='space-y-2'>
+                {existingReviews.map((review) => {
+                  const reviewerData = reviewers.find((r) => r.id === review.reviewer.id);
+                  return (
+                    <div
+                      key={review.id}
+                      className='flex items-center justify-between p-2 bg-blue-50 rounded-md border border-blue-200'
+                    >
+                      <div className='flex items-center gap-2 flex-1'>
+                        <CheckCircle2 className='h-4 w-4 text-blue-600' />
+                        <div className='flex-1'>
+                          <span className='text-sm font-medium'>
+                            {getReviewerName(review.reviewer)}
+                          </span>
+                          <div className='flex items-center gap-2 mt-1'>
+                            {review.isDraft ? (
+                              <Badge variant='outline' className='text-xs bg-yellow-50'>
+                                Draft
+                              </Badge>
+                            ) : (
+                              <Badge variant='outline' className='text-xs bg-green-50'>
+                                Validated
+                              </Badge>
+                            )}
+                            {reviewerData?.hasTopicMatch && (
+                              <span className='text-xs text-green-600'>(Topic Match)</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <Button
+                        size='sm'
+                        variant='ghost'
+                        onClick={() => handleRemoveExistingReviewer(review.id)}
+                      >
+                        <X className='h-4 w-4' />
+                      </Button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
-          <div className='space-y-2'>
-            <Label className='text-sm font-medium'>
-              Assigned Reviewers ({selectedReviewers.length}/3)
-            </Label>
-            {selectedReviewers.length > 0 && (
+          {/* Newly Added Reviewers */}
+          {selectedReviewers.length > 0 && (
+            <div className='space-y-2'>
+              <Label className='text-sm font-medium'>Newly Added Reviewers</Label>
               <div className='space-y-2'>
                 {selectedReviewers.map((reviewerId) => {
                   const reviewer = reviewers.find((r) => r.id === reviewerId);
@@ -181,7 +249,7 @@ export function AssignReviewersDialog({
                       <Button
                         size='sm'
                         variant='ghost'
-                        onClick={() => handleRemoveReviewer(reviewerId)}
+                        onClick={() => handleRemoveNewReviewer(reviewerId)}
                       >
                         <X className='h-4 w-4' />
                       </Button>
@@ -189,18 +257,20 @@ export function AssignReviewersDialog({
                   );
                 })}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <div className='space-y-2'>
-            <Label className='text-sm font-medium'>Add Reviewer</Label>
+            <Label className='text-sm font-medium'>Add Reviewer ({totalReviewers}/3)</Label>
             <Select onValueChange={handleAddReviewer} disabled={status === 'executing'}>
               <SelectTrigger>
                 <SelectValue placeholder='Select a reviewer to assign...' />
               </SelectTrigger>
               <SelectContent>
                 {sortedReviewers.map((reviewer) => {
-                  const isAssigned = selectedReviewers.includes(reviewer.id);
+                  const isNewlyAssigned = selectedReviewers.includes(reviewer.id);
+                  const isExistingAssigned = existingReviews.some((r) => r.reviewer.id === reviewer.id);
+                  const isAssigned = isNewlyAssigned || isExistingAssigned;
                   return (
                     <SelectItem
                       key={reviewer.id}
