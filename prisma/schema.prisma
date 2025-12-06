@@ -113,9 +113,9 @@ model SubmissionWindow {
   name                  String       @unique
   submissionOpenAt      DateTime
   submissionCloseAt     DateTime
-  reviewStartAt         DateTime
-  reviewDeadlineDefault DateTime
-  responseDeadline      DateTime
+  reviewStartAt         DateTime?
+  reviewDeadlineDefault DateTime?
+  responseDeadline      DateTime?
   nextWindowOpensAt     DateTime?
   status                WindowStatus @default(UPCOMING)
   createdAt             DateTime     @default(now())

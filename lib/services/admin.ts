@@ -205,9 +205,9 @@ export async function createSubmissionWindow(data: {
   name: string;
   submissionOpenAt: Date;
   submissionCloseAt: Date;
-  reviewStartAt: Date;
-  reviewDeadlineDefault: Date;
-  responseDeadline: Date;
+  reviewStartAt?: Date;
+  reviewDeadlineDefault?: Date;
+  responseDeadline?: Date;
   nextWindowOpensAt?: Date;
 }) {
   return prisma.submissionWindow.create({

@@ -67,33 +67,15 @@ export const submissionWindowSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),
   submissionOpenAt: z.coerce.date(),
   submissionCloseAt: z.coerce.date(),
-  reviewStartAt: z.coerce.date(),
-  reviewDeadlineDefault: z.coerce.date(),
-  responseDeadline: z.coerce.date(),
+  reviewStartAt: z.coerce.date().optional(),
+  reviewDeadlineDefault: z.coerce.date().optional(),
+  responseDeadline: z.coerce.date().optional(),
   nextWindowOpensAt: z.coerce.date().optional()
 }).refine(
   (data) => data.submissionCloseAt > data.submissionOpenAt,
   {
     message: 'Submission close date must be after open date',
     path: ['submissionCloseAt']
-  }
-).refine(
-  (data) => data.reviewStartAt >= data.submissionCloseAt,
-  {
-    message: 'Review start must be on or after submission close date',
-    path: ['reviewStartAt']
-  }
-).refine(
-  (data) => data.reviewDeadlineDefault > data.reviewStartAt,
-  {
-    message: 'Review deadline must be after review start date',
-    path: ['reviewDeadlineDefault']
-  }
-).refine(
-  (data) => data.responseDeadline > data.reviewDeadlineDefault,
-  {
-    message: 'Response deadline must be after review deadline',
-    path: ['responseDeadline']
   }
 );
 

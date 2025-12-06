@@ -13,9 +13,9 @@ interface SubmissionWindow {
   name: string;
   submissionOpenAt: Date;
   submissionCloseAt: Date;
-  reviewStartAt: Date;
-  reviewDeadlineDefault: Date;
-  responseDeadline: Date;
+  reviewStartAt: Date | null;
+  reviewDeadlineDefault: Date | null;
+  responseDeadline: Date | null;
   nextWindowOpensAt: Date | null;
   status: WindowStatus;
   _count: {
@@ -53,15 +53,11 @@ export function WindowsList({ windows }: WindowsListProps) {
                 {window._count.proposals} {window._count.proposals === 1 ? 'proposal submitted' : 'proposals submitted'}
               </Badge>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground'>
+            <div className='text-sm text-muted-foreground'>
               <div>
+                <span className='font-medium'>Submission:</span>{' '}
                 {new Date(window.submissionOpenAt).toLocaleDateString()} -{' '}
                 {new Date(window.submissionCloseAt).toLocaleDateString()}
-              </div>
-              <div>
-                <span className='font-medium'>Review:</span>{' '}
-                {new Date(window.reviewStartAt).toLocaleDateString()} -{' '}
-                {new Date(window.reviewDeadlineDefault).toLocaleDateString()}
               </div>
             </div>
           </div>

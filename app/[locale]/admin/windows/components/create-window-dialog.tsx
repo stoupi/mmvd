@@ -40,9 +40,6 @@ export function CreateWindowDialog() {
       name: '',
       submissionOpenAt: new Date() as any,
       submissionCloseAt: new Date() as any,
-      reviewStartAt: new Date() as any,
-      reviewDeadlineDefault: new Date() as any,
-      responseDeadline: new Date() as any,
       nextWindowOpensAt: undefined
     }
   });
@@ -120,94 +117,6 @@ export function CreateWindowDialog() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Submission Closes</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='date'
-                        {...field}
-                        value={
-                          field.value
-                            ? new Date(field.value).toISOString().split('T')[0]
-                            : ''
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className='grid grid-cols-2 gap-4'>
-              <FormField
-                control={form.control}
-                name='reviewStartAt'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Review Starts</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='date'
-                        {...field}
-                        value={
-                          field.value
-                            ? new Date(field.value).toISOString().split('T')[0]
-                            : ''
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name='reviewDeadlineDefault'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Review Deadline</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='date'
-                        {...field}
-                        value={
-                          field.value
-                            ? new Date(field.value).toISOString().split('T')[0]
-                            : ''
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className='grid grid-cols-2 gap-4'>
-              <FormField
-                control={form.control}
-                name='responseDeadline'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Response Deadline</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='date'
-                        {...field}
-                        value={
-                          field.value
-                            ? new Date(field.value).toISOString().split('T')[0]
-                            : ''
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name='nextWindowOpensAt'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Next Window Opens (Optional)</FormLabel>
                     <FormControl>
                       <Input
                         type='date'
