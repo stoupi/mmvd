@@ -75,7 +75,7 @@ export function NavbarClient({ user }: { user?: NavbarUser | null }) {
 						<div className='hidden md:flex items-center space-x-1'>
 							{availableApps.map((app) => {
 								const Icon = iconMap[app.icon as keyof typeof iconMap];
-								const isActive = pathname.includes(app.path);
+								const isActive = pathname.startsWith(app.path);
 								return (
 									<Link
 										key={app.id}
