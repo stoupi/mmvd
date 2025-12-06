@@ -27,6 +27,17 @@ export const createUserSchema = z.object({
   permissions: z.array(z.nativeEnum(AppPermission)).default([])
 });
 
+export const createUserInviteSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  title: z.string().optional().transform(val => val === '' ? undefined : val),
+  affiliation: z.string().optional().transform(val => val === '' ? undefined : val),
+  centreId: z.string().min(1, 'Centre is required'),
+  permissions: z.array(z.nativeEnum(AppPermission)).default([]),
+  locale: z.enum(['en', 'fr'])
+});
+
 export const updateUserPermissionsSchema = z.object({
   userId: z.string(),
   permissions: z.array(z.nativeEnum(AppPermission))

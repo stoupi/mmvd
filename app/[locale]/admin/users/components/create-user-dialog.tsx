@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'next-safe-action/hooks';
-import { createUserAction } from '@/lib/actions/admin-actions';
-import { createUserSchema } from '@/lib/schemas/admin';
+import { useParams } from 'next/navigation';
+import { createUserInviteAction } from '@/lib/actions/admin-actions';
+import { createUserInviteSchema } from '@/lib/schemas/admin';
 import { AppPermission, Centre } from '@/app/generated/prisma';
 import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -36,7 +37,7 @@ import { Input } from '@/components/ui/input';
 import { Plus } from 'lucide-react';
 import { toast } from 'sonner';
 
-type CreateUserFormData = z.infer<typeof createUserSchema>;
+type CreateUserFormData = z.infer<typeof createUserInviteSchema>;
 
 const permissionOptions: Array<{ value: AppPermission; label: string }> = [
   { value: AppPermission.SUBMISSION, label: 'Submission' },
@@ -50,9 +51,11 @@ interface CreateUserDialogProps {
 
 export function CreateUserDialog({ centres }: CreateUserDialogProps) {
   const [open, setOpen] = useState(false);
+  const params = useParams();
+  const locale = (params.locale as 'en' | 'fr') || 'en';
 
   const form = useForm({
-    resolver: zodResolver(createUserSchema),
+    resolver: zodResolver(createUserInviteSchema),
     defaultValues: {
       email: '',
       firstName: '',
@@ -60,22 +63,23 @@ export function CreateUserDialog({ centres }: CreateUserDialogProps) {
       title: '',
       affiliation: '',
       centreId: '',
-      permissions: [] as AppPermission[]
+      permissions: [] as AppPermission[],
+      locale
     }
   });
 
-  const { execute, status } = useAction(createUserAction, {
+  const { execute, status } = useAction(createUserInviteAction, {
     onSuccess: () => {
-      toast.success('User created successfully');
+      toast.success('Invitation sent successfully');
       setOpen(false);
       form.reset();
     },
     onError: ({ error }) => {
-      toast.error(error.serverError || 'Failed to create user');
+      toast.error(error.serverError || 'Failed to send invitation');
     }
   });
 
-  const onSubmit = (data: z.infer<typeof createUserSchema>) => {
+  const onSubmit = (data: z.infer<typeof createUserInviteSchema>) => {
     if (!data.permissions || data.permissions.length === 0) {
       const confirmed = window.confirm(
         'Warning: No permissions selected. This user will not have access to any features. Do you want to continue?'

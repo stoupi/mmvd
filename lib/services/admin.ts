@@ -150,6 +150,42 @@ export async function createUser(data: {
   });
 }
 
+export async function createPlaceholderUser(data: {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  affiliation?: string;
+  centreId: string;
+  permissions: AppPermission[];
+  locale?: string;
+}) {
+  const existingUser = await prisma.user.findUnique({
+    where: { email: data.email }
+  });
+
+  if (existingUser) {
+    throw new Error('A user with this email already exists');
+  }
+
+  return prisma.user.create({
+    data: {
+      id: createId(),
+      email: data.email,
+      firstName: data.firstName || null,
+      lastName: data.lastName || null,
+      name: [data.firstName, data.lastName].filter(Boolean).join(' ') || data.email,
+      title: data.title || null,
+      affiliation: data.affiliation || null,
+      centreId: data.centreId,
+      permissions: data.permissions,
+      locale: data.locale || null,
+      isActive: true,
+      emailVerified: false
+    }
+  });
+}
+
 export async function updateUserReviewTopics(userId: string, mainAreaIds: string[]) {
   return prisma.user.update({
     where: { id: userId },

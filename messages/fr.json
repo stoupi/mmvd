@@ -1,0 +1,13 @@
+{
+  "welcome": {
+    "title": "Bienvenue sur MMVD",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "setPassword": "Définir le mot de passe",
+    "saving": "Enregistrement...",
+    "errorTitle": "Erreur",
+    "genericError": "Une erreur s'est produite. Veuillez réessayer.",
+    "invalidToken": "Lien d'invitation invalide ou expiré.",
+    "passwordMismatch": "Les mots de passe ne correspondent pas."
+  }
+}

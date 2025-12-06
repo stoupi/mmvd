@@ -4,6 +4,9 @@ import { revalidatePath } from 'next/cache';
 import { adminAction } from './safe-action';
 import * as adminService from '@/lib/services/admin';
 import * as schemas from '@/lib/schemas/admin';
+import { createInvitation } from '@/lib/services/invitations';
+import { sendWelcomeEmail } from '@/lib/services/email';
+import { prisma } from '@/lib/prisma';
 
 // Main Area Actions
 export const createMainAreaAction = adminAction
@@ -107,6 +110,62 @@ export const createUserAction = adminAction
     const user = await adminService.createUser(parsedInput);
     revalidatePath('/admin/users');
     return { success: true, user };
+  });
+
+export const createUserInviteAction = adminAction
+  .schema(schemas.createUserInviteSchema)
+  .action(async ({ parsedInput }) => {
+    // Step 1: Create placeholder user (visible in admin table immediately)
+    await adminService.createPlaceholderUser({
+      email: parsedInput.email,
+      firstName: parsedInput.firstName,
+      lastName: parsedInput.lastName,
+      title: parsedInput.title,
+      affiliation: parsedInput.affiliation,
+      centreId: parsedInput.centreId,
+      permissions: parsedInput.permissions,
+      locale: parsedInput.locale,
+    });
+
+    // Step 2: Create invitation token (7-day expiry)
+    const { token, expiresAt } = await createInvitation({
+      email: parsedInput.email,
+      locale: parsedInput.locale,
+      firstName: parsedInput.firstName,
+      lastName: parsedInput.lastName,
+      title: parsedInput.title,
+      affiliation: parsedInput.affiliation,
+      centreId: parsedInput.centreId,
+      permissions: parsedInput.permissions,
+    });
+
+    // Step 3: Generate setup link
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+    const setupLink = `${appUrl}/${parsedInput.locale}/welcome/${token}`;
+
+    // Step 4: Send welcome email
+    const result = await sendWelcomeEmail({
+      to: parsedInput.email,
+      locale: parsedInput.locale,
+      firstName: parsedInput.firstName,
+      lastName: parsedInput.lastName,
+      title: parsedInput.title,
+      setupLink,
+    });
+
+    // Step 5: Handle email failure (rollback)
+    if ('error' in result) {
+      // Rollback: delete placeholder user and invitation
+      await prisma.user.delete({ where: { email: parsedInput.email } }).catch(() => {});
+      await prisma.verification.deleteMany({
+        where: { identifier: `INVITE:${parsedInput.email}` }
+      }).catch(() => {});
+
+      throw new Error(`Failed to send invitation email: ${result.error}`);
+    }
+
+    revalidatePath('/admin/users');
+    return { success: true, expiresAt };
   });
 
 export const updateUserReviewTopicsAction = adminAction

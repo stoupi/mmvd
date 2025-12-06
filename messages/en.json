@@ -11,7 +11,7 @@
     "appName": "App Name"
   },
   "home": {
-    "title": "Hello World"
+    "title": "coucou cs"
   },
   "auth": {
     "loginTitle": "Login",
@@ -520,5 +520,16 @@
         "reviewCountPlural": "{count} reviews"
       }
     }
+  },
+  "welcome": {
+    "title": "Welcome to MMVD",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "setPassword": "Set Password",
+    "saving": "Saving...",
+    "errorTitle": "Error",
+    "genericError": "An error occurred. Please try again.",
+    "invalidToken": "Invalid or expired invitation link.",
+    "passwordMismatch": "Passwords do not match."
   }
 }
