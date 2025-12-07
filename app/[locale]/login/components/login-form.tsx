@@ -51,6 +51,8 @@ export function LoginForm() {
 				refetchSession();
 				router.push(`/${locale}${data.redirectTo}`);
 				router.refresh();
+			} else if (data && !data.success && data.error) {
+				setError('root', { message: data.error });
 			}
 		},
 	});
