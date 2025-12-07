@@ -1,10 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useAction } from 'next-safe-action/hooks';
 import { updateUserReviewTopicsAction } from '@/lib/actions/admin-actions';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import {
   Dialog,
   DialogContent,
@@ -13,12 +21,14 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { Plus } from 'lucide-react';
+import { Plus, Search, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ReviewTopic {
   id: string;
+  code: string | null;
   label: string;
+  categoryCode?: string | null;
 }
 
 interface ReviewTopicsDialogProps {
@@ -38,11 +48,46 @@ export function ReviewTopicsDialog({
 }: ReviewTopicsDialogProps) {
   const [open, setOpen] = useState(false);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [search, setSearch] = useState('');
+
+  // Group topics by category code
+  const topicsByCategory = useMemo(() => {
+    const groups: Record<string, ReviewTopic[]> = {};
+    allMainAreas.forEach((topic) => {
+      const categoryCode = topic.code?.split('-')[0] || 'Other';
+      if (!groups[categoryCode]) {
+        groups[categoryCode] = [];
+      }
+      groups[categoryCode].push(topic);
+    });
+    return groups;
+  }, [allMainAreas]);
+
+  // Filter topics based on search
+  const filteredCategories = useMemo(() => {
+    if (!search) return topicsByCategory;
+
+    const searchLower = search.toLowerCase();
+    const filtered: Record<string, ReviewTopic[]> = {};
+
+    Object.entries(topicsByCategory).forEach(([category, topics]) => {
+      const matchingTopics = topics.filter((topic) =>
+        topic.code?.toLowerCase().includes(searchLower) ||
+        topic.label.toLowerCase().includes(searchLower)
+      );
+      if (matchingTopics.length > 0) {
+        filtered[category] = matchingTopics;
+      }
+    });
+
+    return filtered;
+  }, [topicsByCategory, search]);
 
   // Initialize selected topics when dialog opens
   const handleOpenChange = (newOpen: boolean) => {
     if (newOpen) {
       setSelectedTopics(currentTopics.map((t) => t.id));
+      setSearch('');
     }
     setOpen(newOpen);
   };
@@ -83,6 +128,7 @@ export function ReviewTopicsDialog({
             <div className='flex flex-wrap gap-1'>
               {currentTopics.map((topic) => (
                 <Badge key={topic.id} variant='secondary' className='text-xs'>
+                  {topic.code && <span className='font-mono mr-1.5'>{topic.code}</span>}
                   {topic.label}
                 </Badge>
               ))}
@@ -103,24 +149,67 @@ export function ReviewTopicsDialog({
           <p className='text-sm text-muted-foreground mb-4'>
             Select the main areas this reviewer can review:
           </p>
-          <div className='flex flex-wrap gap-2'>
-            {allMainAreas.map((area) => {
-              const isSelected = selectedTopics.includes(area.id);
-              return (
+
+          <div className='mb-4'>
+            <div className='relative'>
+              <Search className='absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground' />
+              <Input
+                type='text'
+                placeholder='Search by topic code or label...'
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className='pl-9'
+              />
+              {search && (
                 <button
-                  key={area.id}
                   type='button'
-                  onClick={() => handleToggleTopic(area.id)}
-                  className={`px-4 py-2 rounded-md font-medium transition-colors ${
-                    isSelected
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                  }`}
+                  onClick={() => setSearch('')}
+                  className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground'
                 >
-                  {area.label}
+                  <X className='h-4 w-4' />
                 </button>
-              );
-            })}
+              )}
+            </div>
+          </div>
+
+          <div className='max-h-[400px] overflow-y-auto border rounded-md'>
+            <Accordion type='multiple' className='w-full'>
+              {Object.entries(filteredCategories).map(([categoryCode, topics]) => (
+                <AccordionItem key={categoryCode} value={categoryCode}>
+                  <AccordionTrigger className='px-4 py-3 hover:no-underline'>
+                    <div className='flex items-center gap-2'>
+                      <span className='font-mono font-semibold text-pink-600'>{categoryCode}</span>
+                      <Badge variant='secondary' className='ml-2'>
+                        {topics.length} {topics.length === 1 ? 'topic' : 'topics'}
+                      </Badge>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className='px-4 pb-4'>
+                    <div className='space-y-2'>
+                      {topics.map((topic) => {
+                        const isSelected = selectedTopics.includes(topic.id);
+                        return (
+                          <div key={topic.id} className='flex items-center gap-3 p-2 rounded hover:bg-muted/50'>
+                            <Checkbox
+                              checked={isSelected}
+                              onCheckedChange={() => handleToggleTopic(topic.id)}
+                              id={`topic-${topic.id}`}
+                            />
+                            <label
+                              htmlFor={`topic-${topic.id}`}
+                              className='flex-1 cursor-pointer text-sm'
+                            >
+                              <span className='font-mono text-xs text-pink-600 mr-2'>{topic.code}</span>
+                              {topic.label}
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
         <DialogFooter>

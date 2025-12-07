@@ -16,6 +16,7 @@ export default async function UsersPage() {
 
   const allMainAreas = mainAreasData.map(area => ({
     id: area.id,
+    code: area.code,
     label: area.label
   }));
 

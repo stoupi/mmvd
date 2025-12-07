@@ -28,6 +28,7 @@ import type { AppPermission, Centre } from '@/app/generated/prisma';
 
 interface ReviewTopic {
   id: string;
+  code: string | null;
   label: string;
 }
 

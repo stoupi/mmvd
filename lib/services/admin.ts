@@ -73,6 +73,7 @@ export async function getAllUsers() {
       reviewTopics: {
         select: {
           id: true,
+          code: true,
           label: true
         }
       },
