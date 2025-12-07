@@ -6,6 +6,7 @@ import { Edit, Trash2 } from 'lucide-react';
 import { EditWindowDialog } from './edit-window-dialog';
 import { DeleteWindowDialog } from './delete-window-dialog';
 import { WindowStatusSelect } from './window-status-select';
+import { WindowStatusBadge } from '@/components/window-status-badge';
 import type { WindowStatus } from '@prisma/client';
 
 interface SubmissionWindow {
@@ -27,14 +28,6 @@ interface WindowsListProps {
   windows: SubmissionWindow[];
 }
 
-const getStatusColor = (status: WindowStatus) => {
-  return status === 'OPEN' ? 'bg-green-500' : 'bg-red-500';
-};
-
-const getStatusLabel = (status: WindowStatus) => {
-  return status === 'OPEN' ? 'Open' : 'Closed';
-};
-
 export function WindowsList({ windows }: WindowsListProps) {
   return (
     <div className='space-y-4'>
@@ -46,9 +39,7 @@ export function WindowsList({ windows }: WindowsListProps) {
           <div className='flex-1'>
             <div className='flex items-center gap-2 mb-2'>
               <h3 className='font-semibold'>{window.name}</h3>
-              <Badge className={getStatusColor(window.status)}>
-                {getStatusLabel(window.status)}
-              </Badge>
+              <WindowStatusBadge status={window.status} />
               <Badge variant='outline'>
                 {window._count.proposals} {window._count.proposals === 1 ? 'proposal submitted' : 'proposals submitted'}
               </Badge>

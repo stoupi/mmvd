@@ -9,6 +9,7 @@ import { Link } from '@/app/i18n/navigation';
 import { ArrowLeft, User, Calendar, Building2, FileDown } from 'lucide-react';
 import { ProposalForm } from '@/app/[locale]/submission/components/proposal-form';
 import { ExportProposalButton } from '../components/export-proposal-button';
+import { WindowStatusBadge } from '@/components/window-status-badge';
 
 const statusColors = {
   DRAFT: 'bg-gray-500',
@@ -43,7 +44,6 @@ export default async function AdminProposalDetailPage({
   }
 
   const mainAreas = await getMainAreas();
-  const isWindowOpen = proposal.submissionWindow.status === 'OPEN';
 
   const piName = proposal.piUser.firstName && proposal.piUser.lastName
     ? `${proposal.piUser.firstName} ${proposal.piUser.lastName}`
@@ -185,9 +185,7 @@ export default async function AdminProposalDetailPage({
               <div>
                 <p className='text-sm text-muted-foreground'>Submission Window</p>
                 <p className='font-medium'>{proposal.submissionWindow.name}</p>
-                <Badge className={isWindowOpen ? 'bg-green-500' : 'bg-red-500'}>
-                  {isWindowOpen ? 'Open' : 'Closed'}
-                </Badge>
+                <WindowStatusBadge status={proposal.submissionWindow.status} />
               </div>
             </div>
             {proposal.submittedAt && (

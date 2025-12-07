@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import { ArrowLeft, Calendar, Building2, User, FileText } from 'lucide-react';
 import { ReviewForm } from './components/review-form';
 import { ProposalForm } from '@/app/[locale]/submission/components/proposal-form';
 
@@ -43,6 +43,17 @@ export default async function ReviewProposalPage({
 
   const mainAreas = await getMainAreas();
   const isCompleted = review.status === 'COMPLETED';
+
+  // Format PI name
+  const piName =
+    proposal.piUser.firstName && proposal.piUser.lastName
+      ? `${proposal.piUser.firstName} ${proposal.piUser.lastName}`
+      : proposal.piUser.email;
+
+  // Format centre
+  const centreInfo = proposal.centre
+    ? `${proposal.centre.code} - ${proposal.centre.name}`
+    : 'N/A';
 
   const initialData = {
     title: proposal.title,
@@ -99,18 +110,63 @@ export default async function ReviewProposalPage({
           )}
         </div>
 
-        <Card className='mb-6'>
+        <Card className='mb-6 bg-gray-50'>
           <CardContent className='pt-6'>
-            <div className='flex items-center gap-2 text-sm text-muted-foreground'>
-              <Calendar className='h-4 w-4' />
-              <span>Review Deadline:</span>
-              <span className='font-medium text-red-600'>
-                {new Date(review.deadline).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric'
-                })}
-              </span>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              <div className='flex items-center gap-2'>
+                <FileText className='h-4 w-4 text-muted-foreground' />
+                <div>
+                  <p className='text-sm text-muted-foreground'>Submission Window</p>
+                  <p className='font-medium'>{proposal.submissionWindow.name}</p>
+                </div>
+              </div>
+
+              <div className='flex items-center gap-2'>
+                <Calendar className='h-4 w-4 text-muted-foreground' />
+                <div>
+                  <p className='text-sm text-muted-foreground'>Submitted On</p>
+                  <p className='font-medium'>
+                    {proposal.submittedAt
+                      ? new Date(proposal.submittedAt).toLocaleDateString('en-US', {
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric'
+                        })
+                      : 'N/A'}
+                  </p>
+                </div>
+              </div>
+
+              <div className='flex items-center gap-2'>
+                <Building2 className='h-4 w-4 text-muted-foreground' />
+                <div>
+                  <p className='text-sm text-muted-foreground'>Centre</p>
+                  <p className='font-medium'>{centreInfo}</p>
+                </div>
+              </div>
+
+              <div className='flex items-center gap-2'>
+                <User className='h-4 w-4 text-muted-foreground' />
+                <div>
+                  <p className='text-sm text-muted-foreground'>Principal Investigator</p>
+                  <p className='font-medium'>{piName}</p>
+                  <p className='text-sm text-muted-foreground'>{proposal.piUser.email}</p>
+                </div>
+              </div>
+
+              <div className='flex items-center gap-2 md:col-span-2 pt-2 border-t'>
+                <Calendar className='h-4 w-4 text-red-600' />
+                <div>
+                  <p className='text-sm text-muted-foreground'>Review Deadline</p>
+                  <p className='font-medium text-red-600'>
+                    {new Date(review.deadline).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
