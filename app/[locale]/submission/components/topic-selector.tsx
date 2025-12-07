@@ -13,7 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { X, ChevronUp } from 'lucide-react';
+import { X, ChevronUp, ChevronDown } from 'lucide-react';
 import type { Category, MainArea } from '@/app/generated/prisma';
 
 interface TopicSelectorProps {
@@ -37,12 +37,27 @@ export function TopicSelector({
   const currentValue = form.watch(fieldName);
   const isMultiple = fieldName === 'secondaryTopics';
   const selectedTopicIds = Array.isArray(currentValue) ? currentValue : currentValue ? [currentValue] : [];
-  const [openCategory, setOpenCategory] = useState<string>('');
+  const [openCategories, setOpenCategories] = useState<string[]>([]);
 
   const allTopics = categories.flatMap((category) => category.topics);
   const selectedTopics = selectedTopicIds
     .map((topicId) => allTopics.find((topic) => topic.id === topicId))
     .filter(Boolean) as MainArea[];
+
+  const availableCategories = categories.filter((category) => {
+    const availableTopics = category.topics.filter(
+      (topic) => topic.id !== excludeTopicId
+    );
+    return availableTopics.length > 0;
+  });
+
+  const handleExpandAll = () => {
+    setOpenCategories(availableCategories.map((cat) => cat.code));
+  };
+
+  const handleCollapseAll = () => {
+    setOpenCategories([]);
+  };
 
   const handleRadioChange = (topicId: string) => {
     form.setValue(fieldName, topicId);
@@ -110,25 +125,34 @@ export function TopicSelector({
         <p className="text-xs text-muted-foreground">
           Numbers show proposals <strong>already submitted</strong> for this window
         </p>
-        {openCategory && (
+        <div className="flex gap-2">
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => setOpenCategory('')}
+            onClick={handleExpandAll}
+            className="text-xs h-7 text-muted-foreground hover:text-foreground"
+          >
+            <ChevronDown className="h-3 w-3 mr-1" />
+            Expand All
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={handleCollapseAll}
             className="text-xs h-7 text-muted-foreground hover:text-foreground"
           >
             <ChevronUp className="h-3 w-3 mr-1" />
             Collapse All
           </Button>
-        )}
+        </div>
       </div>
 
       <Accordion
-        type="single"
-        collapsible
-        value={openCategory}
-        onValueChange={setOpenCategory}
+        type="multiple"
+        value={openCategories}
+        onValueChange={setOpenCategories}
         className="w-full border rounded-lg"
       >
         {categories.map((category) => {
