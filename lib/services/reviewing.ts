@@ -59,6 +59,32 @@ export async function createDraftAssignment(data: {
     throw new Error('This reviewer is already assigned to this proposal');
   }
 
+  // If there's a deleted review, reactivate it instead of creating a new one
+  if (existingReview && existingReview.isDeleted) {
+    return prisma.review.update({
+      where: {
+        proposalId_reviewerId: {
+          proposalId: data.proposalId,
+          reviewerId: data.reviewerId
+        }
+      },
+      data: {
+        isDeleted: false,
+        isDraft: true,
+        deadline: data.deadline,
+        status: 'ASSIGNED'
+      },
+      include: {
+        reviewer: true,
+        proposal: {
+          include: {
+            mainArea: true
+          }
+        }
+      }
+    });
+  }
+
   // Check if there are already 3 reviewers assigned
   const reviewCount = await prisma.review.count({
     where: {
