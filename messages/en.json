@@ -316,6 +316,54 @@
       "submitError": "Failed to submit proposal",
       "deleteSuccess": "Proposal deleted successfully",
       "deleteError": "Failed to delete proposal"
+    },
+    "guidelines": {
+      "title": "Important Information to Read Before Submission",
+      "intro": "Dear Investigators,\n\nTo make the rules and process as clear as possible, please find below a structured overview of how to submit ancillary study proposals based on the MMVD dataset.",
+      "section1": {
+        "title": "What is an ancillary study submission window?",
+        "content": "• Each participating center has the opportunity to submit <strong>1 synopsis proposal</strong> for an ancillary study during dedicated submission windows.\n• Each window is open for <strong>1 month</strong>, and a new window is launched every <strong>4 months</strong>."
+      },
+      "section2": {
+        "title": "How many proposals can each center submit?",
+        "content": "• <strong>Only the Principal Investigator (PI)</strong> of each center, using a dedicated ID and password, may submit proposals on this website.\n• For each submission window, <strong>1 single synopsis can be submitted per center</strong>."
+      },
+      "section3": {
+        "title": "What condition must be met before submitting a new proposal?",
+        "content": "• Before a center can submit a new proposal, the previous ancillary study must have been brought to the manuscript stage and submitted to a scientific journal. Notably, <strong>the proof of manuscript submission is required</strong>.\n• This rule ensures that each center completes its previous project before initiating a new one."
+      },
+      "section4": {
+        "title": "How should the synopsis be completed?",
+        "content": "• You are asked to complete the synopsis form <strong>as precisely and thoroughly as possible</strong>.\n• The objective is to identify clearly the clinical question or hypothesis you wish to address and <strong>avoid overlap</strong> between different proposals that would focus on the same topic."
+      },
+      "section5": {
+        "title": "Importance of the choice of the main topic",
+        "content": "• One key step is to <strong>choose the most appropriate main topic</strong> from the predefined list.\n• During the submission window, when you select a main topic in the system, you will be able to see <strong>in real time how many synopsis proposals have already been submitted</strong> under that same topic.\n• This provides a form of self-regulation between centers. Indeed, we <strong>strongly encourage you to prioritize main topics with no or few existing proposals</strong> in the current window, to maximize your chances of immediate acceptance.\n\nFor example, if you have in mind three potential proposals on mixed aortic valve disease on multiple valvular heart disease in obese patients on the prognostic value of pulmonary hypertension and you see that several proposals have already been submitted on the first two topics but none on pulmonary hypertension, we recommend prioritizing the pulmonary hypertension proposal for that window."
+      },
+      "section6": {
+        "title": "What happens if two centers propose the same idea?",
+        "content": "• If several centers submit proposals on the same question, <strong>priority will be given to the center with the largest number of relevant patients</strong> enrolled in the cohort.\n\nFor example, if two centers submit a proposal on patients with bicuspid aortic valve disease, priority will go to the center that has included the highest number of bicuspid aortic valve patients.\n\n• The other centers will promptly receive an alternative proposal suggestion from the Steering Committee, focusing on a closely related topic that has not yet been submitted by any other team. Our aim is to allow as many centers as possible to coordinate their own ancillary study, while <strong>strictly avoiding overlap between projects</strong>."
+      },
+      "section7": {
+        "title": "Reviewing process after submission of your proposal?",
+        "content": "• Once your proposal has been submitted on the website, <strong>it cannot be modified</strong> until it has been evaluated by one or more reviewers from the Steering Committee.\n• The reviewers' role is <strong>not to reject proposals</strong>, but to provide constructive feedback to improve clarity and methodology refine the statistical analysis plan and ensure alignment with existing literature and ongoing projects.\n• After the submission window closes, you will receive the reviewers' comments by email.\n• You will then be able to log back into the website to implement the requested modifications, if needed."
+      },
+      "section8": {
+        "title": "How are the statistical analyses performed?",
+        "content": "• After validation of your proposal and synopsis, you will be connected with the statistical analysis team at Lariboisiere University Hospital (Paris, France).\n• A series of online meetings will be organized to conduct the statistical analyses together.\n• <strong>All analyses are carried out locally by the Lariboisiere University Hospital biostatistics team</strong>. This is essential to fully secure the database, which <strong>cannot be exported outside Lariboisiere University Hospital</strong>."
+      },
+      "section9": {
+        "title": "Who writes the manuscript and who is the corresponding author?",
+        "content": "• Once the analyses are completed, <strong>you are responsible for writing the full manuscript</strong>.\n• You will then send a finalized version for review by all co-authors (within <strong>15 days maximum</strong>).\n• After this internal review, you may submit the article to the journal of your choice, and <strong>you will be the corresponding author</strong> of the work."
+      },
+      "section10": {
+        "title": "What happens if the manuscript is not submitted within 6 months after receiving the statistical analyses?",
+        "content": "• If all statistical analyses have been completed and transmitted to the coordinating team, and no finalized manuscript has been submitted by the proposing center <strong>within 6 months</strong> after the delivery of the analyses, <strong>the ancillary study will be reassigned to another team</strong>.\n• This measure ensures that the statistical work already performed is properly valorized and that the scientific question can still lead to a publication. The new team will then take responsibility for writing and submitting the manuscript."
+      },
+      "section11": {
+        "title": "Who to contact in case of questions?",
+        "content": "If you have any questions at any stage of the process, please feel free to contact us directly at the email address provided below:\n\n<strong>Dr. Theo Pezel (international coordinator of the MMVD study): theopezel.eacvi@gmail.com</strong>"
+      }
     }
   },
   "admin": {

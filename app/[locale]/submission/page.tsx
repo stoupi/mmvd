@@ -3,6 +3,7 @@ import { getCurrentWindow, getProposalsByPi } from '@/lib/services/submission';
 import { getTranslations } from 'next-intl/server';
 import { ProposalsSection } from './components/proposals-section';
 import { CurrentWindowProposals } from './components/current-window-proposals';
+import { SubmissionGuidelines } from './components/submission-guidelines';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from '@/app/i18n/navigation';
@@ -57,6 +58,10 @@ export default async function SubmissionPage({
         <p className='text-muted-foreground'>
           Submit and manage your research proposals
         </p>
+      </div>
+
+      <div className='mb-8'>
+        <SubmissionGuidelines />
       </div>
 
       <div className='grid gap-8'>

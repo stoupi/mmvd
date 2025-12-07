@@ -67,5 +67,55 @@
     "genericError": "Une erreur s'est produite. Veuillez réessayer.",
     "invalidToken": "Lien d'invitation invalide ou expiré.",
     "passwordMismatch": "Les mots de passe ne correspondent pas."
+  },
+  "submission": {
+    "guidelines": {
+      "title": "Directives de Soumission et Informations Importantes",
+      "intro": "Chers Investigateurs,\n\nAfin de rendre les règles et le processus aussi clairs que possible, vous trouverez ci-dessous un aperçu structuré de la façon de soumettre des propositions d'études ancillaires basées sur la base de données MMVD.",
+      "section1": {
+        "title": "Qu'est-ce qu'une fenêtre de soumission d'étude ancillaire ?",
+        "content": "• Chaque centre participant a la possibilité de soumettre 1 proposition de synopsis pour une étude ancillaire pendant des fenêtres de soumission dédiées.\n• Chaque fenêtre est ouverte pendant 1 mois, et une nouvelle fenêtre est lancée tous les 4 mois."
+      },
+      "section2": {
+        "title": "Combien de propositions chaque centre peut-il soumettre ?",
+        "content": "• Seul l'Investigateur Principal (PI) de chaque centre, utilisant un identifiant et un mot de passe dédiés, peut soumettre des propositions sur ce site Web.\n• Pour chaque fenêtre de soumission, 1 seul synopsis peut être soumis par centre."
+      },
+      "section3": {
+        "title": "Quelle condition doit être remplie avant de soumettre une nouvelle proposition ?",
+        "content": "• Avant qu'un centre puisse soumettre une nouvelle proposition, l'étude ancillaire précédente doit avoir été amenée au stade de manuscrit et soumise à une revue scientifique. Notamment, la preuve de soumission du manuscrit est requise.\n• Cette règle garantit que chaque centre termine son projet précédent avant d'en initier un nouveau."
+      },
+      "section4": {
+        "title": "Comment le synopsis doit-il être complété ?",
+        "content": "• Vous êtes invités à compléter le formulaire de synopsis aussi précisément et minutieusement que possible.\n• L'objectif est d'identifier clairement la question clinique ou l'hypothèse que vous souhaitez aborder et d'éviter le chevauchement entre différentes propositions qui se concentreraient sur le même sujet."
+      },
+      "section5": {
+        "title": "Importance du choix du sujet principal",
+        "content": "• Une étape clé consiste à choisir le sujet principal le plus approprié dans la liste prédéfinie.\n• Pendant la fenêtre de soumission, lorsque vous sélectionnez un sujet principal dans le système, vous pourrez voir en temps réel combien de propositions de synopsis ont déjà été soumises sous ce même sujet.\n• Cela fournit une forme d'autorégulation entre les centres. En effet, nous vous encourageons fortement à prioriser les sujets principaux sans ou avec peu de propositions existantes dans la fenêtre actuelle, pour maximiser vos chances d'acceptation immédiate.\n\nPar exemple, si vous avez en tête trois propositions potentielles sur la maladie valvulaire aortique mixte sur la maladie valvulaire multiple chez les patients obèses sur la valeur pronostique de l'hypertension pulmonaire et que vous voyez que plusieurs propositions ont déjà été soumises sur les deux premiers sujets mais aucune sur l'hypertension pulmonaire, nous recommandons de prioriser la proposition sur l'hypertension pulmonaire pour cette fenêtre."
+      },
+      "section6": {
+        "title": "Que se passe-t-il si deux centres proposent la même idée ?",
+        "content": "• Si plusieurs centres soumettent des propositions sur la même question, la priorité sera donnée au centre avec le plus grand nombre de patients pertinents inclus dans la cohorte.\n\nPar exemple, si deux centres soumettent une proposition sur des patients atteints de maladie de la valve aortique bicuspide, la priorité ira au centre qui a inclus le plus grand nombre de patients avec valve aortique bicuspide.\n\n• Les autres centres recevront rapidement une suggestion de proposition alternative du Comité de Pilotage, se concentrant sur un sujet étroitement lié qui n'a pas encore été soumis par une autre équipe. Notre objectif est de permettre au plus grand nombre de centres possible de coordonner leur propre étude ancillaire, tout en évitant strictement le chevauchement entre les projets."
+      },
+      "section7": {
+        "title": "Processus de révision après soumission de votre proposition ?",
+        "content": "• Une fois votre proposition soumise sur le site Web, elle ne peut pas être modifiée tant qu'elle n'a pas été évaluée par un ou plusieurs relecteurs du Comité de Pilotage.\n• Le rôle des relecteurs n'est pas de rejeter les propositions, mais de fournir des commentaires constructifs pour améliorer la clarté et la méthodologie affiner le plan d'analyse statistique et assurer l'alignement avec la littérature existante et les projets en cours.\n• Après la fermeture de la fenêtre de soumission, vous recevrez les commentaires des relecteurs par e-mail.\n• Vous pourrez ensuite vous reconnecter au site Web pour mettre en œuvre les modifications demandées, si nécessaire."
+      },
+      "section8": {
+        "title": "Comment les analyses statistiques sont-elles effectuées ?",
+        "content": "• Après validation de votre proposition et synopsis, vous serez mis en contact avec l'équipe d'analyse statistique de l'Hôpital Universitaire Lariboisière (Paris, France).\n• Une série de réunions en ligne sera organisée pour effectuer les analyses statistiques ensemble.\n• Toutes les analyses sont effectuées localement par l'équipe de biostatistiques de l'Hôpital Universitaire Lariboisière. Ceci est essentiel pour sécuriser pleinement la base de données, qui ne peut pas être exportée en dehors de l'Hôpital Universitaire Lariboisière."
+      },
+      "section9": {
+        "title": "Qui rédige le manuscrit et qui est l'auteur correspondant ?",
+        "content": "• Une fois les analyses terminées, vous êtes responsable de la rédaction du manuscrit complet.\n• Vous enverrez ensuite une version finalisée pour révision par tous les co-auteurs (dans un délai maximum de 15 jours).\n• Après cette révision interne, vous pourrez soumettre l'article à la revue de votre choix, et vous serez l'auteur correspondant du travail."
+      },
+      "section10": {
+        "title": "Que se passe-t-il si le manuscrit n'est pas soumis dans les 6 mois après réception des analyses statistiques ?",
+        "content": "• Si toutes les analyses statistiques ont été complétées et transmises à l'équipe de coordination, et qu'aucun manuscrit finalisé n'a été soumis par le centre proposant dans les 6 mois suivant la livraison des analyses, l'étude ancillaire sera réassignée à une autre équipe.\n• Cette mesure garantit que le travail statistique déjà effectué est correctement valorisé et que la question scientifique peut encore mener à une publication. La nouvelle équipe assumera alors la responsabilité de rédiger et de soumettre le manuscrit."
+      },
+      "section11": {
+        "title": "Qui contacter en cas de questions ?",
+        "content": "Si vous avez des questions à n'importe quelle étape du processus, n'hésitez pas à nous contacter directement à l'adresse e-mail fournie ci-dessous :\n\nDr. Theo Pezel (coordinateur international de l'étude MMVD) : theopezel.eacvi@gmail.com"
+      }
+    }
   }
 }
