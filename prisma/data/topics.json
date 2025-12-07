@@ -1,54 +1,54 @@
 [
   {
-    "code": "A-1",
+    "code": "A-01",
     "categoryCode": "A",
     "label": "Mixed aortic valve disease (Aortic stenosis + Aortic regurgitation)",
     "order": 1
   },
   {
-    "code": "A-2",
+    "code": "A-02",
     "categoryCode": "A",
     "label": "Mixed mitral valve disease (Mitral stenosis + Mitral regurgitation)",
     "order": 2
   },
   {
-    "code": "A-3",
+    "code": "A-03",
     "categoryCode": "A",
     "label": "Tricuspid regurgitation",
     "order": 3
   },
   {
-    "code": "A-4",
+    "code": "A-04",
     "categoryCode": "A",
     "label": "Tricuspid stenosis",
     "order": 4
   },
   {
-    "code": "A-5",
+    "code": "A-05",
     "categoryCode": "A",
     "label": "Pulmonary regurgitation",
     "order": 5
   },
   {
-    "code": "A-6",
+    "code": "A-06",
     "categoryCode": "A",
     "label": "Pulmonary stenosis",
     "order": 6
   },
   {
-    "code": "A-7",
+    "code": "A-07",
     "categoryCode": "A",
     "label": "Multiple valve disease",
     "order": 7
   },
   {
-    "code": "A-8",
+    "code": "A-08",
     "categoryCode": "A",
     "label": "Aortic stenosis",
     "order": 8
   },
   {
-    "code": "A-9",
+    "code": "A-09",
     "categoryCode": "A",
     "label": "Aortic regurgitation",
     "order": 9
@@ -90,109 +90,109 @@
     "order": 15
   },
   {
-    "code": "B-1",
+    "code": "B-01",
     "categoryCode": "B",
     "label": "Rheumatic etiology",
     "order": 1
   },
   {
-    "code": "B-2",
+    "code": "B-02",
     "categoryCode": "B",
     "label": "Degenerative etiology",
     "order": 2
   },
   {
-    "code": "B-3",
+    "code": "B-03",
     "categoryCode": "B",
     "label": "Dystrophic etiology",
     "order": 3
   },
   {
-    "code": "B-4",
+    "code": "B-04",
     "categoryCode": "B",
     "label": "Ischemic etiology",
     "order": 4
   },
   {
-    "code": "B-5",
+    "code": "B-05",
     "categoryCode": "B",
     "label": "Bicuspid aortic valve",
     "order": 5
   },
   {
-    "code": "B-6",
+    "code": "B-06",
     "categoryCode": "B",
     "label": "Valve calcific phenotypes",
     "order": 6
   },
   {
-    "code": "B-7",
+    "code": "B-07",
     "categoryCode": "B",
     "label": "Infective endocarditis",
     "order": 7
   },
   {
-    "code": "B-8",
+    "code": "B-08",
     "categoryCode": "B",
     "label": "Congenital etiology",
     "order": 8
   },
   {
-    "code": "B-9",
+    "code": "B-09",
     "categoryCode": "B",
     "label": "Other etiologies (radiation, drugs, etc.)",
     "order": 9
   },
   {
-    "code": "C-1",
+    "code": "C-01",
     "categoryCode": "C",
     "label": "Left atrial remodeling",
     "order": 1
   },
   {
-    "code": "C-2",
+    "code": "C-02",
     "categoryCode": "C",
     "label": "Left ventricular remodeling",
     "order": 2
   },
   {
-    "code": "C-3",
+    "code": "C-03",
     "categoryCode": "C",
     "label": "Right ventricular remodeling",
     "order": 3
   },
   {
-    "code": "C-4",
+    "code": "C-04",
     "categoryCode": "C",
     "label": "Right atrial remodeling",
     "order": 4
   },
   {
-    "code": "C-5",
+    "code": "C-05",
     "categoryCode": "C",
     "label": "Myocardial function and contractility",
     "order": 5
   },
   {
-    "code": "C-6",
+    "code": "C-06",
     "categoryCode": "C",
     "label": "Diastolic function",
     "order": 6
   },
   {
-    "code": "C-7",
+    "code": "C-07",
     "categoryCode": "C",
     "label": "Pulmonary hypertension",
     "order": 7
   },
   {
-    "code": "C-8",
+    "code": "C-08",
     "categoryCode": "C",
     "label": "Pulmonary vascular resistance",
     "order": 8
   },
   {
-    "code": "C-9",
+    "code": "C-09",
     "categoryCode": "C",
     "label": "Exercise hemodynamics",
     "order": 9
@@ -210,55 +210,55 @@
     "order": 11
   },
   {
-    "code": "D-1",
+    "code": "D-01",
     "categoryCode": "D",
     "label": "Transthoracic echocardiography (TTE)",
     "order": 1
   },
   {
-    "code": "D-2",
+    "code": "D-02",
     "categoryCode": "D",
     "label": "Transesophageal echocardiography (TEE/TOE)",
     "order": 2
   },
   {
-    "code": "D-3",
+    "code": "D-03",
     "categoryCode": "D",
     "label": "3D echocardiography",
     "order": 3
   },
   {
-    "code": "D-4",
+    "code": "D-04",
     "categoryCode": "D",
     "label": "Stress echocardiography (exercise)",
     "order": 4
   },
   {
-    "code": "D-5",
+    "code": "D-05",
     "categoryCode": "D",
     "label": "Stress echocardiography (dobutamine)",
     "order": 5
   },
   {
-    "code": "D-6",
+    "code": "D-06",
     "categoryCode": "D",
     "label": "Speckle tracking echocardiography / Strain imaging",
     "order": 6
   },
   {
-    "code": "D-7",
+    "code": "D-07",
     "categoryCode": "D",
     "label": "Tissue Doppler imaging",
     "order": 7
   },
   {
-    "code": "D-8",
+    "code": "D-08",
     "categoryCode": "D",
     "label": "Cardiac magnetic resonance (CMR)",
     "order": 8
   },
   {
-    "code": "D-9",
+    "code": "D-09",
     "categoryCode": "D",
     "label": "Late gadolinium enhancement (LGE)",
     "order": 9
@@ -330,55 +330,55 @@
     "order": 20
   },
   {
-    "code": "E-1",
+    "code": "E-01",
     "categoryCode": "E",
     "label": "Asymptomatic patients",
     "order": 1
   },
   {
-    "code": "E-2",
+    "code": "E-02",
     "categoryCode": "E",
     "label": "Symptomatic patients",
     "order": 2
   },
   {
-    "code": "E-3",
+    "code": "E-03",
     "categoryCode": "E",
     "label": "Heart failure with reduced ejection fraction (HFrEF)",
     "order": 3
   },
   {
-    "code": "E-4",
+    "code": "E-04",
     "categoryCode": "E",
     "label": "Heart failure with preserved ejection fraction (HFpEF)",
     "order": 4
   },
   {
-    "code": "E-5",
+    "code": "E-05",
     "categoryCode": "E",
     "label": "Low-flow low-gradient aortic stenosis",
     "order": 5
   },
   {
-    "code": "E-6",
+    "code": "E-06",
     "categoryCode": "E",
     "label": "Paradoxical low-flow aortic stenosis",
     "order": 6
   },
   {
-    "code": "E-7",
+    "code": "E-07",
     "categoryCode": "E",
     "label": "Elderly patients (>75 years)",
     "order": 7
   },
   {
-    "code": "E-8",
+    "code": "E-08",
     "categoryCode": "E",
     "label": "Young patients (<50 years)",
     "order": 8
   },
   {
-    "code": "E-9",
+    "code": "E-09",
     "categoryCode": "E",
     "label": "Sex-specific differences",
     "order": 9
@@ -390,103 +390,103 @@
     "order": 10
   },
   {
-    "code": "F-1",
+    "code": "F-01",
     "categoryCode": "F",
     "label": "Hypertension",
     "order": 1
   },
   {
-    "code": "F-2",
+    "code": "F-02",
     "categoryCode": "F",
     "label": "Diabetes mellitus",
     "order": 2
   },
   {
-    "code": "F-3",
+    "code": "F-03",
     "categoryCode": "F",
     "label": "Dyslipidemia",
     "order": 3
   },
   {
-    "code": "F-4",
+    "code": "F-04",
     "categoryCode": "F",
     "label": "Obesity / metabolic syndrome",
     "order": 4
   },
   {
-    "code": "F-5",
+    "code": "F-05",
     "categoryCode": "F",
     "label": "Smoking",
     "order": 5
   },
   {
-    "code": "F-6",
+    "code": "F-06",
     "categoryCode": "F",
     "label": "Family history",
     "order": 6
   },
   {
-    "code": "F-7",
+    "code": "F-07",
     "categoryCode": "F",
     "label": "Sedentary lifestyle",
     "order": 7
   },
   {
-    "code": "F-8",
+    "code": "F-08",
     "categoryCode": "F",
     "label": "Genetic factors",
     "order": 8
   },
   {
-    "code": "G-1",
+    "code": "G-01",
     "categoryCode": "G",
     "label": "Coronary artery disease",
     "order": 1
   },
   {
-    "code": "G-2",
+    "code": "G-02",
     "categoryCode": "G",
     "label": "Atrial fibrillation",
     "order": 2
   },
   {
-    "code": "G-3",
+    "code": "G-03",
     "categoryCode": "G",
     "label": "Other arrhythmias",
     "order": 3
   },
   {
-    "code": "G-4",
+    "code": "G-04",
     "categoryCode": "G",
     "label": "Chronic kidney disease",
     "order": 4
   },
   {
-    "code": "G-5",
+    "code": "G-05",
     "categoryCode": "G",
     "label": "Anemia",
     "order": 5
   },
   {
-    "code": "G-6",
+    "code": "G-06",
     "categoryCode": "G",
     "label": "Chronic obstructive pulmonary disease (COPD)",
     "order": 6
   },
   {
-    "code": "G-7",
+    "code": "G-07",
     "categoryCode": "G",
     "label": "Sleep apnea",
     "order": 7
   },
   {
-    "code": "G-8",
+    "code": "G-08",
     "categoryCode": "G",
     "label": "Stroke / cerebrovascular disease",
     "order": 8
   },
   {
-    "code": "G-9",
+    "code": "G-09",
     "categoryCode": "G",
     "label": "Peripheral artery disease",
     "order": 9
@@ -564,97 +564,97 @@
     "order": 21
   },
   {
-    "code": "H-1",
+    "code": "H-01",
     "categoryCode": "H",
     "label": "Biomarkers (BNP, NT-proBNP, troponin)",
     "order": 1
   },
   {
-    "code": "H-2",
+    "code": "H-02",
     "categoryCode": "H",
     "label": "Inflammatory markers",
     "order": 2
   },
   {
-    "code": "H-3",
+    "code": "H-03",
     "categoryCode": "H",
     "label": "Genetic biomarkers",
     "order": 3
   },
   {
-    "code": "I-1",
+    "code": "I-01",
     "categoryCode": "I",
     "label": "Medical management of aortic stenosis",
     "order": 1
   },
   {
-    "code": "I-2",
+    "code": "I-02",
     "categoryCode": "I",
     "label": "Medical management of mitral regurgitation",
     "order": 2
   },
   {
-    "code": "I-3",
+    "code": "I-03",
     "categoryCode": "I",
     "label": "Heart failure medications",
     "order": 3
   },
   {
-    "code": "I-4",
+    "code": "I-04",
     "categoryCode": "I",
     "label": "Anticoagulation / antiplatelet therapy",
     "order": 4
   },
   {
-    "code": "J-1",
+    "code": "J-01",
     "categoryCode": "J",
     "label": "Transcatheter aortic valve implantation (TAVI)",
     "order": 1
   },
   {
-    "code": "J-2",
+    "code": "J-02",
     "categoryCode": "J",
     "label": "Surgical aortic valve replacement (SAVR)",
     "order": 2
   },
   {
-    "code": "J-3",
+    "code": "J-03",
     "categoryCode": "J",
     "label": "Transcatheter mitral valve repair (MitraClip)",
     "order": 3
   },
   {
-    "code": "J-4",
+    "code": "J-04",
     "categoryCode": "J",
     "label": "Transcatheter mitral valve replacement (TMVR)",
     "order": 4
   },
   {
-    "code": "J-5",
+    "code": "J-05",
     "categoryCode": "J",
     "label": "Surgical mitral valve repair",
     "order": 5
   },
   {
-    "code": "J-6",
+    "code": "J-06",
     "categoryCode": "J",
     "label": "Surgical mitral valve replacement",
     "order": 6
   },
   {
-    "code": "J-7",
+    "code": "J-07",
     "categoryCode": "J",
     "label": "Tricuspid valve interventions (repair/replacement)",
     "order": 7
   },
   {
-    "code": "J-8",
+    "code": "J-08",
     "categoryCode": "J",
     "label": "Balloon valvuloplasty",
     "order": 8
   },
   {
-    "code": "J-9",
+    "code": "J-09",
     "categoryCode": "J",
     "label": "Hybrid procedures",
     "order": 9
@@ -684,55 +684,55 @@
     "order": 13
   },
   {
-    "code": "K-1",
+    "code": "K-01",
     "categoryCode": "K",
     "label": "All-cause mortality",
     "order": 1
   },
   {
-    "code": "K-2",
+    "code": "K-02",
     "categoryCode": "K",
     "label": "Cardiovascular mortality",
     "order": 2
   },
   {
-    "code": "K-3",
+    "code": "K-03",
     "categoryCode": "K",
     "label": "Heart failure hospitalization",
     "order": 3
   },
   {
-    "code": "K-4",
+    "code": "K-04",
     "categoryCode": "K",
     "label": "Cardiovascular hospitalization",
     "order": 4
   },
   {
-    "code": "K-5",
+    "code": "K-05",
     "categoryCode": "K",
     "label": "Functional capacity (NYHA class, 6-minute walk test)",
     "order": 5
   },
   {
-    "code": "K-6",
+    "code": "K-06",
     "categoryCode": "K",
     "label": "Quality of life",
     "order": 6
   },
   {
-    "code": "K-7",
+    "code": "K-07",
     "categoryCode": "K",
     "label": "Procedural complications",
     "order": 7
   },
   {
-    "code": "K-8",
+    "code": "K-08",
     "categoryCode": "K",
     "label": "Valve dysfunction / structural deterioration",
     "order": 8
   },
   {
-    "code": "K-9",
+    "code": "K-09",
     "categoryCode": "K",
     "label": "Reintervention rates",
     "order": 9
@@ -744,79 +744,79 @@
     "order": 10
   },
   {
-    "code": "L-1",
+    "code": "L-01",
     "categoryCode": "L",
     "label": "Risk prediction models",
     "order": 1
   },
   {
-    "code": "L-2",
+    "code": "L-02",
     "categoryCode": "L",
     "label": "Prognostic models",
     "order": 2
   },
   {
-    "code": "L-3",
+    "code": "L-03",
     "categoryCode": "L",
     "label": "Diagnostic algorithms / AI-assisted diagnosis",
     "order": 3
   },
   {
-    "code": "M-1",
+    "code": "M-01",
     "categoryCode": "M",
     "label": "Core lab TTE analysis (baseline)",
     "order": 1
   },
   {
-    "code": "M-2",
+    "code": "M-02",
     "categoryCode": "M",
     "label": "Core lab TOE analysis",
     "order": 2
   },
   {
-    "code": "M-3",
+    "code": "M-03",
     "categoryCode": "M",
     "label": "Core lab stress echo analysis",
     "order": 3
   },
   {
-    "code": "M-4",
+    "code": "M-04",
     "categoryCode": "M",
     "label": "Core lab CMR analysis",
     "order": 4
   },
   {
-    "code": "M-5",
+    "code": "M-05",
     "categoryCode": "M",
     "label": "Core lab CT analysis",
     "order": 5
   },
   {
-    "code": "M-6",
+    "code": "M-06",
     "categoryCode": "M",
     "label": "Core lab RHC analysis",
     "order": 6
   },
   {
-    "code": "M-7",
+    "code": "M-07",
     "categoryCode": "M",
     "label": "Inter-observer variability / reproducibility",
     "order": 7
   },
   {
-    "code": "N-1",
+    "code": "N-01",
     "categoryCode": "N",
     "label": "TTE at 12 months - valve function",
     "order": 1
   },
   {
-    "code": "N-2",
+    "code": "N-02",
     "categoryCode": "N",
     "label": "TTE at 12 months - cardiac remodeling",
     "order": 2
   },
   {
-    "code": "N-3",
+    "code": "N-03",
     "categoryCode": "N",
     "label": "TTE at 12 months - hemodynamic changes",
     "order": 3

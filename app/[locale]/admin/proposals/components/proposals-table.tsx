@@ -140,7 +140,7 @@ export function ProposalsTable({ proposals, mainAreas }: ProposalsTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead style={{ width: columnWidths.centreCode }} className='relative'>
-              Centre Code
+              Centre
               <div
                 className='absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-blue-500 transition-colors'
                 onMouseDown={(e) => handleMouseDown('centreCode', e)}

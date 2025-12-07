@@ -82,12 +82,12 @@ export function TopicsTable({ topics }: TopicsTableProps) {
 
       switch (sortField) {
         case 'category':
-          comparison = (topicA.category?.label || '').localeCompare(
-            topicB.category?.label || ''
+          comparison = (topicA.category?.code || '').localeCompare(
+            topicB.category?.code || ''
           );
           break;
         case 'topic':
-          comparison = topicA.label.localeCompare(topicB.label);
+          comparison = (topicA.code || '').localeCompare(topicB.code || '');
           break;
         case 'proposals':
           comparison = topicA._count.proposals - topicB._count.proposals;
