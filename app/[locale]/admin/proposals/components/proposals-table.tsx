@@ -34,6 +34,7 @@ interface Proposal {
   } | null;
   mainArea: {
     id: string;
+    code: string | null;
     label: string;
     color: string | null;
   };
@@ -60,7 +61,7 @@ function formatDate(date: Date | null): string {
 
 interface ProposalsTableProps {
   proposals: Proposal[];
-  mainAreas: { id: string; label: string }[];
+  mainAreas: { id: string; code: string | null; label: string }[];
 }
 
 const statusColors = {
@@ -210,6 +211,7 @@ export function ProposalsTable({ proposals, mainAreas }: ProposalsTableProps) {
                       color: proposal.mainArea.color
                     } : undefined}
                   >
+                    <span className='font-mono mr-1.5'>{proposal.mainArea.code}</span>
                     {proposal.mainArea.label}
                   </Badge>
                 </TableCell>
@@ -220,6 +222,7 @@ export function ProposalsTable({ proposals, mainAreas }: ProposalsTableProps) {
                         const mainAreaTopic = mainAreas.find(area => area.id === topicId);
                         return (
                           <Badge key={index} variant='outline' className='text-xs'>
+                            {mainAreaTopic?.code && <span className='font-mono mr-1.5'>{mainAreaTopic.code}</span>}
                             {mainAreaTopic?.label || topicId}
                           </Badge>
                         );

@@ -351,6 +351,7 @@ export async function getAllProposals() {
       mainArea: {
         select: {
           id: true,
+          code: true,
           label: true,
           color: true
         }
@@ -414,6 +415,7 @@ export async function getProposalsByWindow(windowId: string) {
       mainArea: {
         select: {
           id: true,
+          code: true,
           label: true,
           color: true
         }
@@ -470,6 +472,7 @@ export async function getProposalsByStatus(status: string) {
       mainArea: {
         select: {
           id: true,
+          code: true,
           label: true,
           color: true
         }

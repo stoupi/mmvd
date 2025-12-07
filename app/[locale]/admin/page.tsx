@@ -14,6 +14,7 @@ export default async function AdminDashboardPage() {
 
   const mainAreasForFilter = mainAreas.map((area) => ({
     id: area.id,
+    code: area.code,
     label: area.label
   }));
 
