@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { nextCookies } from 'better-auth/next-js';
 import { prisma } from './prisma';
+import { sendResetPasswordEmail } from './services/email';
 
 export const auth = betterAuth({
 	database: prismaAdapter(prisma, {
@@ -9,6 +10,18 @@ export const auth = betterAuth({
 	}),
 	emailAndPassword: {
 		enabled: true,
+		sendResetPassword: async ({ user, url }) => {
+			const userRecord = await prisma.user.findUnique({
+				where: { id: user.id },
+				select: { locale: true },
+			});
+			const locale = userRecord?.locale === 'fr' ? 'fr' : 'en';
+			await sendResetPasswordEmail({
+				to: user.email,
+				resetUrl: url,
+				locale,
+			});
+		},
 	},
 	socialProviders: {
 		google: {

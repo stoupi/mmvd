@@ -12,8 +12,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AlertCircle, LogIn, Eye, EyeOff } from 'lucide-react';
 import { loginAction } from '../actions';
-import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
+import { useRouter } from '@/app/i18n/navigation';
 
 export function LoginForm() {
 	const t = useTranslations('auth');
@@ -64,7 +64,7 @@ export function LoginForm() {
 	};
 
 	const handleForgotPassword = () => {
-		// TODO: Implement forgot password functionality
+		router.push('/forgot-password');
 	};
 
 	return (
