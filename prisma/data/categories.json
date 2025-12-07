@@ -1,0 +1,86 @@
+[
+  {
+    "code": "A",
+    "label": "Types of MMVD",
+    "description": "Classification and types of mitral valve disease",
+    "order": 1
+  },
+  {
+    "code": "B",
+    "label": "Etiologies",
+    "description": "Causes and origins of mitral valve disease",
+    "order": 2
+  },
+  {
+    "code": "C",
+    "label": "Cardiac remodeling and hemodynamics",
+    "description": "Cardiac structural changes and blood flow dynamics",
+    "order": 3
+  },
+  {
+    "code": "D",
+    "label": "Cardiovascular imaging modalities",
+    "description": "Imaging techniques for cardiovascular assessment",
+    "order": 4
+  },
+  {
+    "code": "E",
+    "label": "Clinical profiles",
+    "description": "Patient clinical characteristics and presentations",
+    "order": 5
+  },
+  {
+    "code": "F",
+    "label": "Cardiovascular risk factors",
+    "description": "Risk factors affecting cardiovascular health",
+    "order": 6
+  },
+  {
+    "code": "G",
+    "label": "Comorbidities",
+    "description": "Concurrent medical conditions and diseases",
+    "order": 7
+  },
+  {
+    "code": "H",
+    "label": "Biology",
+    "description": "Biological markers and mechanisms",
+    "order": 8
+  },
+  {
+    "code": "I",
+    "label": "Medical treatment",
+    "description": "Pharmacological and medical interventions",
+    "order": 9
+  },
+  {
+    "code": "J",
+    "label": "Management and valvular interventions",
+    "description": "Surgical and interventional procedures",
+    "order": 10
+  },
+  {
+    "code": "K",
+    "label": "Clinical outcomes and prognosis",
+    "description": "Patient outcomes and disease progression",
+    "order": 11
+  },
+  {
+    "code": "L",
+    "label": "Machine learning models",
+    "description": "AI and computational prediction models",
+    "order": 12
+  },
+  {
+    "code": "M",
+    "label": "Core laboratory imaging analysis",
+    "description": "Standardized imaging analysis protocols",
+    "order": 13
+  },
+  {
+    "code": "N",
+    "label": "TTE at 12 months",
+    "description": "Transthoracic echocardiography follow-up assessments",
+    "order": 14
+  }
+]

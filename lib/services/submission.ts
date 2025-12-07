@@ -262,6 +262,40 @@ export async function deleteProposal(id: string) {
 export async function getMainAreas() {
   return prisma.mainArea.findMany({
     where: { isActive: true },
-    orderBy: { label: 'asc' }
+    include: { category: true },
+    orderBy: [
+      { category: { order: 'asc' } },
+      { order: 'asc' }
+    ]
   });
+}
+
+export async function getCategoriesWithTopics() {
+  return prisma.category.findMany({
+    where: { isActive: true },
+    include: {
+      topics: {
+        where: { isActive: true },
+        orderBy: { order: 'asc' }
+      }
+    },
+    orderBy: { order: 'asc' }
+  });
+}
+
+export async function getAllProposalCounts(submissionWindowId: string) {
+  const counts = await prisma.proposal.groupBy({
+    by: ['mainAreaId'],
+    where: {
+      submissionWindowId,
+      isDeleted: false,
+      status: { not: 'DRAFT' }
+    },
+    _count: { mainAreaId: true }
+  });
+
+  return counts.reduce((acc, item) => {
+    acc[item.mainAreaId] = item._count.mainAreaId;
+    return acc;
+  }, {} as Record<string, number>);
 }

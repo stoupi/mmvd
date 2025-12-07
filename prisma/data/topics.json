@@ -1,0 +1,824 @@
+[
+  {
+    "code": "A-1",
+    "categoryCode": "A",
+    "label": "Mixed aortic valve disease (Aortic stenosis + Aortic regurgitation)",
+    "order": 1
+  },
+  {
+    "code": "A-2",
+    "categoryCode": "A",
+    "label": "Mixed mitral valve disease (Mitral stenosis + Mitral regurgitation)",
+    "order": 2
+  },
+  {
+    "code": "A-3",
+    "categoryCode": "A",
+    "label": "Tricuspid regurgitation",
+    "order": 3
+  },
+  {
+    "code": "A-4",
+    "categoryCode": "A",
+    "label": "Tricuspid stenosis",
+    "order": 4
+  },
+  {
+    "code": "A-5",
+    "categoryCode": "A",
+    "label": "Pulmonary regurgitation",
+    "order": 5
+  },
+  {
+    "code": "A-6",
+    "categoryCode": "A",
+    "label": "Pulmonary stenosis",
+    "order": 6
+  },
+  {
+    "code": "A-7",
+    "categoryCode": "A",
+    "label": "Multiple valve disease",
+    "order": 7
+  },
+  {
+    "code": "A-8",
+    "categoryCode": "A",
+    "label": "Aortic stenosis",
+    "order": 8
+  },
+  {
+    "code": "A-9",
+    "categoryCode": "A",
+    "label": "Aortic regurgitation",
+    "order": 9
+  },
+  {
+    "code": "A-10",
+    "categoryCode": "A",
+    "label": "Mitral stenosis",
+    "order": 10
+  },
+  {
+    "code": "A-11",
+    "categoryCode": "A",
+    "label": "Mitral regurgitation primary",
+    "order": 11
+  },
+  {
+    "code": "A-12",
+    "categoryCode": "A",
+    "label": "Mitral regurgitation secondary",
+    "order": 12
+  },
+  {
+    "code": "A-13",
+    "categoryCode": "A",
+    "label": "Mitral regurgitation atrial functional",
+    "order": 13
+  },
+  {
+    "code": "A-14",
+    "categoryCode": "A",
+    "label": "Mitral valve prolapse",
+    "order": 14
+  },
+  {
+    "code": "A-15",
+    "categoryCode": "A",
+    "label": "Barlow disease",
+    "order": 15
+  },
+  {
+    "code": "B-1",
+    "categoryCode": "B",
+    "label": "Rheumatic etiology",
+    "order": 1
+  },
+  {
+    "code": "B-2",
+    "categoryCode": "B",
+    "label": "Degenerative etiology",
+    "order": 2
+  },
+  {
+    "code": "B-3",
+    "categoryCode": "B",
+    "label": "Dystrophic etiology",
+    "order": 3
+  },
+  {
+    "code": "B-4",
+    "categoryCode": "B",
+    "label": "Ischemic etiology",
+    "order": 4
+  },
+  {
+    "code": "B-5",
+    "categoryCode": "B",
+    "label": "Bicuspid aortic valve",
+    "order": 5
+  },
+  {
+    "code": "B-6",
+    "categoryCode": "B",
+    "label": "Valve calcific phenotypes",
+    "order": 6
+  },
+  {
+    "code": "B-7",
+    "categoryCode": "B",
+    "label": "Infective endocarditis",
+    "order": 7
+  },
+  {
+    "code": "B-8",
+    "categoryCode": "B",
+    "label": "Congenital etiology",
+    "order": 8
+  },
+  {
+    "code": "B-9",
+    "categoryCode": "B",
+    "label": "Other etiologies (radiation, drugs, etc.)",
+    "order": 9
+  },
+  {
+    "code": "C-1",
+    "categoryCode": "C",
+    "label": "Left atrial remodeling",
+    "order": 1
+  },
+  {
+    "code": "C-2",
+    "categoryCode": "C",
+    "label": "Left ventricular remodeling",
+    "order": 2
+  },
+  {
+    "code": "C-3",
+    "categoryCode": "C",
+    "label": "Right ventricular remodeling",
+    "order": 3
+  },
+  {
+    "code": "C-4",
+    "categoryCode": "C",
+    "label": "Right atrial remodeling",
+    "order": 4
+  },
+  {
+    "code": "C-5",
+    "categoryCode": "C",
+    "label": "Myocardial function and contractility",
+    "order": 5
+  },
+  {
+    "code": "C-6",
+    "categoryCode": "C",
+    "label": "Diastolic function",
+    "order": 6
+  },
+  {
+    "code": "C-7",
+    "categoryCode": "C",
+    "label": "Pulmonary hypertension",
+    "order": 7
+  },
+  {
+    "code": "C-8",
+    "categoryCode": "C",
+    "label": "Pulmonary vascular resistance",
+    "order": 8
+  },
+  {
+    "code": "C-9",
+    "categoryCode": "C",
+    "label": "Exercise hemodynamics",
+    "order": 9
+  },
+  {
+    "code": "C-10",
+    "categoryCode": "C",
+    "label": "Cardiac output and stroke volume",
+    "order": 10
+  },
+  {
+    "code": "C-11",
+    "categoryCode": "C",
+    "label": "Valvulo-arterial impedance",
+    "order": 11
+  },
+  {
+    "code": "D-1",
+    "categoryCode": "D",
+    "label": "Transthoracic echocardiography (TTE)",
+    "order": 1
+  },
+  {
+    "code": "D-2",
+    "categoryCode": "D",
+    "label": "Transesophageal echocardiography (TEE/TOE)",
+    "order": 2
+  },
+  {
+    "code": "D-3",
+    "categoryCode": "D",
+    "label": "3D echocardiography",
+    "order": 3
+  },
+  {
+    "code": "D-4",
+    "categoryCode": "D",
+    "label": "Stress echocardiography (exercise)",
+    "order": 4
+  },
+  {
+    "code": "D-5",
+    "categoryCode": "D",
+    "label": "Stress echocardiography (dobutamine)",
+    "order": 5
+  },
+  {
+    "code": "D-6",
+    "categoryCode": "D",
+    "label": "Speckle tracking echocardiography / Strain imaging",
+    "order": 6
+  },
+  {
+    "code": "D-7",
+    "categoryCode": "D",
+    "label": "Tissue Doppler imaging",
+    "order": 7
+  },
+  {
+    "code": "D-8",
+    "categoryCode": "D",
+    "label": "Cardiac magnetic resonance (CMR)",
+    "order": 8
+  },
+  {
+    "code": "D-9",
+    "categoryCode": "D",
+    "label": "Late gadolinium enhancement (LGE)",
+    "order": 9
+  },
+  {
+    "code": "D-10",
+    "categoryCode": "D",
+    "label": "T1 mapping",
+    "order": 10
+  },
+  {
+    "code": "D-11",
+    "categoryCode": "D",
+    "label": "Extracellular volume (ECV)",
+    "order": 11
+  },
+  {
+    "code": "D-12",
+    "categoryCode": "D",
+    "label": "Computed tomography (CT)",
+    "order": 12
+  },
+  {
+    "code": "D-13",
+    "categoryCode": "D",
+    "label": "Calcium scoring",
+    "order": 13
+  },
+  {
+    "code": "D-14",
+    "categoryCode": "D",
+    "label": "Coronary CT angiography",
+    "order": 14
+  },
+  {
+    "code": "D-15",
+    "categoryCode": "D",
+    "label": "Right heart catheterization (RHC)",
+    "order": 15
+  },
+  {
+    "code": "D-16",
+    "categoryCode": "D",
+    "label": "Invasive hemodynamic assessment",
+    "order": 16
+  },
+  {
+    "code": "D-17",
+    "categoryCode": "D",
+    "label": "Coronary angiography",
+    "order": 17
+  },
+  {
+    "code": "D-18",
+    "categoryCode": "D",
+    "label": "Nuclear imaging (PET, SPECT)",
+    "order": 18
+  },
+  {
+    "code": "D-19",
+    "categoryCode": "D",
+    "label": "Electrocardiography (ECG)",
+    "order": 19
+  },
+  {
+    "code": "D-20",
+    "categoryCode": "D",
+    "label": "Holter monitoring / ambulatory ECG",
+    "order": 20
+  },
+  {
+    "code": "E-1",
+    "categoryCode": "E",
+    "label": "Asymptomatic patients",
+    "order": 1
+  },
+  {
+    "code": "E-2",
+    "categoryCode": "E",
+    "label": "Symptomatic patients",
+    "order": 2
+  },
+  {
+    "code": "E-3",
+    "categoryCode": "E",
+    "label": "Heart failure with reduced ejection fraction (HFrEF)",
+    "order": 3
+  },
+  {
+    "code": "E-4",
+    "categoryCode": "E",
+    "label": "Heart failure with preserved ejection fraction (HFpEF)",
+    "order": 4
+  },
+  {
+    "code": "E-5",
+    "categoryCode": "E",
+    "label": "Low-flow low-gradient aortic stenosis",
+    "order": 5
+  },
+  {
+    "code": "E-6",
+    "categoryCode": "E",
+    "label": "Paradoxical low-flow aortic stenosis",
+    "order": 6
+  },
+  {
+    "code": "E-7",
+    "categoryCode": "E",
+    "label": "Elderly patients (>75 years)",
+    "order": 7
+  },
+  {
+    "code": "E-8",
+    "categoryCode": "E",
+    "label": "Young patients (<50 years)",
+    "order": 8
+  },
+  {
+    "code": "E-9",
+    "categoryCode": "E",
+    "label": "Sex-specific differences",
+    "order": 9
+  },
+  {
+    "code": "E-10",
+    "categoryCode": "E",
+    "label": "Frailty assessment",
+    "order": 10
+  },
+  {
+    "code": "F-1",
+    "categoryCode": "F",
+    "label": "Hypertension",
+    "order": 1
+  },
+  {
+    "code": "F-2",
+    "categoryCode": "F",
+    "label": "Diabetes mellitus",
+    "order": 2
+  },
+  {
+    "code": "F-3",
+    "categoryCode": "F",
+    "label": "Dyslipidemia",
+    "order": 3
+  },
+  {
+    "code": "F-4",
+    "categoryCode": "F",
+    "label": "Obesity / metabolic syndrome",
+    "order": 4
+  },
+  {
+    "code": "F-5",
+    "categoryCode": "F",
+    "label": "Smoking",
+    "order": 5
+  },
+  {
+    "code": "F-6",
+    "categoryCode": "F",
+    "label": "Family history",
+    "order": 6
+  },
+  {
+    "code": "F-7",
+    "categoryCode": "F",
+    "label": "Sedentary lifestyle",
+    "order": 7
+  },
+  {
+    "code": "F-8",
+    "categoryCode": "F",
+    "label": "Genetic factors",
+    "order": 8
+  },
+  {
+    "code": "G-1",
+    "categoryCode": "G",
+    "label": "Coronary artery disease",
+    "order": 1
+  },
+  {
+    "code": "G-2",
+    "categoryCode": "G",
+    "label": "Atrial fibrillation",
+    "order": 2
+  },
+  {
+    "code": "G-3",
+    "categoryCode": "G",
+    "label": "Other arrhythmias",
+    "order": 3
+  },
+  {
+    "code": "G-4",
+    "categoryCode": "G",
+    "label": "Chronic kidney disease",
+    "order": 4
+  },
+  {
+    "code": "G-5",
+    "categoryCode": "G",
+    "label": "Anemia",
+    "order": 5
+  },
+  {
+    "code": "G-6",
+    "categoryCode": "G",
+    "label": "Chronic obstructive pulmonary disease (COPD)",
+    "order": 6
+  },
+  {
+    "code": "G-7",
+    "categoryCode": "G",
+    "label": "Sleep apnea",
+    "order": 7
+  },
+  {
+    "code": "G-8",
+    "categoryCode": "G",
+    "label": "Stroke / cerebrovascular disease",
+    "order": 8
+  },
+  {
+    "code": "G-9",
+    "categoryCode": "G",
+    "label": "Peripheral artery disease",
+    "order": 9
+  },
+  {
+    "code": "G-10",
+    "categoryCode": "G",
+    "label": "Liver disease",
+    "order": 10
+  },
+  {
+    "code": "G-11",
+    "categoryCode": "G",
+    "label": "Cancer",
+    "order": 11
+  },
+  {
+    "code": "G-12",
+    "categoryCode": "G",
+    "label": "Autoimmune diseases",
+    "order": 12
+  },
+  {
+    "code": "G-13",
+    "categoryCode": "G",
+    "label": "Connective tissue disorders (Marfan, Ehlers-Danlos)",
+    "order": 13
+  },
+  {
+    "code": "G-14",
+    "categoryCode": "G",
+    "label": "Thyroid disorders",
+    "order": 14
+  },
+  {
+    "code": "G-15",
+    "categoryCode": "G",
+    "label": "Depression / anxiety",
+    "order": 15
+  },
+  {
+    "code": "G-16",
+    "categoryCode": "G",
+    "label": "Cognitive impairment / dementia",
+    "order": 16
+  },
+  {
+    "code": "G-17",
+    "categoryCode": "G",
+    "label": "Osteoporosis",
+    "order": 17
+  },
+  {
+    "code": "G-18",
+    "categoryCode": "G",
+    "label": "Malnutrition",
+    "order": 18
+  },
+  {
+    "code": "G-19",
+    "categoryCode": "G",
+    "label": "Pregnancy-related complications",
+    "order": 19
+  },
+  {
+    "code": "G-20",
+    "categoryCode": "G",
+    "label": "Previous cardiac surgery",
+    "order": 20
+  },
+  {
+    "code": "G-21",
+    "categoryCode": "G",
+    "label": "Pacemaker / ICD",
+    "order": 21
+  },
+  {
+    "code": "H-1",
+    "categoryCode": "H",
+    "label": "Biomarkers (BNP, NT-proBNP, troponin)",
+    "order": 1
+  },
+  {
+    "code": "H-2",
+    "categoryCode": "H",
+    "label": "Inflammatory markers",
+    "order": 2
+  },
+  {
+    "code": "H-3",
+    "categoryCode": "H",
+    "label": "Genetic biomarkers",
+    "order": 3
+  },
+  {
+    "code": "I-1",
+    "categoryCode": "I",
+    "label": "Medical management of aortic stenosis",
+    "order": 1
+  },
+  {
+    "code": "I-2",
+    "categoryCode": "I",
+    "label": "Medical management of mitral regurgitation",
+    "order": 2
+  },
+  {
+    "code": "I-3",
+    "categoryCode": "I",
+    "label": "Heart failure medications",
+    "order": 3
+  },
+  {
+    "code": "I-4",
+    "categoryCode": "I",
+    "label": "Anticoagulation / antiplatelet therapy",
+    "order": 4
+  },
+  {
+    "code": "J-1",
+    "categoryCode": "J",
+    "label": "Transcatheter aortic valve implantation (TAVI)",
+    "order": 1
+  },
+  {
+    "code": "J-2",
+    "categoryCode": "J",
+    "label": "Surgical aortic valve replacement (SAVR)",
+    "order": 2
+  },
+  {
+    "code": "J-3",
+    "categoryCode": "J",
+    "label": "Transcatheter mitral valve repair (MitraClip)",
+    "order": 3
+  },
+  {
+    "code": "J-4",
+    "categoryCode": "J",
+    "label": "Transcatheter mitral valve replacement (TMVR)",
+    "order": 4
+  },
+  {
+    "code": "J-5",
+    "categoryCode": "J",
+    "label": "Surgical mitral valve repair",
+    "order": 5
+  },
+  {
+    "code": "J-6",
+    "categoryCode": "J",
+    "label": "Surgical mitral valve replacement",
+    "order": 6
+  },
+  {
+    "code": "J-7",
+    "categoryCode": "J",
+    "label": "Tricuspid valve interventions (repair/replacement)",
+    "order": 7
+  },
+  {
+    "code": "J-8",
+    "categoryCode": "J",
+    "label": "Balloon valvuloplasty",
+    "order": 8
+  },
+  {
+    "code": "J-9",
+    "categoryCode": "J",
+    "label": "Hybrid procedures",
+    "order": 9
+  },
+  {
+    "code": "J-10",
+    "categoryCode": "J",
+    "label": "Valve-in-valve procedures",
+    "order": 10
+  },
+  {
+    "code": "J-11",
+    "categoryCode": "J",
+    "label": "Timing of intervention",
+    "order": 11
+  },
+  {
+    "code": "J-12",
+    "categoryCode": "J",
+    "label": "Risk stratification for intervention",
+    "order": 12
+  },
+  {
+    "code": "J-13",
+    "categoryCode": "J",
+    "label": "Conservative management (watchful waiting)",
+    "order": 13
+  },
+  {
+    "code": "K-1",
+    "categoryCode": "K",
+    "label": "All-cause mortality",
+    "order": 1
+  },
+  {
+    "code": "K-2",
+    "categoryCode": "K",
+    "label": "Cardiovascular mortality",
+    "order": 2
+  },
+  {
+    "code": "K-3",
+    "categoryCode": "K",
+    "label": "Heart failure hospitalization",
+    "order": 3
+  },
+  {
+    "code": "K-4",
+    "categoryCode": "K",
+    "label": "Cardiovascular hospitalization",
+    "order": 4
+  },
+  {
+    "code": "K-5",
+    "categoryCode": "K",
+    "label": "Functional capacity (NYHA class, 6-minute walk test)",
+    "order": 5
+  },
+  {
+    "code": "K-6",
+    "categoryCode": "K",
+    "label": "Quality of life",
+    "order": 6
+  },
+  {
+    "code": "K-7",
+    "categoryCode": "K",
+    "label": "Procedural complications",
+    "order": 7
+  },
+  {
+    "code": "K-8",
+    "categoryCode": "K",
+    "label": "Valve dysfunction / structural deterioration",
+    "order": 8
+  },
+  {
+    "code": "K-9",
+    "categoryCode": "K",
+    "label": "Reintervention rates",
+    "order": 9
+  },
+  {
+    "code": "K-10",
+    "categoryCode": "K",
+    "label": "Long-term prognosis and survival",
+    "order": 10
+  },
+  {
+    "code": "L-1",
+    "categoryCode": "L",
+    "label": "Risk prediction models",
+    "order": 1
+  },
+  {
+    "code": "L-2",
+    "categoryCode": "L",
+    "label": "Prognostic models",
+    "order": 2
+  },
+  {
+    "code": "L-3",
+    "categoryCode": "L",
+    "label": "Diagnostic algorithms / AI-assisted diagnosis",
+    "order": 3
+  },
+  {
+    "code": "M-1",
+    "categoryCode": "M",
+    "label": "Core lab TTE analysis (baseline)",
+    "order": 1
+  },
+  {
+    "code": "M-2",
+    "categoryCode": "M",
+    "label": "Core lab TOE analysis",
+    "order": 2
+  },
+  {
+    "code": "M-3",
+    "categoryCode": "M",
+    "label": "Core lab stress echo analysis",
+    "order": 3
+  },
+  {
+    "code": "M-4",
+    "categoryCode": "M",
+    "label": "Core lab CMR analysis",
+    "order": 4
+  },
+  {
+    "code": "M-5",
+    "categoryCode": "M",
+    "label": "Core lab CT analysis",
+    "order": 5
+  },
+  {
+    "code": "M-6",
+    "categoryCode": "M",
+    "label": "Core lab RHC analysis",
+    "order": 6
+  },
+  {
+    "code": "M-7",
+    "categoryCode": "M",
+    "label": "Inter-observer variability / reproducibility",
+    "order": 7
+  },
+  {
+    "code": "N-1",
+    "categoryCode": "N",
+    "label": "TTE at 12 months - valve function",
+    "order": 1
+  },
+  {
+    "code": "N-2",
+    "categoryCode": "N",
+    "label": "TTE at 12 months - cardiac remodeling",
+    "order": 2
+  },
+  {
+    "code": "N-3",
+    "categoryCode": "N",
+    "label": "TTE at 12 months - hemodynamic changes",
+    "order": 3
+  }
+]

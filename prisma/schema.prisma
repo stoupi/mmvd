@@ -125,16 +125,39 @@ model SubmissionWindow {
   @@index([status])
 }
 
+model Category {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  label       String
+  description String?
+  order       Int        @unique
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  topics      MainArea[]
+
+  @@index([code])
+  @@index([order])
+}
+
 model MainArea {
   id          String     @id @default(cuid())
+  code        String?    @unique
   label       String     @unique
   description String?
+  categoryId  String?
+  order       Int?
   isActive    Boolean    @default(true)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   color       String?
+  category    Category?  @relation(fields: [categoryId], references: [id])
   proposals   Proposal[]
   reviewers   User[]     @relation("ReviewerTopics")
+
+  @@index([categoryId])
+  @@index([code])
+  @@index([order])
 }
 
 model Proposal {

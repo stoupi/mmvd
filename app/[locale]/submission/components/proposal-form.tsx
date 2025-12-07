@@ -24,29 +24,30 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import type { MainArea } from '@/app/generated/prisma';
+import type { MainArea, Category } from '@/app/generated/prisma';
 import { Save, Plus, Trash2, Send } from 'lucide-react';
 import { useState } from 'react';
+import { TopicSelector } from './topic-selector';
 
 interface ProposalFormProps {
   initialData?: Partial<ProposalFormData>;
   proposalId?: string;
-  mainAreas: MainArea[];
+  categoriesWithTopics: (Category & { topics: MainArea[] })[];
   submissionWindowId: string;
   centreId: string;
   isEditing?: boolean;
-  proposalCounts?: Record<string, number>;
+  proposalCounts: Record<string, number>;
   readOnly?: boolean;
 }
 
 export function ProposalForm({
   initialData,
   proposalId,
-  mainAreas,
+  categoriesWithTopics,
   submissionWindowId,
   centreId,
   isEditing = false,
-  proposalCounts = {},
+  proposalCounts,
   readOnly = false
 }: ProposalFormProps) {
   const router = useRouter();
@@ -290,31 +291,19 @@ export function ProposalForm({
           }}
         />
 
-        <div className='grid md:grid-cols-2 gap-4'>
+        <div className='space-y-6'>
           <FormField
             control={form.control}
             name='mainAreaId'
-            render={({ field }) => (
+            render={() => (
               <FormItem>
-                <FormLabel>Main Topic *</FormLabel>
-                <p className='text-sm font-semibold text-pink-600 mb-2'>
-                  Numbers in parentheses show<br />proposals <strong>already submitted</strong> for this window
-                </p>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder='Select main topic' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent align='start'>
-                    {mainAreas.map((area) => (
-                      <SelectItem key={area.id} value={area.id}>
-                        {area.label} ({proposalCounts[area.id] || 0})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
+                <TopicSelector
+                  categories={categoriesWithTopics}
+                  proposalCounts={proposalCounts}
+                  fieldName='mainAreaId'
+                  label='Main Topic'
+                  readOnly={readOnly}
+                />
               </FormItem>
             )}
           />
@@ -322,43 +311,18 @@ export function ProposalForm({
           <FormField
             control={form.control}
             name='secondaryTopics'
-            render={({ field }) => {
-              const selectedMainArea = form.watch('mainAreaId');
-              const availableAreas = mainAreas.filter(area => area.id !== selectedMainArea);
-              const selectedTopicId = field.value?.[0];
-              const selectedTopic = mainAreas.find(area => area.id === selectedTopicId);
-
+            render={() => {
+              const mainTopicId = form.watch('mainAreaId');
               return (
                 <FormItem>
-                  <FormLabel>Secondary Topic *</FormLabel>
-                  {readOnly ? (
-                    <div className='min-h-10 flex items-center'>
-                      {selectedTopic ? (
-                        <Badge variant='secondary'>{selectedTopic.label}</Badge>
-                      ) : (
-                        <span className='text-muted-foreground text-sm'>No secondary topic selected</span>
-                      )}
-                    </div>
-                  ) : (
-                    <Select
-                      onValueChange={(value) => field.onChange(value ? [value] : [])}
-                      value={selectedTopicId || ''}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder='Select secondary topic' />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent align='start'>
-                        {availableAreas.map((area) => (
-                          <SelectItem key={area.id} value={area.id}>
-                            {area.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                  <FormMessage />
+                  <TopicSelector
+                    categories={categoriesWithTopics}
+                    proposalCounts={proposalCounts}
+                    fieldName='secondaryTopics'
+                    label='Secondary Topics (Optional)'
+                    excludeTopicId={mainTopicId}
+                    readOnly={readOnly}
+                  />
                 </FormItem>
               );
             }}

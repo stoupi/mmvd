@@ -1,5 +1,5 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
-import { getCurrentWindow, getMainAreas, getProposalCountByMainArea } from '@/lib/services/submission';
+import { getCurrentWindow, getCategoriesWithTopics, getAllProposalCounts } from '@/lib/services/submission';
 import { redirect } from 'next/navigation';
 import { ProposalForm } from '../components/proposal-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,7 +11,7 @@ export default async function NewProposalPage() {
   const session = await requirePermissionGuard('SUBMISSION');
 
   const currentWindow = await getCurrentWindow();
-  const mainAreas = await getMainAreas();
+  const categoriesWithTopics = await getCategoriesWithTopics();
 
   // Redirect if no open window
   if (!currentWindow || currentWindow.status !== 'OPEN') {
@@ -35,12 +35,8 @@ export default async function NewProposalPage() {
     }
   }
 
-  // Get proposal counts for each main area
-  const proposalCounts: Record<string, number> = {};
-  for (const area of mainAreas) {
-    const count = await getProposalCountByMainArea(currentWindow.id, area.id);
-    proposalCounts[area.id] = count;
-  }
+  // Get proposal counts for all topics (bulk fetch optimization)
+  const proposalCounts = await getAllProposalCounts(currentWindow.id);
 
   // Calculate days remaining
   const daysRemaining = Math.ceil(
@@ -103,7 +99,7 @@ export default async function NewProposalPage() {
       <Card>
         <CardContent className='pt-6'>
           <ProposalForm
-            mainAreas={mainAreas}
+            categoriesWithTopics={categoriesWithTopics}
             submissionWindowId={currentWindow.id}
             centreId={session.user.centreId}
             proposalCounts={proposalCounts}

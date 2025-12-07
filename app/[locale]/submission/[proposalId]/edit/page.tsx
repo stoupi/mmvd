@@ -1,5 +1,5 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
-import { getProposal, getMainAreas, getProposalCountByMainArea, getProposalsByPi } from '@/lib/services/submission';
+import { getProposal, getCategoriesWithTopics, getAllProposalCounts, getProposalsByPi } from '@/lib/services/submission';
 import { redirect, notFound } from 'next/navigation';
 import { ProposalForm } from '../../components/proposal-form';
 import { Card, CardContent } from '@/components/ui/card';
@@ -33,7 +33,7 @@ export default async function EditProposalPage({
     redirect(`/submission/${proposalId}`);
   }
 
-  const mainAreas = await getMainAreas();
+  const categoriesWithTopics = await getCategoriesWithTopics();
   const isWindowOpen = proposal.submissionWindow.status === 'OPEN';
 
   // Calculate days remaining
@@ -47,12 +47,8 @@ export default async function EditProposalPage({
     (p) => p.submissionWindowId === proposal.submissionWindowId && p.status === 'SUBMITTED'
   );
 
-  // Get proposal counts for each main area
-  const proposalCounts: Record<string, number> = {};
-  for (const area of mainAreas) {
-    const count = await getProposalCountByMainArea(proposal.submissionWindowId, area.id);
-    proposalCounts[area.id] = count;
-  }
+  // Get proposal counts for all topics (bulk fetch optimization)
+  const proposalCounts = await getAllProposalCounts(proposal.submissionWindowId);
 
   const initialData = {
     title: proposal.title,
@@ -153,7 +149,7 @@ export default async function EditProposalPage({
           <ProposalForm
             initialData={initialData}
             proposalId={proposalId}
-            mainAreas={mainAreas}
+            categoriesWithTopics={categoriesWithTopics}
             submissionWindowId={proposal.submissionWindowId}
             centreId={proposal.centreId}
             isEditing={true}
