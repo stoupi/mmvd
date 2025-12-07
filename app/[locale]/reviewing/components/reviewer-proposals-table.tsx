@@ -67,10 +67,10 @@ export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps)
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className='w-[350px]'>Proposal Title</TableHead>
+            <TableHead className='w-[300px]'>Proposal Title</TableHead>
             <TableHead className='w-[150px]'>Main Topic</TableHead>
             <TableHead className='w-[200px]'>Principal Investigator</TableHead>
-            <TableHead className='w-[100px]'>Centre</TableHead>
+            <TableHead className='w-[200px]'>Centre</TableHead>
             <TableHead className='w-[150px]'>Deadline</TableHead>
             <TableHead className='w-[120px] text-center'>Status</TableHead>
             <TableHead className='w-[150px] text-right'>Actions</TableHead>
@@ -108,8 +108,17 @@ export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps)
                     {piName}
                   </div>
                 </TableCell>
-                <TableCell className='font-medium'>
-                  {review.proposal.centre?.code || 'N/A'}
+                <TableCell>
+                  {review.proposal.centre ? (
+                    <div className='max-w-[200px]'>
+                      <div className='font-medium'>{review.proposal.centre.code}</div>
+                      <div className='text-sm text-muted-foreground truncate' title={review.proposal.centre.name}>
+                        {review.proposal.centre.name}
+                      </div>
+                    </div>
+                  ) : (
+                    'N/A'
+                  )}
                 </TableCell>
                 <TableCell>
                   <div className={isOverdue && !isCompleted ? 'text-red-600 font-medium' : ''}>
