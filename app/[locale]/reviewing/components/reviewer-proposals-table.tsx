@@ -11,7 +11,7 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { Link } from '@/app/i18n/navigation';
-import { ClipboardEdit, Eye, CheckCircle2 } from 'lucide-react';
+import { ClipboardEdit, Eye, CheckCircle2, FileEdit } from 'lucide-react';
 import { format, isPast } from 'date-fns';
 
 interface Review {
@@ -20,6 +20,9 @@ interface Review {
   status: string;
   isLate: boolean;
   completedAt: Date | null;
+  decision: string | null;
+  overlap: string | null;
+  commentsForPI: string | null;
   proposal: {
     id: string;
     title: string;
@@ -78,6 +81,11 @@ export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps)
             const { formattedDate, isOverdue } = formatDeadline(review.deadline);
             const piName = getPiName(review.proposal.piUser);
             const isCompleted = review.status === 'COMPLETED';
+            const isInProgress = !isCompleted && (
+              review.decision !== null ||
+              review.overlap !== null ||
+              review.commentsForPI !== null
+            );
 
             return (
               <TableRow key={review.id}>
@@ -116,6 +124,11 @@ export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps)
                     <Badge className='bg-green-600'>
                       <CheckCircle2 className='h-3 w-3 mr-1' />
                       Completed
+                    </Badge>
+                  ) : isInProgress ? (
+                    <Badge className='bg-gray-500'>
+                      <FileEdit className='h-3 w-3 mr-1' />
+                      In Progress
                     </Badge>
                   ) : (
                     <Badge variant='outline'>Pending</Badge>
