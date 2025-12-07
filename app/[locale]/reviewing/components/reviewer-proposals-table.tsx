@@ -26,6 +26,7 @@ interface Review {
   proposal: {
     id: string;
     title: string;
+    status: string;
     piUser: {
       firstName: string | null;
       lastName: string | null;
@@ -46,6 +47,14 @@ interface ReviewerProposalsTableProps {
   reviews: Review[];
 }
 
+const proposalStatusConfig: Record<string, { label: string; className: string }> = {
+  UNDER_REVIEW: { label: 'Under Review', className: 'bg-blue-500' },
+  ACCEPTED: { label: 'Accepted', className: 'bg-green-500' },
+  REJECTED: { label: 'Rejected', className: 'bg-red-500' },
+  PRIORITIZED: { label: 'Prioritized', className: 'bg-purple-500' },
+  SUBMITTED: { label: 'Submitted', className: 'bg-gray-400' }
+};
+
 export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps) {
   const formatDeadline = (deadline: Date) => {
     const date = new Date(deadline);
@@ -62,18 +71,28 @@ export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps)
     return piUser.email;
   };
 
+  const getProposalStatusBadge = (status: string) => {
+    const config = proposalStatusConfig[status] || { label: status, className: 'bg-gray-400' };
+    return (
+      <Badge className={config.className}>
+        {config.label}
+      </Badge>
+    );
+  };
+
   return (
     <div className='rounded-md border bg-white overflow-x-auto'>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className='w-[300px]'>Proposal Title</TableHead>
+            <TableHead className='w-[250px]'>Proposal Title</TableHead>
             <TableHead className='w-[150px]'>Main Topic</TableHead>
-            <TableHead className='w-[200px]'>Principal Investigator</TableHead>
-            <TableHead className='w-[200px]'>Centre</TableHead>
-            <TableHead className='w-[150px]'>Deadline</TableHead>
-            <TableHead className='w-[120px] text-center'>Status</TableHead>
-            <TableHead className='w-[150px] text-right'>Actions</TableHead>
+            <TableHead className='w-[180px]'>Principal Investigator</TableHead>
+            <TableHead className='w-[180px]'>Centre</TableHead>
+            <TableHead className='w-[130px]'>Deadline</TableHead>
+            <TableHead className='w-[130px] text-center'>Review Status</TableHead>
+            <TableHead className='w-[130px] text-center'>Proposal Status</TableHead>
+            <TableHead className='w-[130px] text-right'>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -142,6 +161,9 @@ export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps)
                   ) : (
                     <Badge variant='outline'>Pending</Badge>
                   )}
+                </TableCell>
+                <TableCell className='text-center'>
+                  {getProposalStatusBadge(review.proposal.status)}
                 </TableCell>
                 <TableCell className='text-right'>
                   <div className='flex gap-2 justify-end'>
