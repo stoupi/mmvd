@@ -1,36 +1,36 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
-import { getAllMainAreas } from '@/lib/services/admin';
+import { getTopicsForAdmin } from '@/lib/services/submission';
 import { FolderOpen } from 'lucide-react';
-import { MainAreaList } from './components/main-area-list';
+import { TopicsTable } from './components/topics-table';
 import { CreateMainAreaDialog } from './components/create-main-area-dialog';
 
 export default async function MainAreasPage() {
   await requirePermissionGuard('ADMIN');
 
-  const mainAreas = await getAllMainAreas();
+  const topics = await getTopicsForAdmin();
 
   return (
     <div className='p-8'>
       <div className='flex items-start justify-between mb-6'>
         <div>
-          <h1 className='text-3xl font-bold mb-2'>Topics</h1>
+          <h1 className='text-3xl font-bold mb-2'>Main Topics</h1>
           <p className='text-muted-foreground'>
-            Manage research topics for abstract classification
+            {topics.length} active topics
           </p>
         </div>
         <CreateMainAreaDialog />
       </div>
 
-      {mainAreas.length === 0 ? (
+      {topics.length === 0 ? (
         <div className='text-center py-12'>
           <FolderOpen className='h-12 w-12 mx-auto text-muted-foreground mb-4' />
-          <h3 className='text-lg font-semibold mb-2'>No main areas yet</h3>
+          <h3 className='text-lg font-semibold mb-2'>No topics yet</h3>
           <p className='text-sm text-muted-foreground mb-4'>
-            Create your first main area to categorize proposals
+            Create your first topic to categorize proposals
           </p>
         </div>
       ) : (
-        <MainAreaList mainAreas={mainAreas} />
+        <TopicsTable topics={topics} />
       )}
     </div>
   );

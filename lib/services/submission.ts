@@ -299,3 +299,34 @@ export async function getAllProposalCounts(submissionWindowId: string) {
     return acc;
   }, {} as Record<string, number>);
 }
+
+export async function getTopicsForAdmin() {
+  return prisma.mainArea.findMany({
+    where: { isActive: true },
+    include: {
+      category: true,
+      reviewers: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true
+        }
+      },
+      _count: {
+        select: {
+          proposals: {
+            where: {
+              status: { not: 'DRAFT' },
+              isDeleted: false
+            }
+          }
+        }
+      }
+    },
+    orderBy: [
+      { category: { order: 'asc' } },
+      { order: 'asc' }
+    ]
+  });
+}

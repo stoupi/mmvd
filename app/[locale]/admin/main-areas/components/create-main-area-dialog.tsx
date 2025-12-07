@@ -63,7 +63,7 @@ export function CreateMainAreaDialog() {
       <DialogTrigger asChild>
         <Button>
           <Plus className='h-4 w-4 mr-2' />
-          New Main Area
+          New Main Topic
         </Button>
       </DialogTrigger>
       <DialogContent>
