@@ -7,20 +7,44 @@ import { revalidatePath } from 'next/cache';
 
 const saveReviewDraftSchema = z.object({
   reviewId: z.string(),
-  decision: z.enum(['ACCEPT', 'REJECT', 'REVISE']).optional(),
-  overlap: z.enum(['NO', 'PARTIAL', 'MAJOR']).optional(),
-  overlapDetails: z.string().optional(),
-  commentsForPI: z.string().optional(),
-  commentsForAdmin: z.string().optional()
+  // Quick questions
+  aimClear: z.boolean().optional(),
+  aimOriginal: z.boolean().optional(),
+  feasible: z.boolean().optional(),
+  rationaleWell: z.boolean().optional(),
+  literatureReviewed: z.boolean().optional(),
+  exposureDefined: z.boolean().optional(),
+  endpointIdentified: z.boolean().optional(),
+  endpointMeaningful: z.boolean().optional(),
+  statisticalPlanCoherent: z.boolean().optional(),
+  wellWritten: z.boolean().optional(),
+  // Detailed comments
+  generalComments: z.string().optional(),
+  statisticalComments: z.string().optional(),
+  modificationsRequired: z.string().optional(),
+  // Decision
+  decision: z.enum(['ACCEPT', 'REJECT', 'REVISE']).optional()
 });
 
 const submitReviewSchema = z.object({
   reviewId: z.string(),
-  decision: z.enum(['ACCEPT', 'REJECT', 'REVISE']),
-  overlap: z.enum(['NO', 'PARTIAL', 'MAJOR']),
-  overlapDetails: z.string().optional(),
-  commentsForPI: z.string().min(1, 'Comments for PI are required'),
-  commentsForAdmin: z.string().optional()
+  // Quick questions (all required)
+  aimClear: z.boolean(),
+  aimOriginal: z.boolean(),
+  feasible: z.boolean(),
+  rationaleWell: z.boolean(),
+  literatureReviewed: z.boolean(),
+  exposureDefined: z.boolean(),
+  endpointIdentified: z.boolean(),
+  endpointMeaningful: z.boolean(),
+  statisticalPlanCoherent: z.boolean(),
+  wellWritten: z.boolean(),
+  // Detailed comments (all required)
+  generalComments: z.string().min(1, 'General comments are required'),
+  statisticalComments: z.string().min(1, 'Statistical comments are required'),
+  modificationsRequired: z.string().min(1, 'Modifications required are required'),
+  // Decision (required)
+  decision: z.enum(['ACCEPT', 'REJECT', 'REVISE'])
 });
 
 export const saveReviewDraftAction = authenticatedAction

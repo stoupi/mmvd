@@ -14,6 +14,7 @@ export default async function ReviewingDashboardPage() {
   }
 
   const reviews = await getReviewerAssignedProposals(session.user.id);
+  console.log('reviews', reviews);
 
   return (
     <div className='container mx-auto py-8 max-w-7xl px-4'>

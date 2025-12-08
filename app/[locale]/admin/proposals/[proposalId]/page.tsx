@@ -10,11 +10,15 @@ import { ArrowLeft, User, Calendar, Building2, FileDown } from 'lucide-react';
 import { ProposalForm } from '@/app/[locale]/submission/components/proposal-form';
 import { ExportProposalButton } from '../components/export-proposal-button';
 import { WindowStatusBadge } from '@/components/window-status-badge';
+import { ReviewsSummary } from './components/reviews-summary';
+import { AdminDecisionForm } from './components/admin-decision-form';
 
 const statusColors = {
   DRAFT: 'bg-gray-500',
   SUBMITTED: 'bg-blue-500',
   UNDER_REVIEW: 'bg-yellow-500',
+  REVISION_REQUIRED: 'bg-orange-500',
+  RESUBMITTED: 'bg-indigo-500',
   ACCEPTED: 'bg-green-500',
   REJECTED: 'bg-red-500',
   PRIORITIZED: 'bg-purple-500'
@@ -24,6 +28,8 @@ const statusLabels = {
   DRAFT: 'Draft',
   SUBMITTED: 'Submitted',
   UNDER_REVIEW: 'Under Review',
+  REVISION_REQUIRED: 'Revision Required',
+  RESUBMITTED: 'Resubmitted',
   ACCEPTED: 'Accepted',
   REJECTED: 'Rejected',
   PRIORITIZED: 'Prioritized'
@@ -202,6 +208,25 @@ export default async function AdminProposalDetailPage({
           </div>
         </CardContent>
       </Card>
+
+      {/* Reviews Summary */}
+      {proposal.reviews && proposal.reviews.length > 0 && (
+        <div className='mb-6'>
+          <ReviewsSummary reviews={proposal.reviews} />
+        </div>
+      )}
+
+      {/* Admin Decision Form */}
+      <div className='mb-6'>
+        <AdminDecisionForm
+          proposalId={proposalId}
+          currentStatus={proposal.status}
+          reviewCount={proposal.reviews?.length || 0}
+          completedReviewCount={
+            proposal.reviews?.filter((r) => r.status === 'COMPLETED' && !r.isDraft).length || 0
+          }
+        />
+      </div>
 
       <Card>
         <CardContent className='pt-6'>

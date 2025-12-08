@@ -224,10 +224,24 @@ model Review {
   status           ReviewStatus       @default(ASSIGNED)
   isLate           Boolean            @default(false)
   decision         ReviewDecision?
-  overlap          OverlapAssessment?
-  overlapDetails   String?
-  commentsForPI    String?
-  commentsForAdmin String?
+
+  // Quick questions (Yes/No)
+  aimClear                Boolean?
+  aimOriginal             Boolean?
+  feasible                Boolean?
+  rationaleWell           Boolean?
+  literatureReviewed      Boolean?
+  exposureDefined         Boolean?
+  endpointIdentified      Boolean?
+  endpointMeaningful      Boolean?
+  statisticalPlanCoherent Boolean?
+  wellWritten             Boolean?
+
+  // Detailed comments
+  generalComments        String? // limit 1500 words
+  statisticalComments    String? // limit 1000 words
+  modificationsRequired  String? // limit 1000 words
+
   isDraft          Boolean            @default(false)
   emailSentAt      DateTime?
   createdAt        DateTime           @default(now())
@@ -261,6 +275,8 @@ enum ProposalStatus {
   DRAFT
   SUBMITTED
   UNDER_REVIEW
+  REVISION_REQUIRED
+  RESUBMITTED
   ACCEPTED
   REJECTED
   PRIORITIZED
