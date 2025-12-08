@@ -1,6 +1,6 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
 import { getTypedSession } from '@/lib/auth-helpers';
-import { getProposal, getMainAreas } from '@/lib/services/submission';
+import { getProposal, getCategoriesWithTopics } from '@/lib/services/submission';
 import { notFound, redirect } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -41,7 +41,7 @@ export default async function ReviewProposalPage({
     redirect('/reviewing');
   }
 
-  const mainAreas = await getMainAreas();
+  const categoriesWithTopics = await getCategoriesWithTopics();
   const isCompleted = review.status === 'COMPLETED';
 
   // Format PI name
@@ -176,7 +176,8 @@ export default async function ReviewProposalPage({
         {/* Proposal Form in read-only mode */}
         <ProposalForm
           initialData={initialData}
-          mainAreas={mainAreas}
+          categoriesWithTopics={categoriesWithTopics}
+          proposalCounts={{}}
           submissionWindowId={proposal.submissionWindowId}
           centreId={proposal.centreId}
           readOnly={true}
