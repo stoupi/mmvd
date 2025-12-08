@@ -122,7 +122,7 @@ export function TopicSelector({
       )}
 
       <div className="flex items-center justify-between">
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-rose-600">
           Numbers show proposals <strong>already submitted</strong> for this window
         </p>
         <div className="flex gap-2">

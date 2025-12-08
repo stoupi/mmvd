@@ -319,7 +319,7 @@ export function ProposalForm({
                     categories={categoriesWithTopics}
                     proposalCounts={proposalCounts}
                     fieldName='secondaryTopics'
-                    label='Secondary Topics (Optional)'
+                    label='Secondary Topics'
                     excludeTopicId={mainTopicId}
                     readOnly={readOnly}
                   />

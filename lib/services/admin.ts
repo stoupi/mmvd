@@ -2,8 +2,18 @@ import { prisma } from '@/lib/prisma';
 import type { AppPermission, WindowStatus } from '@/app/generated/prisma';
 import { createId } from '@paralleldrive/cuid2';
 
+// Categories Management
+export async function getAllCategories() {
+  return prisma.category.findMany({
+    where: {
+      isActive: true
+    },
+    orderBy: { order: 'asc' }
+  });
+}
+
 // Main Areas Management
-export async function createMainArea(data: { label: string; description?: string }) {
+export async function createMainArea(data: { label: string; description?: string; categoryId: string }) {
   return prisma.mainArea.create({
     data
   });

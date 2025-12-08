@@ -1,5 +1,6 @@
 import { requirePermissionGuard } from '@/lib/auth-guard';
 import { getTopicsForAdmin } from '@/lib/services/submission';
+import { getAllCategories } from '@/lib/services/admin';
 import { FolderOpen } from 'lucide-react';
 import { TopicsTable } from './components/topics-table';
 import { CreateMainAreaDialog } from './components/create-main-area-dialog';
@@ -7,7 +8,10 @@ import { CreateMainAreaDialog } from './components/create-main-area-dialog';
 export default async function MainAreasPage() {
   await requirePermissionGuard('ADMIN');
 
-  const topics = await getTopicsForAdmin();
+  const [topics, categories] = await Promise.all([
+    getTopicsForAdmin(),
+    getAllCategories()
+  ]);
 
   return (
     <div className='p-8'>
@@ -18,7 +22,7 @@ export default async function MainAreasPage() {
             {topics.length} active topics
           </p>
         </div>
-        <CreateMainAreaDialog />
+        <CreateMainAreaDialog categories={categories} />
       </div>
 
       {topics.length === 0 ? (

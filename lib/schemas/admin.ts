@@ -5,7 +5,7 @@ import { AppPermission, WindowStatus } from '@/app/generated/prisma';
 export const mainAreaSchema = z.object({
   label: z.string().min(3, 'Label must be at least 3 characters'),
   description: z.string().optional(),
-  color: z.string().regex(/^#[0-9A-F]{6}$/i, 'Must be a valid hex color (e.g., #3B82F6)').optional()
+  categoryId: z.string().min(1, 'Category is required')
 });
 
 export const updateMainAreaSchema = mainAreaSchema.extend({
