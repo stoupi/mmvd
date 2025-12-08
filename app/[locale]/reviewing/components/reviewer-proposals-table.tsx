@@ -13,6 +13,7 @@ import {
 import { Link } from '@/app/i18n/navigation';
 import { ClipboardEdit, Eye, CheckCircle2, FileEdit } from 'lucide-react';
 import { format, isPast } from 'date-fns';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 
 interface Review {
   id: string;
@@ -33,6 +34,7 @@ interface Review {
       email: string;
     };
     mainArea: {
+      code: string | null;
       label: string;
       color: string | null;
     };
@@ -114,13 +116,7 @@ export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps)
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge
-                    style={{
-                      backgroundColor: review.proposal.mainArea.color || '#6b7280'
-                    }}
-                  >
-                    {review.proposal.mainArea.label}
-                  </Badge>
+                  <TopicBadge topic={review.proposal.mainArea} />
                 </TableCell>
                 <TableCell>
                   <div className='max-w-[200px] truncate' title={piName}>

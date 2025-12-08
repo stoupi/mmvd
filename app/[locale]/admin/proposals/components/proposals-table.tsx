@@ -14,6 +14,7 @@ import {
 import { ExternalLink } from 'lucide-react';
 import { Link } from '@/app/i18n/navigation';
 import type { ProposalStatus } from '@prisma/client';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 
 interface Proposal {
   id: string;
@@ -61,7 +62,7 @@ function formatDate(date: Date | null): string {
 
 interface ProposalsTableProps {
   proposals: Proposal[];
-  mainAreas: { id: string; code: string | null; label: string }[];
+  mainAreas: { id: string; code: string | null; label: string; color: string | null }[];
 }
 
 const statusColors = {
@@ -203,28 +204,21 @@ export function ProposalsTable({ proposals, mainAreas }: ProposalsTableProps) {
                   </Link>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.mainTopic }}>
-                  <Badge
-                    variant='outline'
-                    style={proposal.mainArea.color ? {
-                      backgroundColor: `${proposal.mainArea.color}15`,
-                      borderColor: proposal.mainArea.color,
-                      color: proposal.mainArea.color
-                    } : undefined}
-                  >
-                    <span className='font-mono mr-1.5'>{proposal.mainArea.code}</span>
-                    {proposal.mainArea.label}
-                  </Badge>
+                  <TopicBadge topic={proposal.mainArea} />
                 </TableCell>
                 <TableCell style={{ width: columnWidths.secondary }}>
                   {proposal.secondaryTopics.length > 0 ? (
                     <div className='flex flex-col gap-1'>
                       {proposal.secondaryTopics.map((topicId, index) => {
                         const mainAreaTopic = mainAreas.find(area => area.id === topicId);
+                        if (!mainAreaTopic) return null;
                         return (
-                          <Badge key={index} variant='outline' className='text-xs'>
-                            {mainAreaTopic?.code && <span className='font-mono mr-1.5'>{mainAreaTopic.code}</span>}
-                            {mainAreaTopic?.label || topicId}
-                          </Badge>
+                          <TopicBadge
+                            key={index}
+                            topic={mainAreaTopic}
+                            variant='secondary'
+                            className='text-xs'
+                          />
                         );
                       })}
                     </div>

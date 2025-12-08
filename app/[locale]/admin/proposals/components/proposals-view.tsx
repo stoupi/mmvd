@@ -26,6 +26,7 @@ interface Proposal {
     id: string;
     code: string | null;
     label: string;
+    color: string | null;
   };
   submissionWindow: {
     id: string;
@@ -41,7 +42,7 @@ interface Proposal {
 
 interface ProposalsViewProps {
   proposals: Proposal[];
-  mainAreas: { id: string; code: string | null; label: string }[];
+  mainAreas: { id: string; code: string | null; label: string; color: string | null }[];
   windows: { id: string; name: string }[];
 }
 
