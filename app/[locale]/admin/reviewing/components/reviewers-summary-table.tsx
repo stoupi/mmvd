@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 import {
   Table,
   TableBody,
@@ -62,6 +63,7 @@ interface ReviewerSummary {
         email: string;
       };
       mainArea: {
+        code: string | null;
         label: string;
         color: string | null;
       };
@@ -302,14 +304,7 @@ export function ReviewersSummaryTable({
                                   </span>
                                   <span>•</span>
                                   <span className='flex-1'>{review.proposal.title}</span>
-                                  <Badge
-                                    style={{
-                                      backgroundColor: review.proposal.mainArea.color || '#6b7280'
-                                    }}
-                                    className='text-xs'
-                                  >
-                                    {review.proposal.mainArea.label}
-                                  </Badge>
+                                  <TopicBadge topic={review.proposal.mainArea} className='text-xs' />
                                 </div>
                               ))}
                             </div>

@@ -1,8 +1,10 @@
 import { Badge } from '@/components/ui/badge';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 
 interface Proposal {
   title: string;
   mainArea: {
+    code: string | null;
     label: string;
     color: string | null;
   };
@@ -36,13 +38,7 @@ export function ProposalDetailsView({ proposal }: ProposalDetailsViewProps) {
         <h3 className='text-lg font-semibold mb-1'>{proposal.title}</h3>
         <div className='flex items-center gap-2 mt-2'>
           <span className='text-sm text-muted-foreground'>Main Topic:</span>
-          <Badge
-            style={{
-              backgroundColor: proposal.mainArea.color || '#6b7280'
-            }}
-          >
-            {proposal.mainArea.label}
-          </Badge>
+          <TopicBadge topic={proposal.mainArea} />
         </div>
       </div>
 

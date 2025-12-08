@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 import {
   Accordion,
   AccordionContent,
@@ -127,10 +128,7 @@ export function ReviewTopicsDialog({
           {currentTopics.length > 0 ? (
             <div className='flex flex-wrap gap-1'>
               {currentTopics.map((topic) => (
-                <Badge key={topic.id} variant='secondary' className='text-xs'>
-                  {topic.code && <span className='font-mono mr-1.5'>{topic.code}</span>}
-                  {topic.label}
-                </Badge>
+                <TopicBadge key={topic.id} topic={topic} className='text-xs' />
               ))}
             </div>
           ) : (

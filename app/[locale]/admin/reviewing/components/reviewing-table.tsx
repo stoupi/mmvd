@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/table';
 import { AssignReviewersDialog } from './assign-reviewers-dialog';
 import { UserPlus } from 'lucide-react';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 
 interface Proposal {
   id: string;
@@ -31,6 +32,7 @@ interface Proposal {
   } | null;
   mainArea: {
     id: string;
+    code: string | null;
     label: string;
     color: string | null;
   };
@@ -139,13 +141,7 @@ export function ReviewingTable({ proposals, reviewers }: ReviewingTableProps) {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        style={{
-                          backgroundColor: proposal.mainArea.color || '#6b7280'
-                        }}
-                      >
-                        {proposal.mainArea.label}
-                      </Badge>
+                      <TopicBadge topic={proposal.mainArea} />
                     </TableCell>
                     <TableCell>
                       <div className='max-w-[200px] truncate' title={piName}>
