@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
 import type { Proposal, ProposalStatus, SubmissionWindow, MainArea, Review, SubmissionWindowStatus } from '@/app/generated/prisma';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 import {
   Table,
   TableBody,
@@ -286,7 +287,9 @@ export function ProposalsSection({ proposals }: ProposalsSectionProps) {
                         </div>
                       </TableCell>
                       <TableCell className='w-[180px]'>{proposal.submissionWindow.name}</TableCell>
-                      <TableCell className='w-[180px]'>{proposal.mainArea.label}</TableCell>
+                      <TableCell className='w-[180px]'>
+                        <TopicBadge topic={proposal.mainArea} />
+                      </TableCell>
                       <TableCell className='w-[120px]'>
                         {new Date(proposal.createdAt).toLocaleDateString('en-US', {
                           month: '2-digit',

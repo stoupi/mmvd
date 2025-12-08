@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { X, ChevronUp, ChevronDown } from 'lucide-react';
 import type { Category, MainArea } from '@/app/generated/prisma';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 
 interface TopicSelectorProps {
   categories: (Category & { topics: MainArea[] })[];
@@ -39,13 +40,13 @@ export function TopicSelector({
   const selectedTopicIds = Array.isArray(currentValue) ? currentValue : currentValue ? [currentValue] : [];
   const [openCategories, setOpenCategories] = useState<string[]>([]);
 
-  const allTopics = categories.flatMap((category) => category.topics);
+  const allTopics = (categories || []).flatMap((category) => category.topics || []);
   const selectedTopics = selectedTopicIds
     .map((topicId) => allTopics.find((topic) => topic.id === topicId))
     .filter(Boolean) as MainArea[];
 
-  const availableCategories = categories.filter((category) => {
-    const availableTopics = category.topics.filter(
+  const availableCategories = (categories || []).filter((category) => {
+    const availableTopics = (category.topics || []).filter(
       (topic) => topic.id !== excludeTopicId
     );
     return availableTopics.length > 0;
@@ -100,23 +101,18 @@ export function TopicSelector({
       {selectedTopics.length > 0 && (
         <div className="flex flex-wrap gap-2 p-3 bg-pink-50 rounded-lg border border-pink-200">
           {selectedTopics.map((topic) => (
-            <Badge
-              key={topic.id}
-              variant="secondary"
-              className="bg-white border border-pink-300 text-pink-900 px-3 py-1.5 text-sm font-medium"
-            >
-              <span className="font-mono mr-1.5">{topic.code}</span>
-              {topic.label}
+            <div key={topic.id} className="flex items-center gap-1.5">
+              <TopicBadge topic={topic} />
               {!readOnly && (
                 <button
                   type="button"
                   onClick={() => removeSelection(topic.id)}
-                  className="ml-2 hover:bg-pink-100 rounded-full p-0.5"
+                  className="hover:bg-pink-100 rounded-full p-0.5 transition-colors"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-3 w-3 text-pink-600" />
                 </button>
               )}
-            </Badge>
+            </div>
           ))}
         </div>
       )}
@@ -155,8 +151,8 @@ export function TopicSelector({
         onValueChange={setOpenCategories}
         className="w-full border rounded-lg"
       >
-        {categories.map((category) => {
-          const availableTopics = category.topics.filter(
+        {(categories || []).map((category) => {
+          const availableTopics = (category.topics || []).filter(
             (topic) => topic.id !== excludeTopicId
           );
 

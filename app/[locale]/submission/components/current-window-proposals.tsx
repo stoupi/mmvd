@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
 import type { Proposal, ProposalStatus, SubmissionWindow, MainArea, Review } from '@/app/generated/prisma';
+import { TopicBadge } from '@/components/design-system/topic-badge';
 import {
   Table,
   TableBody,
@@ -217,10 +218,7 @@ export function CurrentWindowProposals({ proposals, windowStatus }: CurrentWindo
                 </div>
               </TableCell>
               <TableCell className='w-[180px]'>
-                <div className='flex flex-col'>
-                  <span className='font-mono text-xs text-pink-600'>{proposal.mainArea.code}</span>
-                  <span className='text-sm'>{proposal.mainArea.label}</span>
-                </div>
+                <TopicBadge topic={proposal.mainArea} />
               </TableCell>
               <TableCell className='w-[120px]'>
                 {new Date(proposal.createdAt).toLocaleDateString('en-US', {
