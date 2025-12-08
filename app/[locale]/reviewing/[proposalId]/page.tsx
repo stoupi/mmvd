@@ -184,7 +184,7 @@ export default async function ReviewProposalPage({
         />
 
         {/* Review Form */}
-        <ReviewForm reviewId={review.id} isCompleted={isCompleted} />
+        <ReviewForm reviewId={review.id} isCompleted={isCompleted} initialReviewData={review} />
       </div>
     </div>
   );

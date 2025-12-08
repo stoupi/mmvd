@@ -21,35 +21,36 @@ import { Save, Send, X } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import { saveReviewDraftAction, submitReviewAction } from '@/lib/actions/review-actions';
 import { toast } from 'sonner';
-import type { ReviewDecision } from '@/app/generated/prisma';
+import type { ReviewDecision, Review } from '@/app/generated/prisma';
 
 interface ReviewFormProps {
   reviewId: string;
   isCompleted: boolean;
+  initialReviewData?: Review;
 }
 
-export function ReviewForm({ reviewId, isCompleted }: ReviewFormProps) {
+export function ReviewForm({ reviewId, isCompleted, initialReviewData }: ReviewFormProps) {
   const router = useRouter();
 
   // Quick questions state
-  const [aimClear, setAimClear] = useState<boolean | null>(null);
-  const [aimOriginal, setAimOriginal] = useState<boolean | null>(null);
-  const [feasible, setFeasible] = useState<boolean | null>(null);
-  const [rationaleWell, setRationaleWell] = useState<boolean | null>(null);
-  const [literatureReviewed, setLiteratureReviewed] = useState<boolean | null>(null);
-  const [exposureDefined, setExposureDefined] = useState<boolean | null>(null);
-  const [endpointIdentified, setEndpointIdentified] = useState<boolean | null>(null);
-  const [endpointMeaningful, setEndpointMeaningful] = useState<boolean | null>(null);
-  const [statisticalPlanCoherent, setStatisticalPlanCoherent] = useState<boolean | null>(null);
-  const [wellWritten, setWellWritten] = useState<boolean | null>(null);
+  const [aimClear, setAimClear] = useState<boolean | null>(initialReviewData?.aimClear ?? null);
+  const [aimOriginal, setAimOriginal] = useState<boolean | null>(initialReviewData?.aimOriginal ?? null);
+  const [feasible, setFeasible] = useState<boolean | null>(initialReviewData?.feasible ?? null);
+  const [rationaleWell, setRationaleWell] = useState<boolean | null>(initialReviewData?.rationaleWell ?? null);
+  const [literatureReviewed, setLiteratureReviewed] = useState<boolean | null>(initialReviewData?.literatureReviewed ?? null);
+  const [exposureDefined, setExposureDefined] = useState<boolean | null>(initialReviewData?.exposureDefined ?? null);
+  const [endpointIdentified, setEndpointIdentified] = useState<boolean | null>(initialReviewData?.endpointIdentified ?? null);
+  const [endpointMeaningful, setEndpointMeaningful] = useState<boolean | null>(initialReviewData?.endpointMeaningful ?? null);
+  const [statisticalPlanCoherent, setStatisticalPlanCoherent] = useState<boolean | null>(initialReviewData?.statisticalPlanCoherent ?? null);
+  const [wellWritten, setWellWritten] = useState<boolean | null>(initialReviewData?.wellWritten ?? null);
 
   // Detailed comments state
-  const [generalComments, setGeneralComments] = useState('');
-  const [statisticalComments, setStatisticalComments] = useState('');
-  const [modificationsRequired, setModificationsRequired] = useState('');
+  const [generalComments, setGeneralComments] = useState(initialReviewData?.generalComments || '');
+  const [statisticalComments, setStatisticalComments] = useState(initialReviewData?.statisticalComments || '');
+  const [modificationsRequired, setModificationsRequired] = useState(initialReviewData?.modificationsRequired || '');
 
   // Decision state
-  const [decision, setDecision] = useState<ReviewDecision | ''>('');
+  const [decision, setDecision] = useState<ReviewDecision | ''>(initialReviewData?.decision || '');
 
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
 
