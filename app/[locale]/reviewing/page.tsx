@@ -3,6 +3,7 @@ import { getTypedSession } from '@/lib/auth-helpers';
 import { getReviewerAssignedProposals } from '@/lib/services/reviewing';
 import { ClipboardCheck } from 'lucide-react';
 import { ReviewerProposalsTable } from './components/reviewer-proposals-table';
+import { ReviewingGuidelines } from './components/reviewing-guidelines';
 
 export default async function ReviewingDashboardPage() {
   await requirePermissionGuard('REVIEWING');
@@ -21,6 +22,10 @@ export default async function ReviewingDashboardPage() {
         <p className='text-muted-foreground'>
           Review and evaluate proposals assigned to you
         </p>
+      </div>
+
+      <div className='mb-8'>
+        <ReviewingGuidelines />
       </div>
 
       {reviews.length === 0 ? (
