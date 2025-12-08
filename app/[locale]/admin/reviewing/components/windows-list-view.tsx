@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/app/i18n/navigation';
 import { ChevronRight, Calendar, ClipboardCheck, Users } from 'lucide-react';
+import { WindowStatusBadge } from '@/components/window-status-badge';
 import type { WindowStatus } from '@/app/generated/prisma';
 
 interface Window {
@@ -19,21 +20,6 @@ interface Window {
 
 interface WindowsListViewProps {
   windows: Window[];
-}
-
-function getStatusColor(status: WindowStatus) {
-  switch (status) {
-    case 'OPEN':
-      return 'bg-green-100 text-green-800 border-green-200';
-    case 'CLOSED':
-      return 'bg-gray-100 text-gray-800 border-gray-200';
-    case 'REVIEW':
-      return 'bg-blue-100 text-blue-800 border-blue-200';
-    case 'COMPLETED':
-      return 'bg-purple-100 text-purple-800 border-purple-200';
-    default:
-      return 'bg-gray-100 text-gray-800 border-gray-200';
-  }
 }
 
 function formatDate(date: Date): string {
@@ -64,9 +50,7 @@ export function WindowsListView({ windows }: WindowsListViewProps) {
           <CardHeader className='pb-3'>
             <div className='flex items-start justify-between'>
               <CardTitle className='text-xl'>{window.name}</CardTitle>
-              <Badge variant='outline' className={getStatusColor(window.status)}>
-                {window.status}
-              </Badge>
+              <WindowStatusBadge status={window.status} />
             </div>
             <p className='text-sm text-muted-foreground mt-2'>
               {formatDate(window.submissionOpenAt)} - {formatDate(window.submissionCloseAt)}

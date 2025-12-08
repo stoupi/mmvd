@@ -2,8 +2,6 @@
 
 import { useState, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -12,14 +10,10 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Edit, CheckCircle, XCircle, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
+import { StatusBadge } from '@/components/design-system/status-badge';
+import { DataTableColumnHeader } from '@/components/design-system/data-table-column-header';
+import { DataTableToolbar } from '@/components/design-system/data-table-toolbar';
 import { EditUserDialog } from './edit-user-dialog';
 import { PermissionsDialog } from './permissions-dialog';
 import { ToggleUserStatusDialog } from './toggle-user-status-dialog';
@@ -61,14 +55,13 @@ interface UsersTableProps {
 }
 
 type SortField = 'name' | 'centreCode' | 'email' | 'status';
-type SortOrder = 'asc' | 'desc';
 
 export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [permissionFilter, setPermissionFilter] = useState<string>('all');
   const [sortField, setSortField] = useState<SortField>('name');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -77,15 +70,6 @@ export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
       setSortField(field);
       setSortOrder('asc');
     }
-  };
-
-  const SortIcon = ({ field }: { field: SortField }) => {
-    if (sortField !== field) return <ArrowUpDown className='h-4 w-4 ml-1' />;
-    return sortOrder === 'asc' ? (
-      <ArrowUp className='h-4 w-4 ml-1' />
-    ) : (
-      <ArrowDown className='h-4 w-4 ml-1' />
-    );
   };
 
   const filteredAndSortedUsers = useMemo(() => {
@@ -143,79 +127,78 @@ export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
 
   return (
     <div className='space-y-4'>
-      <div className='flex gap-4'>
-        <Input
-          placeholder='Search by name, email, or centre...'
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className='max-w-sm'
-        />
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className='w-[180px]'>
-            <SelectValue placeholder='Filter by status' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='all'>All Status</SelectItem>
-            <SelectItem value='active'>Active</SelectItem>
-            <SelectItem value='inactive'>Inactive</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={permissionFilter} onValueChange={setPermissionFilter}>
-          <SelectTrigger className='w-[180px]'>
-            <SelectValue placeholder='Filter by permission' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='all'>All Permissions</SelectItem>
-            <SelectItem value='SUBMISSION'>Submission</SelectItem>
-            <SelectItem value='REVIEWING'>Reviewing</SelectItem>
-            <SelectItem value='ADMIN'>Admin</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <DataTableToolbar
+        searchValue={searchTerm}
+        onSearchChange={setSearchTerm}
+        searchPlaceholder='Search by name, email, or centre...'
+        filters={[
+          {
+            value: statusFilter,
+            onChange: setStatusFilter,
+            placeholder: 'Filter by status',
+            options: [
+              { value: 'all', label: 'All Status' },
+              { value: 'active', label: 'Active' },
+              { value: 'inactive', label: 'Inactive' }
+            ]
+          },
+          {
+            value: permissionFilter,
+            onChange: setPermissionFilter,
+            placeholder: 'Filter by permission',
+            options: [
+              { value: 'all', label: 'All Permissions' },
+              { value: 'SUBMISSION', label: 'Submission' },
+              { value: 'REVIEWING', label: 'Reviewing' },
+              { value: 'ADMIN', label: 'Admin' }
+            ]
+          }
+        ]}
+      />
 
       <div className='rounded-md border bg-white'>
         <Table>
         <TableHeader>
           <TableRow>
             <TableHead>
-              <button
-                onClick={() => handleSort('name')}
-                className='flex items-center hover:text-foreground'
-              >
-                User
-                <SortIcon field='name' />
-              </button>
+              <DataTableColumnHeader
+                field='name'
+                label='User'
+                currentSortField={sortField}
+                currentSortOrder={sortOrder}
+                onSort={handleSort}
+              />
             </TableHead>
             <TableHead>
-              <button
-                onClick={() => handleSort('centreCode')}
-                className='flex items-center hover:text-foreground'
-              >
-                Centre Code
-                <SortIcon field='centreCode' />
-              </button>
+              <DataTableColumnHeader
+                field='centreCode'
+                label='Centre Code'
+                currentSortField={sortField}
+                currentSortOrder={sortOrder}
+                onSort={handleSort}
+              />
             </TableHead>
             <TableHead>Centre Name</TableHead>
             <TableHead>
-              <button
-                onClick={() => handleSort('email')}
-                className='flex items-center hover:text-foreground'
-              >
-                Email
-                <SortIcon field='email' />
-              </button>
+              <DataTableColumnHeader
+                field='email'
+                label='Email'
+                currentSortField={sortField}
+                currentSortOrder={sortOrder}
+                onSort={handleSort}
+              />
             </TableHead>
             <TableHead>Permissions</TableHead>
             <TableHead>Review Topics</TableHead>
             <TableHead>Activity</TableHead>
             <TableHead>
-              <button
-                onClick={() => handleSort('status')}
-                className='flex items-center hover:text-foreground'
-              >
-                Status
-                <SortIcon field='status' />
-              </button>
+              <DataTableColumnHeader
+                field='status'
+                label='Status'
+                currentSortField={sortField}
+                currentSortOrder={sortOrder}
+                onSort={handleSort}
+              />
             </TableHead>
             <TableHead className='text-right'>Actions</TableHead>
           </TableRow>
@@ -266,17 +249,19 @@ export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
                 </div>
               </TableCell>
               <TableCell>
-                {user.isActive ? (
-                  <Badge className='bg-green-500'>
-                    <CheckCircle className='h-3 w-3 mr-1' />
-                    Active
-                  </Badge>
-                ) : (
-                  <Badge variant='destructive'>
-                    <XCircle className='h-3 w-3 mr-1' />
-                    Inactive
-                  </Badge>
-                )}
+                <div className='flex items-center gap-1'>
+                  {user.isActive ? (
+                    <>
+                      <CheckCircle className='h-3 w-3' />
+                      <StatusBadge variant='success' text='Active' />
+                    </>
+                  ) : (
+                    <>
+                      <XCircle className='h-3 w-3' />
+                      <StatusBadge variant='error' text='Inactive' />
+                    </>
+                  )}
+                </div>
               </TableCell>
               <TableCell className='text-right'>
                 <div className='flex justify-end gap-2'>
