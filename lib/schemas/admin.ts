@@ -48,6 +48,10 @@ export const updateUserStatusSchema = z.object({
   isActive: z.boolean()
 });
 
+export const deleteUserSchema = z.object({
+  userId: z.string()
+});
+
 export const updateUserProfileSchema = z.object({
   userId: z.string(),
   firstName: z.string().min(1, 'First name is required').optional(),
@@ -103,4 +107,8 @@ export const deleteSubmissionWindowSchema = z.object({
 export const updateProposalStatusSchema = z.object({
   id: z.string(),
   status: z.enum(['DRAFT', 'SUBMITTED', 'UNDER_REVIEW', 'ACCEPTED', 'REJECTED', 'PRIORITIZED'])
+});
+
+export const deleteProposalSchema = z.object({
+  id: z.string()
 });

@@ -211,6 +211,34 @@ export async function updateUserReviewTopics(userId: string, mainAreaIds: string
   });
 }
 
+export async function deleteUser(userId: string) {
+  const proposalCount = await prisma.proposal.count({
+    where: {
+      piUserId: userId,
+      isDeleted: false
+    }
+  });
+
+  if (proposalCount > 0) {
+    throw new Error('Cannot delete user with existing proposals');
+  }
+
+  const reviewCount = await prisma.review.count({
+    where: {
+      reviewerId: userId,
+      isDeleted: false
+    }
+  });
+
+  if (reviewCount > 0) {
+    throw new Error('Cannot delete user with existing reviews');
+  }
+
+  return prisma.user.delete({
+    where: { id: userId }
+  });
+}
+
 // Submission Windows Management
 export async function createSubmissionWindow(data: {
   name: string;
@@ -255,13 +283,20 @@ export async function updateWindowStatus(id: string, status: WindowStatus) {
 }
 
 export async function deleteSubmissionWindow(id: string) {
-  const proposalCount = await prisma.proposal.count({
-    where: { submissionWindowId: id }
+  const proposals = await prisma.proposal.findMany({
+    where: { submissionWindowId: id },
+    select: { id: true }
   });
 
-  if (proposalCount > 0) {
-    throw new Error('Cannot delete submission window with existing proposals');
+  for (const proposal of proposals) {
+    await prisma.review.deleteMany({
+      where: { proposalId: proposal.id }
+    });
   }
+
+  await prisma.proposal.deleteMany({
+    where: { submissionWindowId: id }
+  });
 
   return prisma.submissionWindow.delete({
     where: { id }
@@ -566,6 +601,16 @@ export async function getAdminProposalDetails(proposalId: string) {
         orderBy: { createdAt: 'desc' }
       }
     }
+  });
+}
+
+export async function deleteProposal(proposalId: string) {
+  await prisma.review.deleteMany({
+    where: { proposalId }
+  });
+
+  return prisma.proposal.delete({
+    where: { id: proposalId }
   });
 }
 

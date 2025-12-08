@@ -18,6 +18,7 @@ import { EditUserDialog } from './edit-user-dialog';
 import { PermissionsDialog } from './permissions-dialog';
 import { ToggleUserStatusDialog } from './toggle-user-status-dialog';
 import { ReviewTopicsDialog } from './review-topics-dialog';
+import { DeleteUserDialog } from './delete-user-dialog';
 import type { AppPermission, Centre } from '@/app/generated/prisma';
 
 interface ReviewTopic {
@@ -270,6 +271,10 @@ export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
                     userId={user.id}
                     userName={`${user.title ? user.title + ' ' : ''}${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
                     currentStatus={user.isActive}
+                  />
+                  <DeleteUserDialog
+                    userId={user.id}
+                    userName={`${user.title ? user.title + ' ' : ''}${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
                   />
                 </div>
               </TableCell>

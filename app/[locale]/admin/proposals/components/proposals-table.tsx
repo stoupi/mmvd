@@ -15,6 +15,7 @@ import { ExternalLink } from 'lucide-react';
 import { Link } from '@/app/i18n/navigation';
 import type { ProposalStatus } from '@prisma/client';
 import { TopicBadge } from '@/components/design-system/topic-badge';
+import { DeleteProposalDialog } from './delete-proposal-dialog';
 
 interface Proposal {
   id: string;
@@ -91,7 +92,7 @@ export function ProposalsTable({ proposals, mainAreas }: ProposalsTableProps) {
     secondary: 200,
     window: 180,
     submittedAt: 120,
-    actions: 80
+    actions: 120
   });
 
   const resizingColumn = useRef<string | null>(null);
@@ -233,11 +234,17 @@ export function ProposalsTable({ proposals, mainAreas }: ProposalsTableProps) {
                   <div className='text-sm'>{formatDate(proposal.submittedAt)}</div>
                 </TableCell>
                 <TableCell style={{ width: columnWidths.actions }} className='text-right'>
-                  <Link href={`/admin/proposals/${proposal.id}`}>
-                    <Button variant='ghost' size='sm'>
-                      <ExternalLink className='h-4 w-4' />
-                    </Button>
-                  </Link>
+                  <div className='flex justify-end gap-2'>
+                    <Link href={`/admin/proposals/${proposal.id}`}>
+                      <Button variant='ghost' size='sm'>
+                        <ExternalLink className='h-4 w-4' />
+                      </Button>
+                    </Link>
+                    <DeleteProposalDialog
+                      proposalId={proposal.id}
+                      proposalTitle={proposal.title}
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             );

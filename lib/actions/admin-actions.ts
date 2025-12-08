@@ -178,3 +178,20 @@ export const updateUserReviewTopicsAction = adminAction
     revalidatePath('/admin/users');
     return { success: true, user };
   });
+
+export const deleteUserAction = adminAction
+  .schema(schemas.deleteUserSchema)
+  .action(async ({ parsedInput }) => {
+    await adminService.deleteUser(parsedInput.userId);
+    revalidatePath('/admin/users');
+    return { success: true };
+  });
+
+export const deleteProposalAction = adminAction
+  .schema(schemas.deleteProposalSchema)
+  .action(async ({ parsedInput }) => {
+    await adminService.deleteProposal(parsedInput.id);
+    revalidatePath('/admin');
+    revalidatePath('/admin/proposals');
+    return { success: true };
+  });
