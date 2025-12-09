@@ -274,7 +274,7 @@ export function CurrentWindowProposals({ proposals, windowStatus }: CurrentWindo
                         <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
                       </>
                     )}
-                    {proposal.status === 'SUBMITTED' && (
+                    {proposal.status !== 'DRAFT' && (
                       <>
                         <Tooltip>
                           <TooltipTrigger asChild>

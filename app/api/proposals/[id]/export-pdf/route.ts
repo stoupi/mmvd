@@ -23,9 +23,20 @@ export async function GET(
       return NextResponse.json({ error: 'Proposal not found' }, { status: 404 });
     }
 
-    if (proposal.status !== 'SUBMITTED') {
-      return NextResponse.json({ error: 'Only submitted proposals can be exported' }, { status: 400 });
+    if (proposal.status === 'DRAFT') {
+      return NextResponse.json({ error: 'Draft proposals cannot be exported' }, { status: 400 });
     }
+
+    const secondaryTopics = await prisma.mainArea.findMany({
+      where: {
+        id: { in: proposal.secondaryTopics }
+      },
+      select: {
+        label: true
+      }
+    });
+
+    const secondaryTopicLabels = secondaryTopics.map(topic => topic.label);
 
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -116,7 +127,7 @@ export async function GET(
     };
 
     addSection('Main Topic', proposal.mainArea.label);
-    addSection('Secondary Topics', proposal.secondaryTopics);
+    addSection('Secondary Topics', secondaryTopicLabels);
     addSection('Scientific Background', proposal.scientificBackground);
     addSection('Primary Objective', proposal.primaryObjective);
     addSection('Secondary Objectives', proposal.secondaryObjectives);

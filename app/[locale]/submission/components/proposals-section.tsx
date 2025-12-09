@@ -191,6 +191,7 @@ function DeleteProposalButton({ proposalId, proposalTitle }: { proposalId: strin
 export function ProposalsSection({ proposals }: ProposalsSectionProps) {
   const [selectedWindow, setSelectedWindow] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
+  // Force recompilation
 
   const uniqueWindows = Array.from(
     new Map(
@@ -340,7 +341,7 @@ export function ProposalsSection({ proposals }: ProposalsSectionProps) {
                                 <DeleteProposalButton proposalId={proposal.id} proposalTitle={proposal.title} />
                               </>
                             )}
-                            {windowStatus === 'OPEN' && proposal.status === 'SUBMITTED' && (
+                            {windowStatus === 'OPEN' && proposal.status !== 'DRAFT' && (
                               <>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
@@ -382,7 +383,7 @@ export function ProposalsSection({ proposals }: ProposalsSectionProps) {
                                     <p>View proposal</p>
                                   </TooltipContent>
                                 </Tooltip>
-                                {proposal.status === 'SUBMITTED' && (
+                                {proposal.status !== 'DRAFT' && (
                                   <Tooltip>
                                     <TooltipTrigger asChild>
                                       <a href={`/api/proposals/${proposal.id}/export-pdf`} download>
