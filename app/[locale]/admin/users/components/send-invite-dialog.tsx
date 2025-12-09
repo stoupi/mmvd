@@ -14,13 +14,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
 import { toast } from 'sonner';
@@ -33,7 +26,6 @@ interface SendInviteDialogProps {
 
 export function SendInviteDialog({ userId, userName, userEmail }: SendInviteDialogProps) {
   const [open, setOpen] = useState(false);
-  const [locale, setLocale] = useState<'en' | 'fr'>('en');
 
   const { execute, status } = useAction(sendInvitationAction, {
     onSuccess: () => {
@@ -46,7 +38,7 @@ export function SendInviteDialog({ userId, userName, userEmail }: SendInviteDial
   });
 
   const handleSendInvite = () => {
-    execute({ userId, locale });
+    execute({ userId });
   };
 
   return (
@@ -63,20 +55,6 @@ export function SendInviteDialog({ userId, userName, userEmail }: SendInviteDial
             Send an invitation email to <strong>{userName}</strong> ({userEmail}) to set up their account.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <div className='space-y-4 py-4'>
-          <div className='space-y-2'>
-            <label className='text-sm font-medium'>Email Language</label>
-            <Select value={locale} onValueChange={(value) => setLocale(value as 'en' | 'fr')}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='en'>English</SelectItem>
-                <SelectItem value='fr'>Français</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction

@@ -124,13 +124,11 @@ export const createUserInviteAction = adminAction
       affiliation: parsedInput.affiliation,
       centreId: parsedInput.centreId,
       permissions: parsedInput.permissions,
-      locale: parsedInput.locale,
     });
 
     // Step 2: Create invitation token (7-day expiry)
     const { token, expiresAt } = await createInvitation({
       email: parsedInput.email,
-      locale: parsedInput.locale,
       firstName: parsedInput.firstName,
       lastName: parsedInput.lastName,
       title: parsedInput.title,
@@ -141,16 +139,16 @@ export const createUserInviteAction = adminAction
 
     // Step 3: Generate setup link
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
-    const setupLink = `${appUrl}/${parsedInput.locale}/welcome/${token}`;
+    const setupLink = `${appUrl}/welcome/${token}`;
 
     // Step 4: Send welcome email
     const result = await sendWelcomeEmail({
       to: parsedInput.email,
-      locale: parsedInput.locale,
       firstName: parsedInput.firstName,
       lastName: parsedInput.lastName,
       title: parsedInput.title,
       setupLink,
+      permissions: parsedInput.permissions,
     });
 
     // Step 5: Handle email failure (rollback)
@@ -181,7 +179,6 @@ export const sendInvitationAction = adminAction
 
     const { token, expiresAt } = await createInvitation({
       email: user.email,
-      locale: parsedInput.locale,
       firstName: user.firstName || undefined,
       lastName: user.lastName || undefined,
       title: user.title || undefined,
@@ -191,15 +188,15 @@ export const sendInvitationAction = adminAction
     });
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
-    const setupLink = `${appUrl}/${parsedInput.locale}/welcome/${token}`;
+    const setupLink = `${appUrl}/welcome/${token}`;
 
     const result = await sendWelcomeEmail({
       to: user.email,
-      locale: parsedInput.locale,
       firstName: user.firstName || undefined,
       lastName: user.lastName || undefined,
       title: user.title || undefined,
       setupLink,
+      permissions: user.permissions,
     });
 
     if ('error' in result) {

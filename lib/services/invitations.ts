@@ -3,7 +3,6 @@ import type { AppPermission } from '@/app/generated/prisma';
 
 export type InvitationPayload = {
 	email: string;
-	locale: 'en' | 'fr';
 	firstName?: string;
 	lastName?: string;
 	title?: string;

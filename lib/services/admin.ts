@@ -173,7 +173,6 @@ export async function createPlaceholderUser(data: {
   affiliation?: string;
   centreId: string;
   permissions: AppPermission[];
-  locale?: string;
 }) {
   const existingUser = await prisma.user.findUnique({
     where: { email: data.email }
@@ -194,7 +193,6 @@ export async function createPlaceholderUser(data: {
       affiliation: data.affiliation || null,
       centreId: data.centreId,
       permissions: data.permissions,
-      locale: data.locale || null,
       isActive: true,
       emailVerified: false
     }

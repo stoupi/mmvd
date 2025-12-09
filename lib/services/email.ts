@@ -1,42 +1,68 @@
+import type { AppPermission } from '@/app/generated/prisma';
+
 type WelcomeEmailParams = {
 	to: string;
-	locale: 'en' | 'fr';
 	firstName?: string;
 	lastName?: string;
 	title?: string;
 	setupLink: string;
+	permissions: AppPermission[];
 };
 
+function getPermissionType(permissions: AppPermission[]): 'admin' | 'submission-reviewer' | 'submission' | 'reviewer' {
+	const hasSubmission = permissions.includes('SUBMISSION');
+	const hasReviewing = permissions.includes('REVIEWING');
+	const hasAdmin = permissions.includes('ADMIN');
+
+	if (hasAdmin) return 'admin';
+	if (hasSubmission && hasReviewing) return 'submission-reviewer';
+	if (hasSubmission) return 'submission';
+	return 'reviewer';
+}
+
+function getPermissionDescription(permissionType: string): string {
+	const descriptions: Record<string, string> = {
+		admin: 'You have been granted <strong>Administrator</strong> access to the MMVD platform. This gives you full access to manage users, review proposals, submit proposals, and configure the platform.',
+		'submission-reviewer': 'You have been granted <strong>Submission and Reviewing</strong> access to the MMVD platform. You can submit new research proposals and review proposals from other investigators.',
+		submission: 'You have been granted <strong>Submission</strong> access to the MMVD platform. You can submit new research proposals and track their review status.',
+		reviewer: 'You have been granted <strong>Reviewer</strong> access to the MMVD platform. You can review and evaluate research proposals submitted by other investigators.'
+	};
+
+	return descriptions[permissionType];
+}
+
 function renderWelcomeEmail({
-	locale,
 	firstName,
 	lastName,
 	title,
 	setupLink,
+	permissions,
 }: WelcomeEmailParams) {
 	const fullName = [title, firstName, lastName].filter(Boolean).join(' ') || undefined;
-	const subject = locale === 'fr' ? 'Bienvenue sur le portail MMVD' : 'Welcome to MMVD portal';
-
-	const greeting = locale === 'fr' ? 'Bonjour' : 'Dear';
+	const subject = 'Welcome to MMVD portal';
+	const greeting = 'Dear';
 	const nameLine = fullName ? ` ${fullName}` : '';
-	const intro =
-		locale === 'fr'
-			? 'Ceci est un message automatique pour vous inviter à rejoindre la plateforme MMVD.'
-			: 'This is an automatic message to invite you to join the MMVD platform.';
-	const ctaText = locale === 'fr' ? "Lien d'accès" : 'Set up link';
+	const permissionType = getPermissionType(permissions);
+	const roleDescription = getPermissionDescription(permissionType);
+	const intro = 'We are pleased to invite you to join the MMVD platform.';
+	const ctaText = 'Set up my account';
+	const linkInstruction = 'Please click the link below to set up your account and create your password:';
+	const expiryNote = 'This link will expire in 7 days.';
 
-	const linkInstruction =
-		locale === 'fr'
-			? 'Veuillez cliquer sur le lien ci-dessous pour configurer votre compte :'
-			: 'Please click the link below to set up your account:';
-
-	const text = `${greeting}${nameLine},\n\n${intro}\n\n${linkInstruction}\n\n${setupLink}`;
+	const text = `${greeting}${nameLine},\n\n${intro}\n\n${roleDescription.replace(/<\/?strong>/g, '')}\n\n${linkInstruction}\n\n${setupLink}\n\n${expiryNote}`;
 
 	const html = `
-    <div style="font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;">
+    <div style="font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <p>${greeting}${nameLine},</p>
       <p>${intro}</p>
-      <p><a href="${setupLink}" style="background:#111827;color:#fff;padding:10px 14px;border-radius:6px;text-decoration:none;display:inline-block">${ctaText}</a></p>
+      <p style="margin: 16px 0; padding: 16px; background: #f9fafb; border-left: 3px solid #db2777; border-radius: 4px;">
+        ${roleDescription}
+      </p>
+      <p>${linkInstruction}</p>
+      <p style="margin: 24px 0;">
+        <a href="${setupLink}" style="background:#db2777;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block">${ctaText}</a>
+      </p>
+      <p style="color:#666;font-size:14px;">${expiryNote}</p>
     </div>
   `;
 	return { subject, text, html };
@@ -73,23 +99,14 @@ export async function sendWelcomeEmail(
 type ResetPasswordEmailParams = {
 	to: string;
 	resetUrl: string;
-	locale: 'en' | 'fr';
 };
 
-function renderResetPasswordEmail({ resetUrl, locale }: ResetPasswordEmailParams) {
-	const subject =
-		locale === 'fr' ? 'Réinitialisation de votre mot de passe' : 'Reset your password';
-
-	const greeting = locale === 'fr' ? 'Bonjour,' : 'Hello,';
-	const intro =
-		locale === 'fr'
-			? 'Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous pour créer un nouveau mot de passe.'
-			: 'You requested to reset your password. Click the link below to create a new password.';
-	const ctaText = locale === 'fr' ? 'Réinitialiser mon mot de passe' : 'Reset my password';
-	const expiryNote =
-		locale === 'fr'
-			? "Ce lien expirera dans 1 heure. Si vous n'avez pas demandé cette réinitialisation, vous pouvez ignorer cet e-mail."
-			: 'This link will expire in 1 hour. If you did not request this reset, you can ignore this email.';
+function renderResetPasswordEmail({ resetUrl }: ResetPasswordEmailParams) {
+	const subject = 'Reset your password';
+	const greeting = 'Hello,';
+	const intro = 'You requested to reset your password. Click the link below to create a new password.';
+	const ctaText = 'Reset my password';
+	const expiryNote = 'This link will expire in 1 hour. If you did not request this reset, you can ignore this email.';
 
 	const text = `${greeting}\n\n${intro}\n\n${resetUrl}\n\n${expiryNote}`;
 

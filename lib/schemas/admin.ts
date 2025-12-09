@@ -34,13 +34,11 @@ export const createUserInviteSchema = z.object({
   title: z.string().optional().transform(val => val === '' ? undefined : val),
   affiliation: z.string().optional().transform(val => val === '' ? undefined : val),
   centreId: z.string().min(1, 'Centre is required'),
-  permissions: z.array(z.nativeEnum(AppPermission)).default([]),
-  locale: z.enum(['en', 'fr'])
+  permissions: z.array(z.nativeEnum(AppPermission)).default([])
 });
 
 export const sendInvitationSchema = z.object({
-  userId: z.string(),
-  locale: z.enum(['en', 'fr'])
+  userId: z.string()
 });
 
 export const updateUserPermissionsSchema = z.object({
