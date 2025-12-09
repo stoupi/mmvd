@@ -23,7 +23,7 @@ export default async function LandingPage({
     <div className='min-h-screen bg-gradient-to-b from-white to-pink-50'>
       {/* Hero Section */}
       <section className='container mx-auto px-4 py-20 text-center'>
-        <div className='flex justify-center mb-8'>
+        <div className='flex justify-center mb-4'>
           <Image
             src='/logo-5-vectorized.png'
             alt='MMVD Logo'
@@ -44,12 +44,12 @@ export default async function LandingPage({
           dedicated to <span className='bg-pink-100 px-2 py-1 rounded'>Multiple and Mixed Valvular Diseases</span>
         </p>
         <div className='flex justify-center gap-4'>
-          <Button size='lg' variant='outline' asChild>
+          <Button size='lg' asChild className='hover:bg-pink-400'>
             <a
               href='https://clinicaltrials.gov/study/NCT06235385'
               target='_blank'
               rel='noopener noreferrer'
-              className='whitespace-pre-line text-center bg-white text-pink-600 border-2 border-pink-600 hover:bg-pink-50 px-8 py-6 min-w-[300px]'
+              className='whitespace-pre-line text-center px-8 py-6 min-w-[300px]'
             >
               {t('hero.clinicalTrialsButton')}
             </a>
@@ -58,7 +58,7 @@ export default async function LandingPage({
       </section>
 
       {/* Global Network Section */}
-      <section className='container mx-auto px-4 py-8'>
+      <section className='container mx-auto px-4 py-4'>
         <div className='bg-white rounded-lg shadow-lg p-8 border border-gray-200'>
           <div className='text-center mb-8'>
             <h2 className='text-4xl font-bold mb-4'>
