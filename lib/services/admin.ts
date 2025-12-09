@@ -66,6 +66,7 @@ export async function getAllUsers() {
     select: {
       id: true,
       email: true,
+      emailVerified: true,
       firstName: true,
       lastName: true,
       title: true,
@@ -80,6 +81,7 @@ export async function getAllUsers() {
       permissions: true,
       isActive: true,
       createdAt: true,
+      lastLoginAt: true,
       reviewTopics: {
         select: {
           id: true,
@@ -115,8 +117,10 @@ export async function updateUserStatus(userId: string, isActive: boolean) {
 export async function updateUserProfile(
   userId: string,
   data: {
+    email?: string;
     firstName?: string;
     lastName?: string;
+    title?: string;
     affiliation?: string;
     centreId?: string;
   }

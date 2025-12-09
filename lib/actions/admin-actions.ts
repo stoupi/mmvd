@@ -168,6 +168,48 @@ export const createUserInviteAction = adminAction
     return { success: true, expiresAt };
   });
 
+export const sendInvitationAction = adminAction
+  .schema(schemas.sendInvitationSchema)
+  .action(async ({ parsedInput }) => {
+    const user = await prisma.user.findUnique({
+      where: { id: parsedInput.userId }
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const { token, expiresAt } = await createInvitation({
+      email: user.email,
+      locale: parsedInput.locale,
+      firstName: user.firstName || undefined,
+      lastName: user.lastName || undefined,
+      title: user.title || undefined,
+      affiliation: user.affiliation || undefined,
+      centreId: user.centreId || '',
+      permissions: user.permissions,
+    });
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+    const setupLink = `${appUrl}/${parsedInput.locale}/welcome/${token}`;
+
+    const result = await sendWelcomeEmail({
+      to: user.email,
+      locale: parsedInput.locale,
+      firstName: user.firstName || undefined,
+      lastName: user.lastName || undefined,
+      title: user.title || undefined,
+      setupLink,
+    });
+
+    if ('error' in result) {
+      throw new Error(`Failed to send invitation email: ${result.error}`);
+    }
+
+    revalidatePath('/admin/users');
+    return { success: true, expiresAt };
+  });
+
 export const updateUserReviewTopicsAction = adminAction
   .schema(schemas.updateUserReviewTopicsSchema)
   .action(async ({ parsedInput }) => {

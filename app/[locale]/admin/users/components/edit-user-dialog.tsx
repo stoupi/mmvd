@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'next-safe-action/hooks';
-import { updateUserProfileAction } from '@/lib/actions/admin-actions';
+import { updateUserProfileAction, updateUserPermissionsAction } from '@/lib/actions/admin-actions';
 import { updateUserProfileSchema } from '@/lib/schemas/admin';
-import { Centre } from '@/app/generated/prisma';
+import { Centre, AppPermission } from '@/app/generated/prisma';
 import type { z } from 'zod';
 import {
   Dialog,
@@ -36,7 +36,9 @@ import { Button } from '@/components/ui/button';
 import { Edit } from 'lucide-react';
 import { toast } from 'sonner';
 
-type FormData = Omit<z.infer<typeof updateUserProfileSchema>, 'userId'>;
+type FormData = Omit<z.infer<typeof updateUserProfileSchema>, 'userId'> & {
+  permissions: AppPermission[];
+};
 
 interface EditUserDialogProps {
   user: {
@@ -44,11 +46,19 @@ interface EditUserDialogProps {
     email: string;
     firstName: string | null;
     lastName: string | null;
+    title: string | null;
     affiliation: string | null;
     centreId: string | null;
+    permissions: AppPermission[];
   };
   centres: Centre[];
 }
+
+const permissionOptions: Array<{ value: AppPermission; label: string }> = [
+  { value: AppPermission.SUBMISSION, label: 'Submission' },
+  { value: AppPermission.REVIEWING, label: 'Reviewing' },
+  { value: AppPermission.ADMIN, label: 'Admin' }
+];
 
 export function EditUserDialog({ user, centres }: EditUserDialogProps) {
   const [open, setOpen] = useState(false);
@@ -56,14 +66,17 @@ export function EditUserDialog({ user, centres }: EditUserDialogProps) {
   const form = useForm<FormData>({
     resolver: zodResolver(updateUserProfileSchema.omit({ userId: true })),
     defaultValues: {
+      email: user.email || '',
       firstName: user.firstName || '',
       lastName: user.lastName || '',
+      title: user.title || '',
       affiliation: user.affiliation || '',
-      centreId: user.centreId || ''
+      centreId: user.centreId || '',
+      permissions: user.permissions || []
     }
   });
 
-  const { execute, status } = useAction(updateUserProfileAction, {
+  const { execute: executeProfile, status: statusProfile } = useAction(updateUserProfileAction, {
     onSuccess: () => {
       toast.success('User updated successfully');
       setOpen(false);
@@ -73,8 +86,16 @@ export function EditUserDialog({ user, centres }: EditUserDialogProps) {
     }
   });
 
-  const handleSubmit = (data: FormData) => {
-    execute({ userId: user.id, ...data });
+  const { execute: executePermissions } = useAction(updateUserPermissionsAction);
+
+  const handleSubmit = async (data: FormData) => {
+    const { permissions, ...profileData } = data;
+
+    // Update permissions first
+    await executePermissions({ userId: user.id, permissions });
+
+    // Then update profile
+    executeProfile({ userId: user.id, ...profileData });
   };
 
   return (
@@ -93,6 +114,46 @@ export function EditUserDialog({ user, centres }: EditUserDialogProps) {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
+            <FormField
+              control={form.control}
+              name='email'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type='email' placeholder='john.doe@example.com' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='title'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value === 'NONE' ? '' : value);
+                    }}
+                    value={field.value || 'NONE'}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select title' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value='NONE'>None</SelectItem>
+                      <SelectItem value='Dr'>Dr</SelectItem>
+                      <SelectItem value='Prof'>Prof</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name='firstName'
@@ -159,17 +220,51 @@ export function EditUserDialog({ user, centres }: EditUserDialogProps) {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name='permissions'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='mb-3 block'>Permissions</FormLabel>
+                  <div className='flex gap-2'>
+                    {permissionOptions.map((permission) => {
+                      const isSelected = field.value?.includes(permission.value);
+                      return (
+                        <button
+                          key={permission.value}
+                          type='button'
+                          onClick={() => {
+                            const newValue = isSelected
+                              ? field.value?.filter((value) => value !== permission.value)
+                              : [...(field.value || []), permission.value];
+                            field.onChange(newValue);
+                          }}
+                          className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                            isSelected
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                          }`}
+                        >
+                          {permission.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <div className='flex justify-end gap-2'>
               <Button
                 type='button'
                 variant='outline'
                 onClick={() => setOpen(false)}
-                disabled={status === 'executing'}
+                disabled={statusProfile === 'executing'}
               >
                 Cancel
               </Button>
-              <Button type='submit' disabled={status === 'executing'}>
-                {status === 'executing' ? 'Updating...' : 'Update'}
+              <Button type='submit' disabled={statusProfile === 'executing'}>
+                {statusProfile === 'executing' ? 'Updating...' : 'Update'}
               </Button>
             </div>
           </form>

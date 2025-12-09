@@ -38,6 +38,11 @@ export const createUserInviteSchema = z.object({
   locale: z.enum(['en', 'fr'])
 });
 
+export const sendInvitationSchema = z.object({
+  userId: z.string(),
+  locale: z.enum(['en', 'fr'])
+});
+
 export const updateUserPermissionsSchema = z.object({
   userId: z.string(),
   permissions: z.array(z.nativeEnum(AppPermission))
@@ -54,6 +59,7 @@ export const deleteUserSchema = z.object({
 
 export const updateUserProfileSchema = z.object({
   userId: z.string(),
+  email: z.string().email('Invalid email address').optional(),
   firstName: z.string().min(1, 'First name is required').optional(),
   lastName: z.string().min(1, 'Last name is required').optional(),
   title: z.string().optional(),

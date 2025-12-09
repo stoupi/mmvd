@@ -19,6 +19,7 @@ import { PermissionsDialog } from './permissions-dialog';
 import { ToggleUserStatusDialog } from './toggle-user-status-dialog';
 import { ReviewTopicsDialog } from './review-topics-dialog';
 import { DeleteUserDialog } from './delete-user-dialog';
+import { SendInviteDialog } from './send-invite-dialog';
 import type { AppPermission, Centre } from '@/app/generated/prisma';
 
 interface ReviewTopic {
@@ -30,6 +31,7 @@ interface ReviewTopic {
 interface User {
   id: string;
   email: string;
+  emailVerified: boolean;
   firstName: string | null;
   lastName: string | null;
   title: string | null;
@@ -42,6 +44,7 @@ interface User {
   permissions: AppPermission[];
   isActive: boolean;
   createdAt: Date;
+  lastLoginAt: Date | null;
   reviewTopics: ReviewTopic[];
   _count: {
     proposalsAsPi: number;
@@ -192,6 +195,8 @@ export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
             <TableHead>Permissions</TableHead>
             <TableHead>Review Topics</TableHead>
             <TableHead>Activity</TableHead>
+            <TableHead>Enrollment</TableHead>
+            <TableHead>Last Login</TableHead>
             <TableHead>
               <DataTableColumnHeader
                 field='status'
@@ -250,6 +255,24 @@ export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
                 </div>
               </TableCell>
               <TableCell>
+                {user.emailVerified ? (
+                  <StatusBadge variant='success' text='Enrolled' />
+                ) : (
+                  <StatusBadge variant='warning' text='Pending' />
+                )}
+              </TableCell>
+              <TableCell>
+                <div className='text-sm text-muted-foreground'>
+                  {user.lastLoginAt
+                    ? new Date(user.lastLoginAt).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                      })
+                    : 'Never'}
+                </div>
+              </TableCell>
+              <TableCell>
                 <div className='flex items-center gap-1'>
                   {user.isActive ? (
                     <>
@@ -266,6 +289,13 @@ export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
               </TableCell>
               <TableCell className='text-right'>
                 <div className='flex justify-end gap-2'>
+                  {!user.emailVerified && (
+                    <SendInviteDialog
+                      userId={user.id}
+                      userName={`${user.title ? user.title + ' ' : ''}${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
+                      userEmail={user.email}
+                    />
+                  )}
                   <EditUserDialog user={user} centres={centres} />
                   <ToggleUserStatusDialog
                     userId={user.id}
