@@ -25,10 +25,10 @@ export default async function LandingPage({
       <section className='container mx-auto px-4 py-20 text-center'>
         <div className='flex justify-center mb-8'>
           <Image
-            src='/logo.png'
+            src='/logo-5-vectorized.png'
             alt='MMVD Logo'
-            width={70}
-            height={96}
+            width={210}
+            height={288}
             className='w-auto h-auto'
           />
         </div>
@@ -58,7 +58,7 @@ export default async function LandingPage({
       </section>
 
       {/* Global Network Section */}
-      <section className='container mx-auto px-4 py-16'>
+      <section className='container mx-auto px-4 py-8'>
         <div className='bg-white rounded-lg shadow-lg p-8 border border-gray-200'>
           <div className='text-center mb-8'>
             <h2 className='text-4xl font-bold mb-4'>

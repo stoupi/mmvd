@@ -7,6 +7,11 @@ type WelcomeEmailParams = {
 	title?: string;
 	setupLink: string;
 	permissions: AppPermission[];
+	centreCode?: string;
+	centreName?: string;
+	customSubject?: string;
+	customHtml?: string;
+	customText?: string;
 };
 
 function getPermissionType(permissions: AppPermission[]): 'admin' | 'submission-reviewer' | 'submission' | 'reviewer' {
@@ -31,18 +36,131 @@ function getPermissionDescription(permissionType: string): string {
 	return descriptions[permissionType];
 }
 
+export function generateEmailPreview(params: Omit<WelcomeEmailParams, 'to' | 'setupLink'> & { setupLink?: string }) {
+	const setupLink = params.setupLink || '[ACCOUNT_SETUP_LINK]';
+	return renderWelcomeEmail({ ...params, to: '', setupLink });
+}
+
 function renderWelcomeEmail({
 	firstName,
 	lastName,
 	title,
 	setupLink,
 	permissions,
+	centreCode,
+	centreName,
+	customSubject,
+	customHtml,
+	customText,
 }: WelcomeEmailParams) {
+	if (customSubject && customHtml && customText) {
+		return { subject: customSubject, html: customHtml, text: customText };
+	}
+
 	const fullName = [title, firstName, lastName].filter(Boolean).join(' ') || undefined;
+	const permissionType = getPermissionType(permissions);
+
+	// Template spécial pour SUBMISSION only
+	if (permissionType === 'submission') {
+		const subject = 'MMVD Study: Invitation to Access the Ancillary Study Platform';
+		const piName = fullName || 'Principal Investigator';
+		const centreInfo = centreCode && centreName ? `Center ${centreCode} – ${centreName}` : 'your center';
+
+		const text = `Dear ${piName},
+Principal Investigator for ${centreInfo},
+
+We hope you are doing well.
+
+As the Principal Investigator of your center for the EACVI MMVD study, you play a key role in shaping and advancing the ancillary study program. We are delighted to invite you to join our new online platform dedicated to the submission, tracking, and evaluation of ancillary study proposals.
+
+To activate your account, please click on the link below and set your password:
+${setupLink}
+
+Once logged in, you will be able to:
+- submit new ancillary study proposals,
+- follow the review process and status of each submission,
+- access feedback from the Steering Committee,
+- collaborate more easily with investigators across participating centers.
+
+Our goal is to make this process smoother, more transparent, and more collaborative for all investigators involved in the MMVD study.
+
+If you have any questions or experience any difficulty accessing the platform, please feel free to contact us. We are always here to support you.
+
+Thank you once again for your involvement and continued commitment to the MMVD study. Your contribution is essential to the scientific success of this international project.
+
+Warm regards,
+MMVD Study Team`;
+
+		const html = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MMVD Study: Invitation to Access the Ancillary Study Platform</title>
+  </head>
+  <body style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #222222; line-height: 1.6;">
+
+    <p>Dear ${piName},<br>
+    Principal Investigator for ${centreInfo},</p>
+    <br>
+
+    <p>We hope you are doing well.</p>
+    <br>
+
+    <p>
+      As the <strong>Principal Investigator of your center for the EACVI MMVD study</strong>, you play a key role
+      in shaping and advancing the ancillary study program. We are delighted to invite you to join our new
+      <strong>online platform dedicated to the submission, tracking, and evaluation of ancillary study proposals</strong>.
+    </p>
+    <br>
+
+    <p>
+      To activate your account, please click on the link below and set your password:<br><br>
+      👉 <a href="${setupLink}" style="color: #0066cc; text-decoration: none; font-weight: 600;">Create your password</a>
+    </p>
+    <br>
+
+    <p>Once logged in, you will be able to:</p>
+    <ul>
+      <li>submit new ancillary study proposals,</li>
+      <li>follow the review process and status of each submission,</li>
+      <li>access feedback from the Steering Committee,</li>
+      <li>collaborate more easily with investigators across participating centers.</li>
+    </ul>
+    <br>
+
+    <p>
+      Our goal is to make this process smoother, more transparent, and more collaborative for all investigators
+      involved in the MMVD study.
+    </p>
+    <br>
+
+    <p>
+      If you have any questions or experience any difficulty accessing the platform, please feel free to contact us.
+      We are always here to support you.
+    </p>
+    <br>
+
+    <p>
+      Thank you once again for your involvement and continued commitment to the MMVD study.<br>
+      Your contribution is essential to the scientific success of this international project.
+    </p>
+    <br>
+
+    <p>
+      Warm regards,<br>
+      <strong>MMVD Study Team</strong>
+    </p>
+
+  </body>
+</html>`;
+
+		return { subject, text, html };
+	}
+
+	// Template générique pour les autres types (admin, reviewer, submission-reviewer)
 	const subject = 'Welcome to MMVD portal';
 	const greeting = 'Dear';
 	const nameLine = fullName ? ` ${fullName}` : '';
-	const permissionType = getPermissionType(permissions);
 	const roleDescription = getPermissionDescription(permissionType);
 	const intro = 'We are pleased to invite you to join the MMVD platform.';
 	const ctaText = 'Set up my account';

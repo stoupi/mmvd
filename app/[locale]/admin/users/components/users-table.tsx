@@ -294,6 +294,12 @@ export function UsersTable({ users, allMainAreas, centres }: UsersTableProps) {
                       userId={user.id}
                       userName={`${user.title ? user.title + ' ' : ''}${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email}
                       userEmail={user.email}
+                      userPermissions={user.permissions}
+                      userTitle={user.title}
+                      userFirstName={user.firstName}
+                      userLastName={user.lastName}
+                      centreCode={user.centre?.code}
+                      centreName={user.centre?.name}
                     />
                   )}
                   <EditUserDialog user={user} centres={centres} />

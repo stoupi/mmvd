@@ -126,7 +126,13 @@ export const createUserInviteAction = adminAction
       permissions: parsedInput.permissions,
     });
 
-    // Step 2: Create invitation token (7-day expiry)
+    // Step 2: Get centre info for email
+    const centre = await prisma.centre.findUnique({
+      where: { id: parsedInput.centreId },
+      select: { code: true, name: true }
+    });
+
+    // Step 3: Create invitation token (7-day expiry)
     const { token, expiresAt } = await createInvitation({
       email: parsedInput.email,
       firstName: parsedInput.firstName,
@@ -137,11 +143,11 @@ export const createUserInviteAction = adminAction
       permissions: parsedInput.permissions,
     });
 
-    // Step 3: Generate setup link
+    // Step 4: Generate setup link
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
     const setupLink = `${appUrl}/welcome/${token}`;
 
-    // Step 4: Send welcome email
+    // Step 5: Send welcome email
     const result = await sendWelcomeEmail({
       to: parsedInput.email,
       firstName: parsedInput.firstName,
@@ -149,6 +155,8 @@ export const createUserInviteAction = adminAction
       title: parsedInput.title,
       setupLink,
       permissions: parsedInput.permissions,
+      centreCode: centre?.code,
+      centreName: centre?.name,
     });
 
     // Step 5: Handle email failure (rollback)
@@ -177,6 +185,12 @@ export const sendInvitationAction = adminAction
       throw new Error('User not found');
     }
 
+    // Get centre info for email
+    const centre = user.centreId ? await prisma.centre.findUnique({
+      where: { id: user.centreId },
+      select: { code: true, name: true }
+    }) : null;
+
     const { token, expiresAt } = await createInvitation({
       email: user.email,
       firstName: user.firstName || undefined,
@@ -197,6 +211,11 @@ export const sendInvitationAction = adminAction
       title: user.title || undefined,
       setupLink,
       permissions: user.permissions,
+      centreCode: centre?.code,
+      centreName: centre?.name,
+      customSubject: parsedInput.customSubject,
+      customHtml: parsedInput.customHtml,
+      customText: parsedInput.customText,
     });
 
     if ('error' in result) {

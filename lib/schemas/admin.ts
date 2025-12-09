@@ -38,7 +38,10 @@ export const createUserInviteSchema = z.object({
 });
 
 export const sendInvitationSchema = z.object({
-  userId: z.string()
+  userId: z.string(),
+  customSubject: z.string().optional(),
+  customHtml: z.string().optional(),
+  customText: z.string().optional()
 });
 
 export const updateUserPermissionsSchema = z.object({
