@@ -1,5 +1,6 @@
 # Repository Guidelines
 
+- Never launch a dev server (npm run dev), consider it is always running. User has always localhost:3000 open in browser. NEVER LAUNCH IT AGAIN, under any pretext.
 - Use postgres mcp to debug database issues and test new features
 
 ### Prohibited Practices
@@ -78,7 +79,6 @@ npm run test:e2e:ui                                    # UI mode with seed
 
 ### UI Testing
 
--  **Playwright MCP**: Primary tool for testing and debugging UI
 -  **Screenshots**: Take screenshots to identify and correct issues
 -  **Test structure**: Tests in `tests/e2e/` organized by feature
 -  **Test data**: Seed files in `prisma/seed.test.ts`
