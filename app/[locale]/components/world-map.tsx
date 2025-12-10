@@ -135,6 +135,7 @@ interface WorldMapProps {
 }
 
 export function WorldMap({ data }: WorldMapProps) {
+  // Map centered at [42, 25] with zoom 4 - updated positioning
   const [isClient, setIsClient] = useState(false);
   const [customIcon, setCustomIcon] = useState<any>(null);
 
@@ -143,10 +144,10 @@ export function WorldMap({ data }: WorldMapProps) {
 
     import('leaflet').then((L) => {
       const pinkMarkerSvg = `
-        <svg width="30" height="45" viewBox="0 0 30 45" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 2C8.373 2 3 7.373 3 14c0 10.5 12 27 12 27s12-16.5 12-27c0-6.627-5.373-12-12-12z"
-                fill="#ec4899" stroke="#be185d" stroke-width="2"/>
-          <circle cx="15" cy="14" r="4" fill="white"/>
+        <svg width="20" height="30" viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 1C5.582 1 2 4.582 2 9c0 7 8 18 8 18s8-11 8-18c0-4.418-3.582-8-8-8z"
+                fill="#ec4899" stroke="#be185d" stroke-width="1.5" opacity="0.8"/>
+          <circle cx="10" cy="9" r="2.5" fill="white"/>
         </svg>
       `;
 
@@ -154,9 +155,9 @@ export function WorldMap({ data }: WorldMapProps) {
 
       const icon = L.icon({
         iconUrl: pinkMarkerUrl,
-        iconSize: [30, 45],
-        iconAnchor: [15, 45],
-        popupAnchor: [0, -45]
+        iconSize: [20, 30],
+        iconAnchor: [10, 30],
+        popupAnchor: [0, -30]
       });
       setCustomIcon(icon);
     });
@@ -164,7 +165,7 @@ export function WorldMap({ data }: WorldMapProps) {
 
   if (!isClient || !customIcon) {
     return (
-      <div className='max-w-4xl mx-auto h-[400px] bg-gray-100 rounded-lg flex items-center justify-center'>
+      <div className='w-full h-[400px] bg-gray-100 rounded-lg flex items-center justify-center'>
         <p className='text-gray-500'>Loading map...</p>
       </div>
     );
@@ -179,10 +180,10 @@ export function WorldMap({ data }: WorldMapProps) {
   );
 
   return (
-    <div className='max-w-4xl mx-auto h-[400px] rounded-lg overflow-hidden border border-gray-200 shadow-lg'>
+    <div className='w-full h-[400px] rounded-lg overflow-hidden border border-gray-200 shadow-lg'>
       <MapContainer
-        center={[48, 15]}
-        zoom={2}
+        center={[40, 15]}
+        zoom={2.4}
         minZoom={2}
         style={{ height: '100%', width: '100%' }}
         scrollWheelZoom={true}
@@ -192,7 +193,6 @@ export function WorldMap({ data }: WorldMapProps) {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         <CountryLayer countriesWithCentres={countriesWithCentres} />
-        <MapBoundsUpdater centres={centresWithCoordinates} />
         {centresWithCoordinates.map((centre) => (
           <Marker
             key={centre.id}

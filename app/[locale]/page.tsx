@@ -66,17 +66,20 @@ export default async function LandingPage({
                 Our Global Network
               </span>
             </h2>
-            <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
-              MMVD Study spans multiple countries and medical centres worldwide, creating one of the largest multicohort studies on valvular diseases.
-            </p>
+            <div className='text-base text-gray-700 max-w-4xl mx-auto space-y-4 text-center'>
+              <p>
+                The MMVD Study is powered by the enthusiasm and collaborative spirit of the <strong>Heart Imagers of Tomorrow (HIT)</strong> community of the EACVI society. Young and experienced cardiovascular imagers have joined forces to build the first worldwide registry dedicated to multiple and mixed valvular disease.
+              </p>
+              <p>
+                This shared effort brings together centers from more than 20 countries, each contributing real-world data, diverse clinical perspectives, and unique imaging expertise. Together, we are creating an unprecedented global picture of MMVD — one that reflects how patients are assessed, imaged, and treated across different healthcare systems and cultures.
+              </p>
+            </div>
           </div>
-          <div className='max-w-4xl mx-auto'>
-            <MapStats
-              totalCentres={mapData.totalCentres}
-              totalPatients={mapData.totalPatients}
-              totalCountries={Object.keys(mapData.statsByCountry).length}
-            />
-          </div>
+          <MapStats
+            totalCentres={mapData.totalCentres}
+            totalPatients={mapData.totalPatients}
+            totalCountries={Object.keys(mapData.statsByCountry).length}
+          />
           <WorldMap data={mapData} />
         </div>
       </section>
