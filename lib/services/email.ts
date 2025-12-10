@@ -208,10 +208,19 @@ export async function sendWelcomeEmail(
 		}),
 	});
 	if (!res.ok) {
-		return { error: `RESEND_REQUEST_FAILED_${res.status}` };
+		const errorBody = await res.text();
+		console.error('Resend API Error (sendWelcomeEmail):', { status: res.status, body: errorBody });
+		return { error: `RESEND_REQUEST_FAILED_${res.status}: ${errorBody}` };
 	}
 	const json = (await res.json()) as { id?: string };
-	return { id: json.id ?? '' };
+	console.log('Resend API Response:', json);
+
+	if (!json.id) {
+		console.error('Resend API returned success but no email ID:', json);
+		return { error: 'RESEND_NO_ID_RETURNED' };
+	}
+
+	return { id: json.id };
 }
 
 type ResetPasswordEmailParams = {

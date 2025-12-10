@@ -57,6 +57,66 @@ export default async function LandingPage({
         </div>
       </section>
 
+      {/* About the Study & Inclusion Criteria Section */}
+      <section className='container mx-auto px-4 py-16'>
+        <div className='grid md:grid-cols-2 gap-6'>
+          {/* About the Study */}
+          <Card>
+            <CardHeader>
+              <CardTitle className='text-2xl'>About the Study</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className='text-gray-700 leading-relaxed mb-6'>
+                The MMVD Study is a <strong>prospective international registry</strong> designed to better understand how multiple and mixed valvular disease presents and evolves in real life. The study collects clinical information and <strong>multimodality imaging</strong> from patients across dozens of centers worldwide, allowing us to capture the <strong>full spectrum of this complex condition</strong>. By bringing together data from different countries and healthcare systems, the project aims to <strong>clarify current practices, identify prognostic markers, and support future evidence-based recommendations</strong>.
+              </p>
+
+              {/* Quote Section */}
+              <div className='border-l-4 border-pink-500 bg-pink-50 p-4 rounded-r-lg'>
+                <div className='flex items-start gap-4'>
+                  <Image
+                    src='/pezel.jpeg'
+                    alt='Principal Investigator'
+                    width={80}
+                    height={80}
+                    className='rounded-full object-cover flex-shrink-0'
+                  />
+                  <div>
+                    <p className='text-gray-700 italic leading-relaxed mb-3'>
+                      &ldquo;Multiple and mixed valvular disease is a <strong>daily reality for clinicians</strong>, yet remains one of the least explored areas in valvular cardiology. With this study, we finally bring global attention and data to a condition that urgently needs it.&rdquo;
+                    </p>
+                    <div className='text-sm'>
+                      <p className='font-semibold text-gray-900'>Dr Théo Pezel</p>
+                      <p className='text-gray-600'>Lariboisière Hospital, AP-HP (Paris, France)</p>
+                      <p className='text-pink-600 font-medium'>Lead Principal Investigator</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Inclusion Criteria */}
+          <Card>
+            <CardHeader>
+              <CardTitle className='text-2xl'>Inclusion Criteria</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className='text-gray-700 leading-relaxed mb-4'>
+                The study includes all consecutive adult patients who are referred for cardiovascular imaging and who present with at least one moderate or severe valvular lesion. Among them, patients enter the dedicated MMVD cohort if they meet one of the following conditions:
+              </p>
+              <ul className='list-disc list-inside space-y-2 text-gray-700 mb-4'>
+                <li>They have two or more moderate-to-severe valvular diseases affecting different valves</li>
+                <li className='ml-4'>or</li>
+                <li>They have a single valve that shows both stenosis and regurgitation of at least moderate severity</li>
+              </ul>
+              <p className='text-sm text-gray-600 italic'>
+                To keep the cohort focused on native valvular disease, patients with previous valve interventions on the concerned valves, active or recently treated infective endocarditis, or complex congenital heart disease are not included.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Global Network Section */}
       <section className='container mx-auto px-4 py-4'>
         <div className='bg-white rounded-lg shadow-lg p-8 border border-gray-200'>
@@ -208,7 +268,7 @@ export default async function LandingPage({
       <footer className='border-t bg-white py-8'>
         <div className='container mx-auto px-4 text-center'>
           <p className='text-sm text-gray-600'>{t('footer.legal')}</p>
-          <p className='text-xs text-gray-500 mt-2'>Logo designed by Andreea and Michael Afana</p>
+          <p className='text-xs text-gray-500 mt-2'>Logo beautifully designed by Andreea and Michael Afana - Thank you!</p>
           <Link href='/login' className='text-sm text-pink-600 hover:underline mt-2 inline-block'>
             {t('footer.piLogin')}
           </Link>

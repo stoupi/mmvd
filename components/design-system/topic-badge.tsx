@@ -18,7 +18,7 @@ export function TopicBadge({ topic, variant = 'primary', className = '' }: Topic
       variant='outline'
       className={`bg-transparent border-pink-600 text-pink-600 ${className}`}
     >
-      {topic.code && <span className='font-mono mr-1.5'>{topic.code}</span>}
+      {topic.code && <span className='font-mono text-xs mr-1.5'>{topic.code}</span>}
       {topic.label}
     </Badge>
   );
