@@ -80,7 +80,16 @@ export default async function LandingPage({
             totalPatients={mapData.totalPatients}
             totalCountries={Object.keys(mapData.statsByCountry).length}
           />
-          <WorldMap data={mapData} />
+          <div className='relative'>
+            <WorldMap data={mapData} />
+            <div className='absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none' style={{ zIndex: 1000 }}>
+              <div className='bg-white text-pink-600 px-6 py-3 rounded-full shadow-2xl animate-bounce border border-pink-500'>
+                <p className='text-sm font-semibold flex items-center gap-2'>
+                  👆 Click on any marker to discover participating centers!
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -199,6 +208,7 @@ export default async function LandingPage({
       <footer className='border-t bg-white py-8'>
         <div className='container mx-auto px-4 text-center'>
           <p className='text-sm text-gray-600'>{t('footer.legal')}</p>
+          <p className='text-xs text-gray-500 mt-2'>Logo designed by Andreea and Michael Afana</p>
           <Link href='/login' className='text-sm text-pink-600 hover:underline mt-2 inline-block'>
             {t('footer.piLogin')}
           </Link>
