@@ -72,7 +72,7 @@ export async function createDraftAssignment(data: {
         isDeleted: false,
         isDraft: true,
         deadline: data.deadline,
-        status: 'ASSIGNED'
+        status: 'PENDING'
       },
       include: {
         reviewer: true,
@@ -103,7 +103,7 @@ export async function createDraftAssignment(data: {
       reviewerId: data.reviewerId,
       deadline: data.deadline,
       isDraft: true,
-      status: 'ASSIGNED'
+      status: 'PENDING'
     },
     include: {
       reviewer: true,

@@ -102,11 +102,7 @@ export function ReviewerProposalsTable({ reviews }: ReviewerProposalsTableProps)
             const { formattedDate, isOverdue } = formatDeadline(review.deadline);
             const piName = getPiName(review.proposal.piUser);
             const isCompleted = review.status === 'COMPLETED';
-            const isInProgress = !isCompleted && (
-              review.decision !== null ||
-              review.overlap !== null ||
-              review.commentsForPI !== null
-            );
+            const isInProgress = review.status === 'IN_PROGRESS';
 
             return (
               <TableRow key={review.id}>

@@ -73,10 +73,13 @@ export const saveReviewDraftAction = authenticatedAction
       throw new Error('This review has already been submitted');
     }
 
-    // Update the review
+    // Update the review and set status to IN_PROGRESS if it's PENDING
     await prisma.review.update({
       where: { id: reviewId },
-      data
+      data: {
+        ...data,
+        ...(review.status === 'PENDING' && { status: 'IN_PROGRESS' })
+      }
     });
 
     revalidatePath('/reviewing');

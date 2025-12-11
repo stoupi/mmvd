@@ -222,7 +222,7 @@ model Review {
   assignedAt       DateTime           @default(now())
   deadline         DateTime
   completedAt      DateTime?
-  status           ReviewStatus       @default(ASSIGNED)
+  status           ReviewStatus       @default(PENDING)
   isLate           Boolean            @default(false)
   decision         ReviewDecision?
 
@@ -284,7 +284,9 @@ enum ProposalStatus {
 }
 
 enum ReviewStatus {
-  ASSIGNED
+  ASSIGNED // Deprecated: Will be migrated to PENDING
+  PENDING
+  IN_PROGRESS
   COMPLETED
 }
 

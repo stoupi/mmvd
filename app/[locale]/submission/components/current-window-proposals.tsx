@@ -189,7 +189,7 @@ export function CurrentWindowProposals({ proposals, windowStatus }: CurrentWindo
     );
   }
 
-  const hasSubmittedProposal = proposals.some(proposal => proposal.status === 'SUBMITTED');
+  const hasSubmittedProposal = proposals.some(proposal => proposal.status !== 'DRAFT');
 
   return (
     <div className='border rounded-lg overflow-x-auto'>
