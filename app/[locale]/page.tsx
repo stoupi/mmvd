@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { getCentreStats } from '@/lib/services/centres';
 import { WorldMap } from './components/world-map';
 import { MapStats } from './components/map-stats';
+import { CriteriaAccordion } from './components/criteria-accordion';
 
 export default async function LandingPage({
   params
@@ -71,20 +72,20 @@ export default async function LandingPage({
               </p>
 
               {/* Quote Section */}
-              <div className='border-l-4 border-pink-500 bg-pink-50 p-4 rounded-r-lg'>
-                <div className='flex items-start gap-4'>
+              <div className='border-l-4 border-pink-500 bg-pink-50 p-3 rounded-r-lg'>
+                <div className='flex items-start gap-3'>
                   <Image
                     src='/pezel.jpeg'
                     alt='Principal Investigator'
-                    width={80}
-                    height={80}
+                    width={60}
+                    height={60}
                     className='rounded-full object-cover flex-shrink-0'
                   />
                   <div>
-                    <p className='text-gray-700 italic leading-relaxed mb-3'>
+                    <p className='text-gray-700 italic text-sm leading-relaxed mb-2'>
                       &ldquo;Multiple and mixed valvular disease is a <strong>daily reality for clinicians</strong>, yet remains one of the least explored areas in valvular cardiology. With this study, we finally bring global attention and data to a condition that urgently needs it.&rdquo;
                     </p>
-                    <div className='text-sm'>
+                    <div className='text-xs'>
                       <p className='font-semibold text-gray-900'>Dr Théo Pezel</p>
                       <p className='text-gray-600'>Lariboisière Hospital, AP-HP (Paris, France)</p>
                       <p className='text-pink-600 font-medium'>Lead Principal Investigator</p>
@@ -95,23 +96,17 @@ export default async function LandingPage({
             </CardContent>
           </Card>
 
-          {/* Inclusion Criteria */}
+          {/* Study Population */}
           <Card>
             <CardHeader>
-              <CardTitle className='text-2xl'>Inclusion Criteria</CardTitle>
+              <CardTitle className='text-2xl'>Study Population</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className='text-gray-700 leading-relaxed mb-4'>
-                The study includes all consecutive adult patients who are referred for cardiovascular imaging and who present with at least one moderate or severe valvular lesion. Among them, patients enter the dedicated MMVD cohort if they meet one of the following conditions:
+              <p className='text-gray-700 leading-relaxed mb-6'>
+                The MMVD Study includes all consecutive patients referred to a Cardiovascular imaging Department with a diagnosis of at least one at least moderate valvular heart disease (VHD), and who meet the criteria for MMVD defined by multiple and/or mixed disease.
               </p>
-              <ul className='list-disc list-inside space-y-2 text-gray-700 mb-4'>
-                <li>They have two or more moderate-to-severe valvular diseases affecting different valves</li>
-                <li className='ml-4'>or</li>
-                <li>They have a single valve that shows both stenosis and regurgitation of at least moderate severity</li>
-              </ul>
-              <p className='text-sm text-gray-600 italic'>
-                To keep the cohort focused on native valvular disease, patients with previous valve interventions on the concerned valves, active or recently treated infective endocarditis, or complex congenital heart disease are not included.
-              </p>
+
+              <CriteriaAccordion />
             </CardContent>
           </Card>
         </div>
@@ -128,7 +123,7 @@ export default async function LandingPage({
             </h2>
             <div className='text-base text-gray-700 max-w-4xl mx-auto space-y-4 text-center'>
               <p>
-                The MMVD Study is powered by the enthusiasm and collaborative spirit of the <strong>Heart Imagers of Tomorrow (HIT)</strong> community of the EACVI society. Young and experienced cardiovascular imagers have joined forces to build the first worldwide registry dedicated to multiple and mixed valvular disease.
+                The MMVD Study is powered by the enthusiasm and collaborative spirit of the Heart Imagers of Tomorrow (HIT) community of the EACVI. Young and experienced cardiovascular imagers have joined forces to build the first worldwide registry dedicated to multiple and mixed valvular disease.
               </p>
               <p>
                 This shared effort brings together centers from more than 20 countries, each contributing real-world data, diverse clinical perspectives, and unique imaging expertise. Together, we are creating an unprecedented global picture of MMVD — one that reflects how patients are assessed, imaged, and treated across different healthcare systems and cultures.
