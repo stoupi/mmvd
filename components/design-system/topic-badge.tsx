@@ -16,10 +16,12 @@ export function TopicBadge({ topic, variant = 'primary', className = '' }: Topic
   return (
     <Badge
       variant='outline'
-      className={`bg-transparent border-pink-600 text-pink-600 ${className}`}
+      className={`bg-transparent border-pink-600 text-pink-600 whitespace-normal leading-tight h-auto py-1 ${className}`}
     >
-      {topic.code && <span className='font-mono text-xs mr-1.5'>{topic.code}</span>}
-      {topic.label}
+      <span className='inline-flex flex-wrap items-start gap-1'>
+        {topic.code && <span className='font-mono text-xs shrink-0'>{topic.code}</span>}
+        <span className='break-words'>{topic.label}</span>
+      </span>
     </Badge>
   );
 }

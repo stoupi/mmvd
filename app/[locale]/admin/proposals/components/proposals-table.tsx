@@ -87,8 +87,8 @@ const statusLabels = {
 export function ProposalsTable({ proposals, mainAreas }: ProposalsTableProps) {
   const [columnWidths, setColumnWidths] = useState({
     centreCode: 100,
-    title: 350,
-    mainTopic: 180,
+    title: 300,
+    mainTopic: 280,
     secondary: 200,
     window: 180,
     submittedAt: 120,
